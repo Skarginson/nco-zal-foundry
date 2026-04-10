@@ -1,0 +1,24 @@
+<form class="{{cssClass}} item flexcol" autocomplete="off">
+  <header class="sheet-header flexrow">
+    <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" width="60" height="60"/>
+    <div class="header-fields flexcol">
+      <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'NCO.Item.NamePlaceholder'}}"/></h1>
+      <div class="item-type-label">{{localize 'NCO.Item.Tag'}}</div>
+    </div>
+  </header>
+
+  <section class="sheet-body flexcol">
+    <div class="form-group">
+      <label>{{localize 'NCO.Tag.Type'}}</label>
+      <select name="system.type">
+        <option value="positive" {{#if (eq system.type "positive")}}selected{{/if}}>{{localize 'NCO.Tag.Positive'}}</option>
+        <option value="negative" {{#if (eq system.type "negative")}}selected{{/if}}>{{localize 'NCO.Tag.Negative'}}</option>
+        <option value="neutral"  {{#if (eq system.type "neutral")}}selected{{/if}}>{{localize 'NCO.Tag.Neutral'}}</option>
+      </select>
+    </div>
+    <div class="form-group biography-group">
+      <label>{{localize 'NCO.Tab.Description'}}</label>
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+  </section>
+</form>

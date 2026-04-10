@@ -1,0 +1,44 @@
+<form class="{{cssClass}} item flexcol" autocomplete="off">
+  <header class="sheet-header flexrow">
+    <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" width="60" height="60"/>
+    <div class="header-fields flexcol">
+      <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'NCO.Item.NamePlaceholder'}}"/></h1>
+      <div class="item-type-label">{{localize 'NCO.Item.Gear'}}</div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">{{localize 'NCO.Tab.Description'}}</a>
+    <a class="item" data-tab="details">{{localize 'NCO.Tab.Details'}}</a>
+    <a class="item" data-tab="effets">{{localize 'NCO.Tab.Effets'}}</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab description" data-group="primary" data-tab="description">
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+
+    <div class="tab details flexcol" data-group="primary" data-tab="details">
+      <div class="form-group">
+        <label>{{localize 'NCO.Gear.Tags'}}</label>
+        <input type="text" name="system.tags" value="{{system.tags}}" placeholder="ex: silencieux, lourd, illegal"/>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'NCO.Gear.ActionDiceBonus'}}</label>
+        <input type="number" name="system.action_dice_bonus" value="{{system.action_dice_bonus}}" min="0" data-dtype="Number"/>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'NCO.Gear.HarmCapacity'}}</label>
+        <input type="number" name="system.harm_capacity" value="{{system.harm_capacity}}" min="0" data-dtype="Number"/>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'NCO.Gear.CredCost'}}</label>
+        <input type="number" name="system.cred_cost" value="{{system.cred_cost}}" min="0" data-dtype="Number"/>
+      </div>
+    </div>
+
+    <div class="tab effets flexcol" data-group="primary" data-tab="effets">
+      {{> "systems/neon-city-overdrive/templates/item/parts/item-effects.hbs"}}
+    </div>
+  </section>
+</form>

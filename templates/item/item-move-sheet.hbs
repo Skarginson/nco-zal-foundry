@@ -1,0 +1,35 @@
+<form class="{{cssClass}} item flexcol" autocomplete="off">
+  <header class="sheet-header flexrow">
+    <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" width="60" height="60"/>
+    <div class="header-fields flexcol">
+      <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'NCO.Item.NamePlaceholder'}}"/></h1>
+      <div class="item-type-label">{{localize 'NCO.Item.Move'}}</div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">{{localize 'NCO.Tab.Description'}}</a>
+    <a class="item" data-tab="details">{{localize 'NCO.Tab.Details'}}</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab description" data-group="primary" data-tab="description">
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+
+    <div class="tab details flexcol" data-group="primary" data-tab="details">
+      <div class="form-group">
+        <label>{{localize 'NCO.Move.Trigger'}}</label>
+        <input type="text" name="system.trigger" value="{{system.trigger}}" placeholder="{{localize 'NCO.Move.TriggerPlaceholder'}}"/>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'NCO.Move.Effect'}}</label>
+        <textarea name="system.effect" placeholder="{{localize 'NCO.Move.EffectPlaceholder'}}">{{system.effect}}</textarea>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'NCO.Move.DiceBonus'}}</label>
+        <input type="number" name="system.dice_bonus" value="{{system.dice_bonus}}" data-dtype="Number"/>
+      </div>
+    </div>
+  </section>
+</form>

@@ -1,0 +1,24 @@
+<form class="{{cssClass}} item flexcol" autocomplete="off">
+  <header class="sheet-header flexrow">
+    <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" width="60" height="60"/>
+    <div class="header-fields flexcol">
+      <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'NCO.Item.NamePlaceholder'}}"/></h1>
+      <div class="item-type-label">{{localize 'NCO.Item.Contact'}}</div>
+    </div>
+  </header>
+
+  <section class="sheet-body flexcol">
+    <div class="form-group">
+      <label>{{localize 'NCO.Contact.Expertise'}}</label>
+      <input type="text" name="system.expertise" value="{{system.expertise}}" placeholder="{{localize 'NCO.Contact.ExpertisePlaceholder'}}"/>
+    </div>
+    <div class="form-group">
+      <label>{{localize 'NCO.Contact.Loyalty'}}</label>
+      <input type="number" name="system.loyalty" value="{{system.loyalty}}" min="0" max="3" data-dtype="Number"/>
+    </div>
+    <div class="form-group biography-group">
+      <label>{{localize 'NCO.Tab.Description'}}</label>
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+  </section>
+</form>
