@@ -1,0 +1,68 @@
+{{!-- Partiels : Traits, Couverture (Zalozhniy) et Moves --}}
+<div class="traits-section flexrow">
+
+  {{!-- Colonne gauche : les 4 traits --}}
+  <div class="traits-list flexcol">
+    <h3 class="section-title">{{localize 'NCO.Section.Traits'}}</h3>
+
+    {{#each system.traits as |trait key|}}
+    <div class="trait flexrow flex-group-center">
+      <label class="trait-label trait-roll rollable" data-trait="{{key}}" title="{{localize 'NCO.Roll.TraitHint'}}">
+        {{localize (lookup @root.traitLabels key)}}
+      </label>
+      <div class="trait-value flexrow">
+        <input type="number" name="system.traits.{{key}}.value" value="{{trait.value}}" min="0" max="6" data-dtype="Number"/>
+        <span class="trait-dice-label">{{localize 'NCO.Roll.ActionDice'}}</span>
+      </div>
+    </div>
+    {{/each}}
+
+    {{!-- Couverture : Zalozhniy uniquement --}}
+    {{#if @root.isZalozhniy}}
+    <div class="zalozhniy-separator"></div>
+    <div class="trait flexrow flex-group-center trait-cover">
+      <label class="trait-label trait-roll rollable" data-trait="cover" title="{{localize 'NCO.Roll.TraitHint'}}">
+        {{localize 'NCO.Zalozhniy.Cover'}}
+      </label>
+      <div class="trait-value flexrow">
+        <input type="number" name="system.cover.value" value="{{@root.system.cover.value}}" min="1" max="4" data-dtype="Number"/>
+        <span class="trait-dice-label">{{localize 'NCO.Roll.ActionDice'}}</span>
+      </div>
+    </div>
+    {{/if}}
+
+  </div>
+
+  {{!-- Colonne droite : Moves --}}
+  <div class="moves-list flexcol">
+    <div class="items-header flexrow">
+      <h3 class="section-title flexrow">
+        <span>{{localize 'NCO.Item.Move'}}</span>
+        {{#if editable}}
+        <a class="item-create" data-type="move" title="{{localize 'NCO.Item.AddMove'}}">
+          <i class="fas fa-plus"></i>
+        </a>
+        {{/if}}
+      </h3>
+    </div>
+    <ul class="items-list">
+      {{#each moves as |move|}}
+      <li class="item flexrow" data-item-id="{{move._id}}">
+        <img src="{{move.img}}" class="item-image" width="24" height="24"/>
+        <span class="item-name rollable" data-roll-type="item">{{move.name}}</span>
+        {{#if @root.editable}}
+        <div class="item-controls flexrow">
+          <a class="item-edit" title="{{localize 'NCO.Item.Edit'}}"><i class="fas fa-edit"></i></a>
+          <a class="item-delete" title="{{localize 'NCO.Item.Delete'}}"><i class="fas fa-trash"></i></a>
+        </div>
+        {{/if}}
+        <div class="item-description" style="display:none;">
+          <p><em>{{move.system.trigger}}</em></p>
+          <p>{{move.system.effect}}</p>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+
+</div>

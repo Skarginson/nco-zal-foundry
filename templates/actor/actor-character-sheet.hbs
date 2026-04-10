@@ -1,0 +1,110 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+
+  {{!-- En-tête : portrait + nom + ressources --}}
+  <header class="sheet-header flexrow">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="90" width="90"/>
+    <div class="header-fields flexcol">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'NCO.Actor.Name'}}"/>
+      </h1>
+      <div class="header-resources flexrow">
+
+        {{!-- Ressources toujours visibles --}}
+        <div class="resource flex-group-center">
+          <label class="resource-label">{{localize 'NCO.Actor.Stress'}}</label>
+          <div class="resource-content flexrow">
+            <input type="number" name="system.stress.value" value="{{system.stress.value}}" min="0" data-dtype="Number"/>
+            <span>/</span>
+            <input type="number" name="system.stress.max" value="{{system.stress.max}}" min="0" data-dtype="Number"/>
+          </div>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">{{localize 'NCO.Actor.Harm'}}</label>
+          <div class="resource-content flexrow">
+            <input type="number" name="system.harm.value" value="{{system.harm.value}}" min="0" data-dtype="Number"/>
+            <span>/</span>
+            <input type="number" name="system.harm.max" value="{{system.harm.max}}" min="0" data-dtype="Number"/>
+          </div>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">{{localize 'NCO.Actor.Cred'}}</label>
+          <div class="resource-content flexrow">
+            <input type="number" name="system.cred" value="{{system.cred}}" min="0" data-dtype="Number"/>
+          </div>
+        </div>
+
+        {{!-- Sanité : Zalozhniy uniquement, si activée dans les settings --}}
+        {{#if sanityEnabled}}
+        <div class="resource flex-group-center resource-zalozhniy">
+          <label class="resource-label zal-label">{{localize 'NCO.Zalozhniy.Sanity'}}</label>
+          <div class="resource-content flexrow">
+            <input type="number" name="system.sanity.value" value="{{system.sanity.value}}" min="0" data-dtype="Number"/>
+            <span>/</span>
+            <input type="number" name="system.sanity.max" value="{{system.sanity.max}}" min="0" data-dtype="Number"/>
+          </div>
+        </div>
+        {{/if}}
+
+      </div>
+    </div>
+  </header>
+
+  {{!-- Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="principal">{{localize 'NCO.Tab.Principal'}}</a>
+    <a class="item" data-tab="identite">{{localize 'NCO.Tab.Identite'}}</a>
+    <a class="item" data-tab="equipement">{{localize 'NCO.Tab.Equipement'}}</a>
+    {{#if isZalozhniy}}
+    <a class="item" data-tab="mission">{{localize 'NCO.Tab.Mission'}}</a>
+    {{/if}}
+    <a class="item" data-tab="effets">{{localize 'NCO.Tab.Effets'}}</a>
+  </nav>
+
+  <section class="sheet-body">
+
+    {{!-- Onglet principal : Traits (+ Couverture si Zalozhniy) --}}
+    <div class="tab principal" data-group="primary" data-tab="principal">
+      {{> "systems/neon-city-overdrive/templates/actor/parts/actor-traits.hbs"}}
+    </div>
+
+    {{!-- Onglet identité --}}
+    <div class="tab identite flexcol" data-group="primary" data-tab="identite">
+      <div class="identity-fields flexcol">
+        <div class="form-group">
+          <label>{{localize 'NCO.Actor.Look'}}</label>
+          <input type="text" name="system.look" value="{{system.look}}" placeholder="{{localize 'NCO.Actor.LookPlaceholder'}}"/>
+        </div>
+        <div class="form-group">
+          <label>{{localize 'NCO.Actor.Drive'}}</label>
+          <input type="text" name="system.drive" value="{{system.drive}}" placeholder="{{localize 'NCO.Actor.DrivePlaceholder'}}"/>
+        </div>
+        <div class="form-group">
+          <label>{{localize 'NCO.Actor.Style'}}</label>
+          <input type="text" name="system.style" value="{{system.style}}" placeholder="{{localize 'NCO.Actor.StylePlaceholder'}}"/>
+        </div>
+        <div class="form-group biography-group">
+          <label>{{localize 'NCO.Actor.Biography'}}</label>
+          {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
+        </div>
+      </div>
+    </div>
+
+    {{!-- Onglet équipement --}}
+    <div class="tab equipement" data-group="primary" data-tab="equipement">
+      {{> "systems/neon-city-overdrive/templates/actor/parts/actor-items.hbs"}}
+    </div>
+
+    {{!-- Onglet mission (Zalozhniy uniquement) --}}
+    {{#if isZalozhniy}}
+    <div class="tab mission" data-group="primary" data-tab="mission">
+      {{> "systems/neon-city-overdrive/templates/actor/parts/actor-mission.hbs"}}
+    </div>
+    {{/if}}
+
+    {{!-- Onglet effets actifs --}}
+    <div class="tab effets flexcol" data-group="primary" data-tab="effets">
+      {{> "systems/neon-city-overdrive/templates/actor/parts/actor-effects.hbs"}}
+    </div>
+
+  </section>
+</form>

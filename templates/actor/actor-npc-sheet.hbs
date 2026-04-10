@@ -1,0 +1,69 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+
+  {{!-- En-tête --}}
+  <header class="sheet-header flexrow">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="80" width="80"/>
+    <div class="header-fields flexcol">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'NCO.NPC.Name'}}"/>
+      </h1>
+      <div class="npc-tags">
+        <input type="text" name="system.tags" value="{{system.tags}}" placeholder="{{localize 'NCO.NPC.TagsPlaceholder'}}"/>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="stats">{{localize 'NCO.Tab.Stats'}}</a>
+    <a class="item" data-tab="notes">{{localize 'NCO.Tab.Notes'}}</a>
+    <a class="item" data-tab="effets">{{localize 'NCO.Tab.Effets'}}</a>
+  </nav>
+
+  <section class="sheet-body">
+
+    {{!-- Onglet stats --}}
+    <div class="tab stats flexcol" data-group="primary" data-tab="stats">
+      <div class="npc-stats flexrow">
+
+        {{!-- Pool de dés --}}
+        <div class="stat-group flex-group-center">
+          <label>{{localize 'NCO.Roll.ActionDice'}}</label>
+          <input type="number" name="system.action_dice" value="{{system.action_dice}}" min="0" data-dtype="Number"/>
+        </div>
+        <div class="stat-group flex-group-center">
+          <label>{{localize 'NCO.Roll.DangerDice'}}</label>
+          <input type="number" name="system.danger_dice" value="{{system.danger_dice}}" min="0" data-dtype="Number"/>
+        </div>
+
+        {{!-- Harm --}}
+        <div class="stat-group flex-group-center">
+          <label>{{localize 'NCO.Actor.Harm'}}</label>
+          <div class="flexrow">
+            <input type="number" name="system.harm.value" value="{{system.harm.value}}" min="0" data-dtype="Number"/>
+            <span>/</span>
+            <input type="number" name="system.harm.max" value="{{system.harm.max}}" min="0" data-dtype="Number"/>
+          </div>
+        </div>
+      </div>
+
+      {{!-- Bouton de jet --}}
+      <div class="npc-roll-section">
+        <button type="button" class="npc-roll">
+          <i class="fas fa-dice"></i> {{localize 'NCO.Roll.RollDice'}}
+        </button>
+      </div>
+    </div>
+
+    {{!-- Onglet notes MJ --}}
+    <div class="tab notes flexcol" data-group="primary" data-tab="notes">
+      {{editor enrichedNotes target="system.notes" engine="prosemirror" button=true editable=editable}}
+    </div>
+
+    {{!-- Onglet effets actifs --}}
+    <div class="tab effets flexcol" data-group="primary" data-tab="effets">
+      {{> "systems/neon-city-overdrive/templates/actor/parts/actor-effects.hbs"}}
+    </div>
+
+  </section>
+</form>
