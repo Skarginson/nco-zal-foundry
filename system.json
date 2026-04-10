@@ -1,0 +1,24 @@
+{
+  "id": "neon-city-overdrive",
+  "title": "Neon City Overdrive",
+  "description": "Système FoundryVTT pour Neon City Overdrive et le Zalozhniy Quartet",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "12"
+  },
+  "authors": [{ "name": "Ulysse" }],
+  "license": "LICENSE.txt",
+  "readme": "README.md",
+  "esmodules": ["module/nco.mjs"],
+  "styles": ["styles/nco.css"],
+  "languages": [
+    { "lang": "en", "name": "English", "path": "lang/en.json" },
+    { "lang": "fr", "name": "Français", "path": "lang/fr.json" }
+  ],
+  "packs": [],
+  "packFolders": [],
+  "socket": false,
+  "primaryTokenAttribute": "harm",
+  "secondaryTokenAttribute": "stress"
+}

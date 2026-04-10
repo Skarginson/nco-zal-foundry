@@ -1,0 +1,93 @@
+{
+  "Actor": {
+    "types": ["character", "npc"],
+    "character": {
+      "biography": "",
+      "look": "",
+      "drive": "",
+      "style": "",
+      "stress": {
+        "value": 0,
+        "min": 0,
+        "max": 8
+      },
+      "harm": {
+        "value": 0,
+        "min": 0,
+        "max": 4
+      },
+      "cred": 0,
+      "traits": {
+        "body":     { "value": 1 },
+        "reflex":   { "value": 1 },
+        "mind":     { "value": 1 },
+        "presence": { "value": 1 }
+      },
+      "sanity": {
+        "value": 6,
+        "min": 0,
+        "max": 6
+      },
+      "cover": {
+        "value": 2,
+        "min": 1,
+        "max": 4
+      },
+      "exposure": {
+        "value": 0,
+        "min": 0,
+        "max": 5
+      }
+    },
+    "npc": {
+      "biography": "",
+      "tags": "",
+      "harm": {
+        "value": 0,
+        "min": 0,
+        "max": 2
+      },
+      "action_dice": 0,
+      "danger_dice": 0,
+      "notes": ""
+    }
+  },
+  "Item": {
+    "types": ["gear", "move", "contact", "tag", "asset", "threat"],
+    "gear": {
+      "description": "",
+      "tags": "",
+      "action_dice_bonus": 0,
+      "harm_capacity": 0,
+      "cred_cost": 0
+    },
+    "move": {
+      "description": "",
+      "trigger": "",
+      "effect": "",
+      "dice_bonus": 0
+    },
+    "contact": {
+      "description": "",
+      "loyalty": 0,
+      "expertise": ""
+    },
+    "tag": {
+      "description": "",
+      "type": "positive"
+    },
+    "asset": {
+      "description": "",
+      "type": "human",
+      "reliability": 1,
+      "burned": false
+    },
+    "threat": {
+      "description": "",
+      "tags": "",
+      "danger_dice_pool": 2,
+      "exposure_threshold": 3,
+      "notes": ""
+    }
+  }
+}
