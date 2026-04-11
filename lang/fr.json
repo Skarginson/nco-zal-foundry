@@ -1,0 +1,179 @@
+{
+  "NCO": {
+    "SheetLabels": {
+      "Character": "Fiche NCO — Personnage",
+      "NPC": "Fiche NCO — PNJ",
+      "Item": "Fiche NCO — Item"
+    },
+    "Settings": {
+      "GameMode": {
+        "Name": "Mode de jeu",
+        "Hint": "Basculer entre Neon City Overdrive standard et le Zalozhniy Quartet.",
+        "Standard": "Neon City Overdrive",
+        "Zalozhniy": "Zalozhniy Quartet"
+      },
+      "Sanity": {
+        "Name": "Jauge de Sanité",
+        "Hint": "Activer la jauge de Sanité (Zalozhniy Quartet)."
+      }
+    },
+    "Actor": {
+      "Name": "Nom",
+      "Stress": "Stress",
+      "Harm": "Blessures",
+      "Cred": "Crédit",
+      "Look": "Apparence",
+      "LookPlaceholder": "Description physique...",
+      "Drive": "Motivation",
+      "DrivePlaceholder": "Ce qui vous pousse à agir...",
+      "Style": "Style",
+      "StylePlaceholder": "Comment vous opérez...",
+      "Biography": "Biographie"
+    },
+    "NPC": {
+      "Name": "Nom du PNJ",
+      "TagsPlaceholder": "ex : Garde, Armé, Corporate..."
+    },
+    "Trait": {
+      "Body": "Corps",
+      "Reflex": "Réflexes",
+      "Mind": "Esprit",
+      "Presence": "Présence",
+      "Physique": "Physique",
+      "Terrain": "Terrain",
+      "Analyse": "Analyse",
+      "Couverture": "Couverture"
+    },
+    "Roll": {
+      "ActionDice": "Dés d'Action",
+      "DangerDice": "Dés de Danger",
+      "TraitHint": "Cliquer pour lancer",
+      "RollDice": "Lancer les dés",
+      "DialogTitle": "Jet — {trait}",
+      "TraitDice": "Dés du trait",
+      "BonusGear": "Bonus équipement",
+      "AllyHelp": "Aide alliée",
+      "TotalDA": "Total DA",
+      "TotalDD": "Total DD",
+      "DesperateWarning": "Désespéré ! 2 Dés de Danger, on garde le plus bas.",
+      "Cancel": "Annuler",
+      "Roll": "Lancer",
+      "Kept": "Gardé",
+      "Desperate": "Situation désespérée"
+    },
+    "Outcome": {
+      "Critical":  "SUCCÈS CRITIQUE",
+      "Solid":     "SUCCÈS SOLIDE",
+      "Success":   "SUCCÈS",
+      "Partial":   "SUCCÈS PARTIEL",
+      "Failure":   "ÉCHEC",
+      "Desperate": "ÉCHEC (Désespéré)"
+    },
+    "Section": {
+      "Traits": "Traits"
+    },
+    "Tab": {
+      "Principal": "Principal",
+      "Identite": "Identité",
+      "Equipement": "Équipement",
+      "Mission": "Mission",
+      "Effets": "Effets",
+      "Stats": "Stats",
+      "Notes": "Notes",
+      "Description": "Description",
+      "Details": "Détails"
+    },
+    "Item": {
+      "Gear": "Équipement",
+      "Move": "Move",
+      "Contact": "Contact",
+      "Tag": "Tag",
+      "Asset": "Ressource",
+      "Threat": "Menace",
+      "AddGear": "Ajouter équipement",
+      "AddMove": "Ajouter move",
+      "AddContact": "Ajouter contact",
+      "AddTag": "Ajouter tag",
+      "AddAsset": "Ajouter ressource",
+      "AddThreat": "Ajouter menace",
+      "EmptyGear": "Aucun équipement.",
+      "EmptyContact": "Aucun contact.",
+      "EmptyTag": "Aucun tag.",
+      "EmptyAsset": "Aucune ressource.",
+      "EmptyThreat": "Aucune menace.",
+      "Edit": "Modifier",
+      "Delete": "Supprimer",
+      "NamePlaceholder": "Nom de l'item..."
+    },
+    "Gear": {
+      "Tags": "Tags",
+      "ActionDiceBonus": "Bonus en Dés d'Action",
+      "HarmCapacity": "Capacité de Blessures",
+      "CredCost": "Coût en Crédit"
+    },
+    "Move": {
+      "Trigger": "Déclencheur",
+      "TriggerPlaceholder": "Quand vous...",
+      "Effect": "Effet",
+      "EffectPlaceholder": "Description de l'effet...",
+      "DiceBonus": "Bonus en dés"
+    },
+    "Contact": {
+      "Expertise": "Expertise",
+      "ExpertisePlaceholder": "ex : Info de rue, Technique, Armes...",
+      "Loyalty": "Loyauté (0–3)"
+    },
+    "Tag": {
+      "Type": "Type",
+      "Positive": "Positif",
+      "Negative": "Négatif",
+      "Neutral": "Neutre"
+    },
+    "Effect": {
+      "Source": "Source",
+      "Toggle": "Activer/Désactiver",
+      "Temporary": "Effets temporaires",
+      "Passive": "Effets passifs",
+      "Inactive": "Effets inactifs"
+    },
+    "Zalozhniy": {
+      "Sanity": "Sanité",
+      "Cover": "Couverture",
+      "Exposure": "Exposition",
+      "ExposureCritical": "Extraction urgente ! Exposition maximale."
+    },
+    "Asset": {
+      "TypeLabel": "Type",
+      "Type": {
+        "Human":       "Humain",
+        "Technical":   "Technique",
+        "Financial":   "Financier",
+        "Information": "Information"
+      },
+      "Reliability": "Fiabilité",
+      "Burned": "Grillé",
+      "BurnedLabel": "Ressource compromise"
+    },
+    "Threat": {
+      "Tags": "Tags",
+      "TagsPlaceholder": "ex : Armé, Corporate, Surnaturel...",
+      "DangerDicePool": "Pool de Dés de Danger",
+      "ExposureThreshold": "Seuil d'Exposition",
+      "NotesPlaceholder": "Notes MJ..."
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "character": "Personnage",
+      "npc": "PNJ"
+    },
+    "Item": {
+      "gear": "Équipement",
+      "move": "Move",
+      "contact": "Contact",
+      "tag": "Tag",
+      "asset": "Ressource",
+      "threat": "Menace"
+    }
+  }
+}

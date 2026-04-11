@@ -1,0 +1,179 @@
+{
+  "NCO": {
+    "SheetLabels": {
+      "Character": "NCO Character Sheet",
+      "NPC": "NCO NPC Sheet",
+      "Item": "NCO Item Sheet"
+    },
+    "Settings": {
+      "GameMode": {
+        "Name": "Game Mode",
+        "Hint": "Switch between standard Neon City Overdrive and Zalozhniy Quartet.",
+        "Standard": "Neon City Overdrive",
+        "Zalozhniy": "Zalozhniy Quartet"
+      },
+      "Sanity": {
+        "Name": "Sanity Track",
+        "Hint": "Enable the Sanity track (Zalozhniy Quartet)."
+      }
+    },
+    "Actor": {
+      "Name": "Name",
+      "Stress": "Stress",
+      "Harm": "Harm",
+      "Cred": "Cred",
+      "Look": "Look",
+      "LookPlaceholder": "Physical description...",
+      "Drive": "Drive",
+      "DrivePlaceholder": "What motivates you?",
+      "Style": "Style",
+      "StylePlaceholder": "How do you operate?",
+      "Biography": "Biography"
+    },
+    "NPC": {
+      "Name": "NPC Name",
+      "TagsPlaceholder": "e.g. Sec-Guard, Armed, Corporate..."
+    },
+    "Trait": {
+      "Body": "Body",
+      "Reflex": "Reflex",
+      "Mind": "Mind",
+      "Presence": "Presence",
+      "Physique": "Physique",
+      "Terrain": "Terrain",
+      "Analyse": "Analysis",
+      "Couverture": "Cover"
+    },
+    "Roll": {
+      "ActionDice": "Action Dice",
+      "DangerDice": "Danger Dice",
+      "TraitHint": "Click to roll",
+      "RollDice": "Roll Dice",
+      "DialogTitle": "Roll — {trait}",
+      "TraitDice": "Trait dice",
+      "BonusGear": "Equipment bonus",
+      "AllyHelp": "Ally help",
+      "TotalDA": "Total AD",
+      "TotalDD": "Total DD",
+      "DesperateWarning": "Desperate! Rolling 2 Danger Dice, keeping the lowest.",
+      "Cancel": "Cancel",
+      "Roll": "Roll",
+      "Kept": "Kept",
+      "Desperate": "Desperate situation"
+    },
+    "Outcome": {
+      "Critical":  "CRITICAL SUCCESS",
+      "Solid":     "SOLID SUCCESS",
+      "Success":   "SUCCESS",
+      "Partial":   "PARTIAL SUCCESS",
+      "Failure":   "FAILURE",
+      "Desperate": "FAILURE (Desperate)"
+    },
+    "Section": {
+      "Traits": "Traits"
+    },
+    "Tab": {
+      "Principal": "Main",
+      "Identite": "Identity",
+      "Equipement": "Equipment",
+      "Mission": "Mission",
+      "Effets": "Effects",
+      "Stats": "Stats",
+      "Notes": "Notes",
+      "Description": "Description",
+      "Details": "Details"
+    },
+    "Item": {
+      "Gear": "Gear",
+      "Move": "Move",
+      "Contact": "Contact",
+      "Tag": "Tag",
+      "Asset": "Asset",
+      "Threat": "Threat",
+      "AddGear": "Add Gear",
+      "AddMove": "Add Move",
+      "AddContact": "Add Contact",
+      "AddTag": "Add Tag",
+      "AddAsset": "Add Asset",
+      "AddThreat": "Add Threat",
+      "EmptyGear": "No equipment.",
+      "EmptyContact": "No contacts.",
+      "EmptyTag": "No tags.",
+      "EmptyAsset": "No assets.",
+      "EmptyThreat": "No threats.",
+      "Edit": "Edit",
+      "Delete": "Delete",
+      "NamePlaceholder": "Item name..."
+    },
+    "Gear": {
+      "Tags": "Tags",
+      "ActionDiceBonus": "Action Dice Bonus",
+      "HarmCapacity": "Harm Capacity",
+      "CredCost": "Cred Cost"
+    },
+    "Move": {
+      "Trigger": "Trigger",
+      "TriggerPlaceholder": "When you...",
+      "Effect": "Effect",
+      "EffectPlaceholder": "Effect description...",
+      "DiceBonus": "Dice Bonus"
+    },
+    "Contact": {
+      "Expertise": "Expertise",
+      "ExpertisePlaceholder": "e.g. Street info, Tech, Weapons...",
+      "Loyalty": "Loyalty (0–3)"
+    },
+    "Tag": {
+      "Type": "Type",
+      "Positive": "Positive",
+      "Negative": "Negative",
+      "Neutral": "Neutral"
+    },
+    "Effect": {
+      "Source": "Source",
+      "Toggle": "Toggle Effect",
+      "Temporary": "Temporary Effects",
+      "Passive": "Passive Effects",
+      "Inactive": "Inactive Effects"
+    },
+    "Zalozhniy": {
+      "Sanity": "Sanity",
+      "Cover": "Cover",
+      "Exposure": "Exposure",
+      "ExposureCritical": "Extraction required! Exposure at maximum."
+    },
+    "Asset": {
+      "TypeLabel": "Type",
+      "Type": {
+        "Human":       "Human",
+        "Technical":   "Technical",
+        "Financial":   "Financial",
+        "Information": "Information"
+      },
+      "Reliability": "Reliability",
+      "Burned": "Burned",
+      "BurnedLabel": "Asset compromised"
+    },
+    "Threat": {
+      "Tags": "Tags",
+      "TagsPlaceholder": "e.g. Armed, Corporate, Supernatural...",
+      "DangerDicePool": "Danger Dice Pool",
+      "ExposureThreshold": "Exposure Threshold",
+      "NotesPlaceholder": "GM notes..."
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "character": "Character",
+      "npc": "NPC"
+    },
+    "Item": {
+      "gear": "Gear",
+      "move": "Move",
+      "contact": "Contact",
+      "tag": "Tag",
+      "asset": "Asset",
+      "threat": "Threat"
+    }
+  }
+}
