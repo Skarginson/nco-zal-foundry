@@ -1,0 +1,73 @@
+<form class="nco roll-dialog-form flexcol" autocomplete="off">
+
+  <div class="roll-dialog-header">
+    <img src="{{actor.img}}" class="actor-portrait" width="40" height="40"/>
+    <div class="roll-dialog-title flexcol">
+      <span class="actor-name">{{actor.name}}</span>
+      <span class="trait-name">{{traitLabel}}</span>
+    </div>
+  </div>
+
+  <div class="roll-dialog-body flexcol">
+
+    {{!-- Dés d'Action --}}
+    <div class="dice-section action-section">
+      <div class="dice-row flexrow">
+        <label class="dice-label">{{localize 'NCO.Roll.TraitDice'}}</label>
+        <span class="dice-base">{{traitValue}}</span>
+      </div>
+      <div class="dice-row flexrow">
+        <label class="dice-label">{{localize 'NCO.Roll.BonusGear'}}</label>
+        <input type="number" name="bonus-da" value="0" min="0" max="10" class="dice-input"/>
+      </div>
+      <div class="dice-row flexrow ally-row">
+        <label class="dice-label">{{localize 'NCO.Roll.AllyHelp'}}</label>
+        <input type="checkbox" name="ally-help" class="ally-checkbox"/>
+        <span class="ally-hint">(+1 DA)</span>
+      </div>
+    </div>
+
+    <div class="dice-divider"></div>
+
+    {{!-- Dés de Danger --}}
+    <div class="dice-section danger-section">
+      <div class="dice-row flexrow">
+        <label class="dice-label danger-label">{{localize 'NCO.Roll.DangerDice'}}</label>
+        <input type="number" name="danger-dice" value="0" min="0" max="10" class="dice-input"/>
+      </div>
+    </div>
+
+    <div class="dice-divider"></div>
+
+    {{!-- Totaux --}}
+    <div class="dice-totals flexrow">
+      <div class="total-block flex-group-center">
+        <span class="total-label">{{localize 'NCO.Roll.TotalDA'}}</span>
+        <span class="total-da total-action">{{traitValue}}</span>
+      </div>
+      <span class="total-vs">vs</span>
+      <div class="total-block flex-group-center">
+        <span class="total-label">{{localize 'NCO.Roll.TotalDD'}}</span>
+        <span class="total-dd total-danger">0</span>
+      </div>
+    </div>
+
+    {{!-- Avertissement situation désespérée --}}
+    <div class="desperate-warning hidden">
+      <i class="fas fa-exclamation-triangle"></i>
+      {{localize 'NCO.Roll.DesperateWarning'}}
+    </div>
+
+  </div>
+
+  {{!-- Boutons --}}
+  <div class="roll-dialog-footer flexrow">
+    <button type="button" class="btn-cancel">
+      <i class="fas fa-times"></i> {{localize 'NCO.Roll.Cancel'}}
+    </button>
+    <button type="button" class="btn-roll">
+      <i class="fas fa-dice"></i> {{localize 'NCO.Roll.Roll'}}
+    </button>
+  </div>
+
+</form>
