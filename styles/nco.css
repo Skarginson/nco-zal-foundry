@@ -1,0 +1,1042 @@
+/* ============================================
+   Neon City Overdrive — Système FoundryVTT
+   Thème : cyberpunk noir / espionnage
+   ============================================ */
+
+/* --- Variables -------------------------------- */
+:root {
+  --nco-bg-dark:       #1a1a2e;
+  --nco-bg-medium:     #16213e;
+  --nco-bg-light:      #0f3460;
+  --nco-neon-cyan:     #00d4ff;
+  --nco-neon-magenta:  #e040fb;
+  --nco-neon-green:    #39ff14;
+  --nco-neon-red:      #ff2d55;
+  --nco-text:          #e0e0e0;
+  --nco-text-muted:    #888;
+  --nco-border:        #2a2a4a;
+  --nco-border-accent: #00d4ff44;
+  --nco-font:          "Segoe UI", system-ui, sans-serif;
+  --nco-font-mono:     "Courier New", monospace;
+}
+
+/* --- Fiche globale ----------------------------- */
+.nco.sheet {
+  background: var(--nco-bg-dark);
+  color: var(--nco-text);
+  font-family: var(--nco-font);
+  border: 1px solid var(--nco-border);
+}
+
+.nco.sheet .window-content {
+  background: var(--nco-bg-dark);
+  padding: 8px;
+}
+
+/* --- En-tête ----------------------------------- */
+.nco.sheet .sheet-header {
+  background: var(--nco-bg-medium);
+  border-bottom: 2px solid var(--nco-neon-cyan);
+  padding: 8px;
+  gap: 10px;
+  align-items: center;
+}
+
+.nco.sheet .profile-img,
+.nco.sheet .item-img {
+  border: 2px solid var(--nco-neon-cyan);
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.nco.sheet .charname input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--nco-border-accent);
+  color: var(--nco-text);
+  font-size: 1.4em;
+  font-weight: bold;
+  width: 100%;
+  padding: 2px 4px;
+}
+
+.nco.sheet .charname input:focus {
+  border-bottom-color: var(--nco-neon-cyan);
+  outline: none;
+}
+
+/* --- Ressources en-tête ------------------------ */
+.nco.sheet .header-resources {
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.nco.sheet .resource {
+  background: var(--nco-bg-light);
+  border: 1px solid var(--nco-border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  text-align: center;
+  flex: 1;
+}
+
+.nco.sheet .resource-label {
+  font-size: 0.75em;
+  color: var(--nco-neon-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.nco.sheet .resource input {
+  background: transparent;
+  border: none;
+  color: var(--nco-text);
+  font-size: 1em;
+  text-align: center;
+  width: 36px;
+}
+
+/* --- Navigation tabs --------------------------- */
+.nco.sheet .sheet-tabs {
+  background: var(--nco-bg-medium);
+  border-bottom: 1px solid var(--nco-border);
+  padding: 0 8px;
+}
+
+.nco.sheet .sheet-tabs .item {
+  color: var(--nco-text-muted);
+  padding: 6px 12px;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nco.sheet .sheet-tabs .item:hover,
+.nco.sheet .sheet-tabs .item.active {
+  color: var(--nco-neon-cyan);
+  border-bottom-color: var(--nco-neon-cyan);
+  text-shadow: 0 0 8px var(--nco-neon-cyan);
+}
+
+/* --- Corps ------------------------------------- */
+.nco.sheet .sheet-body {
+  padding: 10px;
+  overflow-y: auto;
+}
+
+/* --- Traits ------------------------------------ */
+.nco.sheet .traits-section {
+  gap: 16px;
+}
+
+.nco.sheet .traits-list,
+.nco.sheet .moves-list {
+  flex: 1;
+}
+
+.nco.sheet .section-title {
+  color: var(--nco-neon-cyan);
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid var(--nco-border-accent);
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+}
+
+.nco.sheet .trait {
+  background: var(--nco-bg-medium);
+  border: 1px solid var(--nco-border);
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  align-items: center;
+  gap: 8px;
+}
+
+.nco.sheet .trait-label {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.95em;
+  cursor: pointer;
+}
+
+.nco.sheet .trait-label.rollable:hover {
+  color: var(--nco-neon-cyan);
+  text-shadow: 0 0 6px var(--nco-neon-cyan);
+}
+
+.nco.sheet .trait-value input {
+  width: 40px;
+  text-align: center;
+  background: var(--nco-bg-light);
+  border: 1px solid var(--nco-border);
+  border-radius: 3px;
+  color: var(--nco-text);
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.nco.sheet .trait-dice-label {
+  font-size: 0.75em;
+  color: var(--nco-text-muted);
+  margin-left: 4px;
+}
+
+/* --- Items list -------------------------------- */
+.nco.sheet .items-section {
+  margin-bottom: 12px;
+}
+
+.nco.sheet .items-header {
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.nco.sheet .items-header h3 {
+  color: var(--nco-neon-cyan);
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+  flex: 1;
+}
+
+.nco.sheet .items-header .item-create {
+  color: var(--nco-text-muted);
+  font-size: 0.85em;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.nco.sheet .items-header .item-create:hover {
+  color: var(--nco-neon-green);
+}
+
+.nco.sheet .items-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nco.sheet .items-list .item {
+  background: var(--nco-bg-medium);
+  border: 1px solid var(--nco-border);
+  border-radius: 3px;
+  padding: 4px 8px;
+  margin-bottom: 3px;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+}
+
+.nco.sheet .items-list .item:hover {
+  border-color: var(--nco-border-accent);
+}
+
+.nco.sheet .item-image {
+  border: 1px solid var(--nco-border);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.nco.sheet .item-name {
+  flex: 1;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.nco.sheet .item-bonus {
+  font-size: 0.8em;
+  color: var(--nco-neon-green);
+  font-family: var(--nco-font-mono);
+}
+
+.nco.sheet .item-detail {
+  font-size: 0.8em;
+  color: var(--nco-text-muted);
+}
+
+.nco.sheet .item-controls {
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.nco.sheet .items-list .item:hover .item-controls {
+  opacity: 1;
+}
+
+.nco.sheet .item-controls a {
+  color: var(--nco-text-muted);
+  font-size: 0.8em;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.nco.sheet .item-controls a:hover {
+  color: var(--nco-neon-red);
+}
+
+.nco.sheet .item-empty {
+  color: var(--nco-text-muted);
+  font-size: 0.85em;
+  font-style: italic;
+  padding: 4px 8px;
+}
+
+/* --- Tags visuels ------------------------------ */
+.nco.sheet .tags-list {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nco.sheet .tag-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.nco.sheet .tag-item.positive {
+  background: #1a3a1a;
+  border: 1px solid var(--nco-neon-green);
+  color: var(--nco-neon-green);
+}
+
+.nco.sheet .tag-item.negative {
+  background: #3a1a1a;
+  border: 1px solid var(--nco-neon-red);
+  color: var(--nco-neon-red);
+}
+
+.nco.sheet .tag-item.neutral {
+  background: var(--nco-bg-light);
+  border: 1px solid var(--nco-text-muted);
+  color: var(--nco-text-muted);
+}
+
+/* --- Identité ---------------------------------- */
+.nco.sheet .identity-fields {
+  gap: 10px;
+}
+
+.nco.sheet .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.nco.sheet .form-group label {
+  font-size: 0.8em;
+  color: var(--nco-neon-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nco.sheet .form-group input,
+.nco.sheet .form-group select,
+.nco.sheet .form-group textarea {
+  background: var(--nco-bg-medium);
+  border: 1px solid var(--nco-border);
+  border-radius: 3px;
+  color: var(--nco-text);
+  padding: 5px 8px;
+  font-size: 0.9em;
+  font-family: var(--nco-font);
+}
+
+.nco.sheet .form-group input:focus,
+.nco.sheet .form-group select:focus,
+.nco.sheet .form-group textarea:focus {
+  border-color: var(--nco-neon-cyan);
+  outline: none;
+  box-shadow: 0 0 4px var(--nco-border-accent);
+}
+
+.nco.sheet .form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.nco.sheet .biography-group {
+  flex: 1;
+}
+
+/* --- PNJ stats --------------------------------- */
+.nco.sheet .npc-stats {
+  gap: 16px;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.nco.sheet .stat-group {
+  text-align: center;
+  flex: 1;
+}
+
+.nco.sheet .npc-roll-section {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.nco.sheet .npc-roll {
+  background: var(--nco-bg-light);
+  border: 1px solid var(--nco-neon-cyan);
+  color: var(--nco-neon-cyan);
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.nco.sheet .npc-roll:hover {
+  background: var(--nco-neon-cyan);
+  color: var(--nco-bg-dark);
+  box-shadow: 0 0 12px var(--nco-neon-cyan);
+}
+
+.nco.sheet .npc-tags input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--nco-border);
+  color: var(--nco-text-muted);
+  font-size: 0.85em;
+  font-style: italic;
+  width: 100%;
+}
+
+/* --- Inputs globaux ---------------------------- */
+.nco.sheet input[type="number"] {
+  text-align: center;
+}
+
+.nco.sheet input[type="text"],
+.nco.sheet input[type="number"] {
+  background: var(--nco-bg-medium);
+  border: 1px solid var(--nco-border);
+  border-radius: 3px;
+  color: var(--nco-text);
+  padding: 3px 6px;
+  font-family: var(--nco-font);
+}
+
+/* Inputs dans les ressources : fond transparent */
+.nco.sheet .resource input[type="number"],
+.nco.sheet .resource input[type="text"] {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* ============================================
+   Zalozhniy Quartet
+   ============================================ */
+
+/* Couleur d'accent Zalozhniy : violet/magenta espionnage */
+.nco.sheet .resource-zalozhniy {
+  border-color: var(--nco-neon-magenta);
+}
+
+.nco.sheet .zal-label {
+  color: var(--nco-neon-magenta) !important;
+}
+
+.nco.sheet .trait-cover {
+  border-color: var(--nco-neon-magenta);
+}
+
+.nco.sheet .trait-cover .trait-label {
+  color: var(--nco-neon-magenta);
+}
+
+.nco.sheet .zalozhniy-separator {
+  height: 1px;
+  background: var(--nco-neon-magenta);
+  opacity: 0.3;
+  margin: 8px 0;
+}
+
+/* Jauge d'Exposition */
+.nco.sheet .exposure-section {
+  margin-bottom: 16px;
+}
+
+.nco.sheet .exposure-track {
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nco.sheet .exposure-pip {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border: 2px solid var(--nco-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: var(--nco-text-muted);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  user-select: none;
+}
+
+.nco.sheet .exposure-pip.pip-filled {
+  background: #2a1a2a;
+  border-color: var(--nco-neon-magenta);
+  color: var(--nco-neon-magenta);
+}
+
+.nco.sheet .exposure-pip.pip-critical.pip-filled {
+  background: #3a0a0a;
+  border-color: var(--nco-neon-red);
+  color: var(--nco-neon-red);
+  box-shadow: 0 0 6px var(--nco-neon-red);
+}
+
+.nco.sheet .exposure-pip:hover {
+  border-color: var(--nco-neon-magenta);
+  color: var(--nco-neon-magenta);
+}
+
+.nco.sheet .exposure-inputs {
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+}
+
+.nco.sheet .exposure-input {
+  width: 40px !important;
+  text-align: center;
+}
+
+.nco.sheet .exposure-label {
+  font-size: 0.85em;
+  color: var(--nco-text-muted);
+}
+
+.nco.sheet .exposure-warning {
+  background: #2a0a0a;
+  border: 1px solid var(--nco-neon-red);
+  border-radius: 4px;
+  color: var(--nco-neon-red);
+  font-size: 0.85em;
+  padding: 6px 10px;
+  margin-top: 8px;
+  animation: pulse-warning 2s ease-in-out infinite;
+}
+
+@keyframes pulse-warning {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.nco.sheet .mission-divider {
+  height: 1px;
+  background: var(--nco-border);
+  margin: 12px 0;
+}
+
+/* Assets */
+.nco.sheet .asset-burned {
+  opacity: 0.5;
+}
+
+.nco.sheet .text-burned {
+  text-decoration: line-through;
+  color: var(--nco-text-muted);
+}
+
+.nco.sheet .asset-type-badge {
+  font-size: 0.72em;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--nco-bg-light);
+  border: 1px solid var(--nco-neon-magenta);
+  color: var(--nco-neon-magenta);
+}
+
+.nco.sheet .asset-reliability {
+  font-size: 0.9em;
+  color: var(--nco-neon-cyan);
+  letter-spacing: 2px;
+}
+
+/* Threats */
+.nco.sheet .threat-item {
+  border-color: #3a1a00;
+}
+
+.nco.sheet .threat-item:hover {
+  border-color: var(--nco-neon-red);
+}
+
+.nco.sheet .threat-dd {
+  font-size: 0.8em;
+  font-family: var(--nco-font-mono);
+  color: var(--nco-neon-red);
+  background: #2a0a0a;
+  border: 1px solid var(--nco-neon-red);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+.nco.sheet .threat-exposure {
+  font-size: 0.8em;
+  color: #ffb300;
+  font-family: var(--nco-font-mono);
+}
+
+/* Reliability track dans la fiche item */
+.nco.sheet .reliability-track,
+.reliability-track {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nco.sheet .reliability-pip,
+.reliability-pip {
+  font-size: 1.2em;
+  color: var(--nco-border);
+  transition: color 0.15s;
+}
+
+.nco.sheet .reliability-pip.pip-on,
+.reliability-pip.pip-on {
+  color: var(--nco-neon-magenta);
+}
+
+.nco.sheet .reliability-input,
+.reliability-input {
+  width: 36px !important;
+  text-align: center;
+  margin-left: 8px;
+}
+
+.nco.sheet .burned-label {
+  font-size: 0.8em;
+  color: var(--nco-neon-red);
+  font-style: italic;
+  margin-left: 6px;
+}
+
+/* Label type threat/asset dans les fiches item */
+.threat-label {
+  color: var(--nco-neon-red) !important;
+}
+
+/* ============================================
+   Roll Dialog
+   ============================================ */
+
+.nco.roll-dialog .window-content {
+  background: var(--nco-bg-dark);
+  padding: 0;
+}
+
+.roll-dialog-form {
+  gap: 0;
+}
+
+.roll-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--nco-bg-medium);
+  border-bottom: 2px solid var(--nco-neon-cyan);
+  padding: 10px 14px;
+}
+
+.roll-dialog-header .actor-portrait {
+  border: 2px solid var(--nco-neon-cyan);
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+.roll-dialog-title .actor-name {
+  font-size: 0.85em;
+  color: var(--nco-text-muted);
+}
+
+.roll-dialog-title .trait-name {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--nco-neon-cyan);
+  text-shadow: 0 0 8px var(--nco-neon-cyan);
+}
+
+.roll-dialog-body {
+  padding: 14px;
+  gap: 10px;
+}
+
+.dice-section {
+  gap: 6px;
+}
+
+.dice-row {
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+}
+
+.dice-label {
+  flex: 1;
+  font-size: 0.88em;
+  color: var(--nco-text);
+}
+
+.action-section .dice-label {
+  color: var(--nco-neon-cyan);
+}
+
+.danger-label {
+  color: var(--nco-neon-red) !important;
+}
+
+.dice-base {
+  background: var(--nco-bg-light);
+  border: 1px solid var(--nco-border);
+  border-radius: 3px;
+  padding: 2px 8px;
+  font-size: 1em;
+  font-weight: bold;
+  color: var(--nco-neon-cyan);
+  min-width: 36px;
+  text-align: center;
+}
+
+.dice-input {
+  width: 52px;
+  text-align: center;
+  background: var(--nco-bg-medium);
+  border: 1px solid var(--nco-border);
+  border-radius: 3px;
+  color: var(--nco-text);
+  padding: 3px;
+  font-size: 0.95em;
+}
+
+.dice-input:focus {
+  border-color: var(--nco-neon-cyan);
+  outline: none;
+}
+
+.ally-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--nco-neon-cyan);
+}
+
+.ally-hint {
+  font-size: 0.8em;
+  color: var(--nco-text-muted);
+}
+
+.dice-divider {
+  height: 1px;
+  background: var(--nco-border);
+  margin: 2px 0;
+}
+
+.dice-totals {
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.total-block {
+  text-align: center;
+}
+
+.total-label {
+  font-size: 0.75em;
+  color: var(--nco-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.total-action {
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--nco-neon-cyan);
+  text-shadow: 0 0 10px var(--nco-neon-cyan);
+  font-family: var(--nco-font-mono);
+}
+
+.total-danger {
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--nco-neon-red);
+  text-shadow: 0 0 10px var(--nco-neon-red);
+  font-family: var(--nco-font-mono);
+}
+
+.total-vs {
+  font-size: 0.9em;
+  color: var(--nco-text-muted);
+  margin-top: 12px;
+}
+
+.desperate-warning {
+  background: #3a1a00;
+  border: 1px solid var(--nco-neon-red);
+  border-radius: 4px;
+  color: var(--nco-neon-red);
+  font-size: 0.82em;
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.desperate-warning.hidden {
+  display: none;
+}
+
+.roll-dialog-footer {
+  border-top: 1px solid var(--nco-border);
+  padding: 10px 14px;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.roll-dialog-footer button {
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 0.88em;
+  cursor: pointer;
+  border: 1px solid;
+  font-family: var(--nco-font);
+}
+
+.btn-cancel {
+  background: var(--nco-bg-medium);
+  border-color: var(--nco-border) !important;
+  color: var(--nco-text-muted);
+}
+
+.btn-cancel:hover {
+  border-color: var(--nco-text-muted) !important;
+  color: var(--nco-text);
+}
+
+.btn-roll {
+  background: var(--nco-bg-light);
+  border-color: var(--nco-neon-cyan) !important;
+  color: var(--nco-neon-cyan);
+  font-weight: bold;
+  text-shadow: 0 0 6px var(--nco-neon-cyan);
+}
+
+.btn-roll:hover {
+  background: var(--nco-neon-cyan);
+  color: var(--nco-bg-dark);
+  box-shadow: 0 0 12px var(--nco-neon-cyan);
+  text-shadow: none;
+}
+
+/* ============================================
+   Chat — Résultat de jet
+   ============================================ */
+
+.nco.chat-roll {
+  background: var(--nco-bg-dark);
+  border: 1px solid var(--nco-border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: var(--nco-font);
+  color: var(--nco-text);
+}
+
+.nco.chat-roll.outcome-success {
+  border-color: var(--nco-neon-green);
+}
+
+.nco.chat-roll.outcome-partial {
+  border-color: #ffb300;
+}
+
+.nco.chat-roll.outcome-failure {
+  border-color: var(--nco-neon-red);
+}
+
+.chat-roll-header {
+  background: var(--nco-bg-medium);
+  padding: 8px 10px;
+  gap: 8px;
+  align-items: center;
+}
+
+.chat-portrait {
+  border: 1px solid var(--nco-border);
+  border-radius: 3px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.chat-actor-name {
+  font-size: 0.82em;
+  color: var(--nco-text-muted);
+  display: block;
+}
+
+.chat-trait-label {
+  font-size: 0.95em;
+  font-weight: bold;
+  color: var(--nco-text);
+  display: block;
+}
+
+.chat-roll-separator {
+  height: 1px;
+  background: var(--nco-border);
+}
+
+.chat-dice-pools {
+  padding: 10px;
+  gap: 10px;
+}
+
+.chat-dice-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background: var(--nco-bg-medium);
+  border-radius: 3px;
+}
+
+.dice-pool-label {
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: bold;
+}
+
+.action-label {
+  color: var(--nco-neon-cyan);
+}
+
+.danger-label {
+  color: var(--nco-neon-red);
+}
+
+.desperate-label {
+  color: #ffb300;
+}
+
+.dice-results {
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.die-face {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  font-size: 0.95em;
+  font-weight: bold;
+  font-family: var(--nco-font-mono);
+  background: var(--nco-bg-light);
+  border: 1px solid var(--nco-border);
+  color: var(--nco-text);
+}
+
+.die-best-action {
+  background: #0a2a1a;
+  border-color: var(--nco-neon-cyan);
+  color: var(--nco-neon-cyan);
+  box-shadow: 0 0 6px var(--nco-neon-cyan);
+}
+
+.die-best-danger {
+  background: #2a0a0a;
+  border-color: var(--nco-neon-red);
+  color: var(--nco-neon-red);
+  box-shadow: 0 0 6px var(--nco-neon-red);
+}
+
+.die-best-desperate {
+  background: #2a1a00;
+  border-color: #ffb300;
+  color: #ffb300;
+  box-shadow: 0 0 6px #ffb300;
+}
+
+.best-die-label {
+  font-size: 0.78em;
+  color: var(--nco-text-muted);
+}
+
+.no-dice {
+  font-size: 0.85em;
+  color: var(--nco-text-muted);
+  font-style: italic;
+}
+
+.chat-outcome {
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.outcome-badge {
+  font-size: 0.95em;
+  font-weight: bold;
+  padding: 5px 14px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.badge-success {
+  background: #0a2a0a;
+  border: 1px solid var(--nco-neon-green);
+  color: var(--nco-neon-green);
+  text-shadow: 0 0 8px var(--nco-neon-green);
+}
+
+.badge-partial {
+  background: #2a1a00;
+  border: 1px solid #ffb300;
+  color: #ffb300;
+  text-shadow: 0 0 8px #ffb300;
+}
+
+.badge-failure {
+  background: #2a0a0a;
+  border: 1px solid var(--nco-neon-red);
+  color: var(--nco-neon-red);
+  text-shadow: 0 0 8px var(--nco-neon-red);
+}
+
+.outcome-compare {
+  font-size: 0.8em;
+  color: var(--nco-text-muted);
+  font-family: var(--nco-font-mono);
+}
