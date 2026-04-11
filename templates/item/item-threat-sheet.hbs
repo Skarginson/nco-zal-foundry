@@ -1,0 +1,41 @@
+<form class="{{cssClass}} item flexcol" autocomplete="off">
+  <header class="sheet-header flexrow">
+    <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" width="60" height="60"/>
+    <div class="header-fields flexcol">
+      <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'NCO.Item.NamePlaceholder'}}"/></h1>
+      <div class="item-type-label zal-label threat-label">{{localize 'NCO.Item.Threat'}}</div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">{{localize 'NCO.Tab.Description'}}</a>
+    <a class="item" data-tab="details">{{localize 'NCO.Tab.Details'}}</a>
+  </nav>
+
+  <section class="sheet-body">
+
+    <div class="tab description" data-group="primary" data-tab="description">
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+
+    <div class="tab details flexcol" data-group="primary" data-tab="details">
+      <div class="form-group">
+        <label>{{localize 'NCO.Threat.Tags'}}</label>
+        <input type="text" name="system.tags" value="{{system.tags}}" placeholder="{{localize 'NCO.Threat.TagsPlaceholder'}}"/>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'NCO.Threat.DangerDicePool'}}</label>
+        <input type="number" name="system.danger_dice_pool" value="{{system.danger_dice_pool}}" min="0" data-dtype="Number"/>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'NCO.Threat.ExposureThreshold'}}</label>
+        <input type="number" name="system.exposure_threshold" value="{{system.exposure_threshold}}" min="0" max="5" data-dtype="Number"/>
+      </div>
+      <div class="form-group biography-group">
+        <label>{{localize 'NCO.Tab.Notes'}}</label>
+        <textarea name="system.notes" placeholder="{{localize 'NCO.Threat.NotesPlaceholder'}}">{{system.notes}}</textarea>
+      </div>
+    </div>
+
+  </section>
+</form>
