@@ -181,7 +181,7 @@ export class NCOActorSheet extends ActorSheet {
     event.preventDefault();
     const header = event.currentTarget;
     const type = header.dataset.type;
-    const data = duplicate(header.dataset);
+    const data = foundry.utils.duplicate(header.dataset);
     const name = `Nouveau ${type}`;
     const itemData = { name, type, system: data };
     delete itemData.system['type'];
@@ -208,6 +208,6 @@ export class NCOActorSheet extends ActorSheet {
     const current = this.actor.system.exposure?.value ?? 0;
     // Clic sur la case déjà remplie la plus haute → décrémente, sinon → incrémente
     const newValue = index < current ? index : index + 1;
-    await this.actor.update({ 'system.exposure.value': Math.clamped(newValue, 0, 5) });
+    await this.actor.update({ 'system.exposure.value': Math.max(0, Math.min(5, newValue)) });
   }
 }
