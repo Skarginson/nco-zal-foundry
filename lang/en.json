@@ -19,7 +19,6 @@
     },
     "Actor": {
       "Name": "Name",
-      "Stress": "Stress",
       "Harm": "Harm",
       "Cred": "Cred",
       "Look": "Look",
@@ -32,45 +31,36 @@
     },
     "NPC": {
       "Name": "NPC Name",
-      "TagsPlaceholder": "e.g. Sec-Guard, Armed, Corporate..."
-    },
-    "Trait": {
-      "Body": "Body",
-      "Reflex": "Reflex",
-      "Mind": "Mind",
-      "Presence": "Presence",
-      "Physique": "Physique",
-      "Terrain": "Terrain",
-      "Analyse": "Analysis",
-      "Couverture": "Cover"
+      "TagsPlaceholder": "e.g. Sec-Guard, Armed, Corporate...",
+      "DangerDice": "Danger Dice added",
+      "Drive": "Drive",
+      "DrivePlaceholder": "What the threat wants...",
+      "Actions": "Actions",
+      "ActionsPlaceholder": "What the threat does on its turn / possible consequences..."
     },
     "Roll": {
       "ActionDice": "Action Dice",
       "DangerDice": "Danger Dice",
-      "TraitHint": "Click to roll",
       "RollDice": "Roll Dice",
-      "DialogTitle": "Roll — {trait}",
-      "TraitDice": "Trait dice",
+      "DialogTitle": "Roll — {actor}",
+      "BaseDice": "Base die",
+      "BonusDA": "Bonus AD (trademark, edge, tags…)",
       "BonusGear": "Equipment bonus",
-      "AllyHelp": "Ally help",
       "TotalDA": "Total AD",
       "TotalDD": "Total DD",
-      "DesperateWarning": "Desperate! Rolling 2 Danger Dice, keeping the lowest.",
+      "DesperateWarning": "Desperate! No AD available — rolling 2 DD, keeping the lowest.",
       "Cancel": "Cancel",
       "Roll": "Roll",
       "Kept": "Kept",
-      "Desperate": "Desperate situation"
+      "Desperate": "Desperate situation",
+      "Boons": "Boons",
+      "PoolHint": "Always start with 1 action die, then adjust for the situation."
     },
     "Outcome": {
-      "Critical":  "CRITICAL SUCCESS",
-      "Solid":     "SOLID SUCCESS",
-      "Success":   "SUCCESS",
-      "Partial":   "PARTIAL SUCCESS",
-      "Failure":   "FAILURE",
-      "Desperate": "FAILURE (Desperate)"
-    },
-    "Section": {
-      "Traits": "Traits"
+      "Botch":   "BOTCH — Critical Failure!",
+      "Failure": "FAILURE",
+      "Partial": "PARTIAL SUCCESS",
+      "Success": "SUCCESS"
     },
     "Tab": {
       "Principal": "Main",

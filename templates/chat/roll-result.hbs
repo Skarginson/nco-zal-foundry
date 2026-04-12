@@ -1,4 +1,4 @@
-<div class="nco chat-roll {{#if isSuccess}}outcome-success{{else if isPartial}}outcome-partial{{else}}outcome-failure{{/if}}">
+<div class="nco chat-roll {{#if isSuccess}}outcome-success{{else if isPartial}}outcome-partial{{else if isBotch}}outcome-botch{{else}}outcome-failure{{/if}}">
 
   {{!-- En-tête : portrait + nom + trait --}}
   <div class="chat-roll-header flexrow">
@@ -12,33 +12,32 @@
   <div class="chat-roll-separator"></div>
 
   {{#if desperate}}
-  {{!-- Situation désespérée --}}
+  {{!-- Situation désespérée : 2 DD, on garde le plus bas --}}
   <div class="chat-dice-section">
     <span class="dice-pool-label desperate-label">{{localize 'NCO.Roll.Desperate'}}</span>
     <div class="dice-results flexrow">
       {{#each ddResults as |val|}}
-      <span class="die-face {{#if (eq val @root.bestDA)}}die-best-desperate{{/if}}">{{val}}</span>
+      <span class="die-face danger-die {{#if (eq val @root.desperateBest)}}die-best-desperate{{/if}}">{{val}}</span>
       {{/each}}
     </div>
-    <span class="best-die-label">→ {{localize 'NCO.Roll.Kept'}} : <strong>{{bestDA}}</strong></span>
+    <span class="best-die-label">→ {{localize 'NCO.Roll.Kept'}} : <strong>{{desperateBest}}</strong></span>
   </div>
 
   {{else}}
   {{!-- Pools normaux --}}
   <div class="chat-dice-pools flexrow">
 
-    {{!-- Dés d'Action --}}
+    {{!-- Dés d'Action : triés, les annulés sont barrés --}}
     <div class="chat-dice-section action-pool">
       <span class="dice-pool-label action-label">{{localize 'NCO.Roll.ActionDice'}}</span>
       <div class="dice-results flexrow">
-        {{#each daResults as |val|}}
-        <span class="die-face action-die {{#if (eq val @root.bestDA)}}die-best-action{{/if}}">{{val}}</span>
+        {{#each daDisplay as |die|}}
+        <span class="die-face action-die {{#if die.cancelled}}die-cancelled{{else if (eq die.value 6)}}die-best-action{{/if}}">{{die.value}}</span>
         {{/each}}
-        {{#unless daResults.length}}
+        {{#unless daDisplay.length}}
         <span class="no-dice">—</span>
         {{/unless}}
       </div>
-      <span class="best-die-label">→ <strong>{{bestDA}}</strong></span>
     </div>
 
     {{!-- Dés de Danger --}}
@@ -46,28 +45,33 @@
       <span class="dice-pool-label danger-label">{{localize 'NCO.Roll.DangerDice'}}</span>
       <div class="dice-results flexrow">
         {{#each ddResults as |val|}}
-        <span class="die-face danger-die {{#if (eq val @root.bestDD)}}die-best-danger{{/if}}">{{val}}</span>
+        <span class="die-face danger-die">{{val}}</span>
         {{/each}}
         {{#unless ddResults.length}}
         <span class="no-dice">—</span>
         {{/unless}}
       </div>
-      <span class="best-die-label">→ <strong>{{#if bestDD}}{{bestDD}}{{else}}0{{/if}}</strong></span>
     </div>
 
   </div>
+
+  {{!-- Boons --}}
+  {{#if boons}}
+  <div class="chat-boons flexrow">
+    <span class="boons-label">{{localize 'NCO.Roll.Boons'}}</span>
+    <span class="boons-count">×{{boons}}</span>
+  </div>
+  {{/if}}
+
   {{/if}}
 
   <div class="chat-roll-separator"></div>
 
   {{!-- Résultat final --}}
   <div class="chat-outcome flexrow">
-    <span class="outcome-badge {{#if isSuccess}}badge-success{{else if isPartial}}badge-partial{{else}}badge-failure{{/if}}">
+    <span class="outcome-badge {{#if isSuccess}}badge-success{{else if isPartial}}badge-partial{{else if isBotch}}badge-botch{{else}}badge-failure{{/if}}">
       {{localize outcomeLabel}}
     </span>
-    {{#unless desperate}}
-    <span class="outcome-compare">({{bestDA}} vs {{#if bestDD}}{{bestDD}}{{else}}0{{/if}})</span>
-    {{/unless}}
   </div>
 
 </div>

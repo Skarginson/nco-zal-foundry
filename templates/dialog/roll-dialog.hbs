@@ -4,7 +4,6 @@
     <img src="{{actor.img}}" class="actor-portrait" width="40" height="40"/>
     <div class="roll-dialog-title flexcol">
       <span class="actor-name">{{actor.name}}</span>
-      <span class="trait-name">{{traitLabel}}</span>
     </div>
   </div>
 
@@ -13,17 +12,12 @@
     {{!-- Dés d'Action --}}
     <div class="dice-section action-section">
       <div class="dice-row flexrow">
-        <label class="dice-label">{{localize 'NCO.Roll.TraitDice'}}</label>
-        <span class="dice-base">{{traitValue}}</span>
+        <label class="dice-label">{{localize 'NCO.Roll.BaseDice'}}</label>
+        <span class="dice-base">1</span>
       </div>
       <div class="dice-row flexrow">
-        <label class="dice-label">{{localize 'NCO.Roll.BonusGear'}}</label>
-        <input type="number" name="bonus-da" value="0" min="0" max="10" class="dice-input"/>
-      </div>
-      <div class="dice-row flexrow ally-row">
-        <label class="dice-label">{{localize 'NCO.Roll.AllyHelp'}}</label>
-        <input type="checkbox" name="ally-help" class="ally-checkbox"/>
-        <span class="ally-hint">(+1 DA)</span>
+        <label class="dice-label">{{localize 'NCO.Roll.BonusDA'}}</label>
+        <input type="number" name="bonus-da" value="0" min="-1" max="10" class="dice-input"/>
       </div>
     </div>
 
@@ -43,7 +37,7 @@
     <div class="dice-totals flexrow">
       <div class="total-block flex-group-center">
         <span class="total-label">{{localize 'NCO.Roll.TotalDA'}}</span>
-        <span class="total-da total-action">{{traitValue}}</span>
+        <span class="total-da total-action">1</span>
       </div>
       <span class="total-vs">vs</span>
       <div class="total-block flex-group-center">

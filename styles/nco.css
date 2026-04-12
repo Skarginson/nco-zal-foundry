@@ -605,29 +605,32 @@
   margin-bottom: 4px;
 }
 
-.nco.sheet .npc-roll-section {
-  text-align: center;
-  margin-top: 16px;
+/* Champs Drive et Actions du PNJ */
+.nco.sheet .npc-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 10px 0;
 }
 
-.nco.sheet .npc-roll {
-  background: transparent;
-  border: 1px solid var(--nco-primary-dark);
-  border-left: 3px solid var(--nco-primary);
-  color: var(--nco-primary);
-  padding: 8px 20px;
-  cursor: pointer;
+.nco.sheet .npc-field-label {
   font-family: var(--nco-font-label);
-  font-size: 0.7em;
+  font-size: 0.6em;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: background 0.15s, color 0.15s;
+  color: var(--nco-text-muted);
 }
 
-.nco.sheet .npc-roll:hover {
-  background: var(--nco-primary);
-  color: var(--nco-bg);
+.nco.sheet .npc-field-group textarea {
+  resize: vertical;
+  min-height: 56px;
+  background: var(--nco-surface-low);
+  border: 1px solid var(--nco-border-dim);
+  color: var(--nco-text);
+  font-size: 0.85em;
+  padding: 6px 8px;
+  line-height: 1.4;
 }
 
 /* ============================================
@@ -1052,6 +1055,7 @@
 .nco.chat-roll.outcome-success { border-left-color: var(--nco-tertiary-mid); }
 .nco.chat-roll.outcome-partial { border-left-color: var(--nco-secondary-dark); }
 .nco.chat-roll.outcome-failure { border-left-color: var(--nco-error-dark); }
+.nco.chat-roll.outcome-botch   { border-left-color: var(--nco-primary); }
 
 .chat-roll-header {
   background: var(--nco-surface-low);
@@ -1145,6 +1149,22 @@
   color: var(--nco-primary);
 }
 
+/* Dé d'action affichant un 6 (succès possible / boon) */
+.action-die.die-best-action {
+  background: var(--nco-tertiary-dark);
+  border-color: var(--nco-tertiary-mid);
+  color: var(--nco-tertiary);
+}
+
+/* Dé annulé par un dé de Danger */
+.die-cancelled {
+  opacity: 0.35;
+  text-decoration: line-through;
+  background: var(--nco-surface-low);
+  border-color: var(--nco-border-dim);
+  color: var(--nco-text-dim);
+}
+
 .die-best-danger {
   background: var(--nco-error-bg);
   border-color: var(--nco-error-dark);
@@ -1206,6 +1226,37 @@
   background: var(--nco-error-bg);
   border-color: var(--nco-error-dark);
   color: var(--nco-error);
+}
+
+.badge-botch {
+  background: var(--nco-primary-dark);
+  border-color: var(--nco-primary);
+  color: var(--nco-primary);
+  text-transform: uppercase;
+}
+
+/* Section Boons (succès critiques supplémentaires) */
+.chat-boons {
+  padding: 4px 10px;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.boons-label {
+  font-family: var(--nco-font-label);
+  font-size: 0.65em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nco-tertiary);
+}
+
+.boons-count {
+  font-family: var(--nco-font-label);
+  font-size: 0.88em;
+  font-weight: 700;
+  color: var(--nco-tertiary);
 }
 
 .outcome-compare {

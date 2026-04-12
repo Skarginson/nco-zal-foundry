@@ -35,45 +35,34 @@ export class NCOActorSheet extends ActorSheet {
     const actorData = this.document.toObject(false);
 
     context.system = actorData.system;
-    context.flags = actorData.flags;
+    context.flags  = actorData.flags;
     context.config = CONFIG.NCO;
 
-    // Mode de jeu courant (nco_standard | zalozhniy)
-    context.gameMode     = game.settings.get('neon-city-overdrive', 'gameMode');
-    context.isZalozhniy  = context.gameMode === 'zalozhniy';
+    context.isZalozhniy   = game.settings.get('neon-city-overdrive', 'gameMode') === 'zalozhniy';
     context.sanityEnabled = game.settings.get('neon-city-overdrive', 'sanityEnabled');
 
-    // Labels des traits selon le mode actif
-    context.traitLabels = context.isZalozhniy
-      ? CONFIG.NCO.traitsZalozhniy
-      : CONFIG.NCO.traits;
-
-    // Données Zalozhniy : jauge d'exposition et état critique
+    // Données Zalozhniy : jauge d'exposition
     if (context.isZalozhniy) {
       const exposure = actorData.system.exposure?.value ?? 0;
       context.exposureCritical = exposure >= 5;
-      // Génère les 6 cases (0-5) pour la jauge visuelle
       context.exposureSteps = Array.from({ length: 6 }, (_, i) => ({
         filled:   i < exposure,
         critical: i === 4,
       }));
     }
 
-    // Prépare les items triés par type
     this._prepareItems(context);
 
-    // Enrichissement du texte de biographie
     context.enrichedBiography = await TextEditor.enrichHTML(
       this.actor.system.biography,
       {
-        secrets: this.document.isOwner,
-        async: true,
+        secrets:  this.document.isOwner,
+        async:    true,
         rollData: this.actor.getRollData(),
         relativeTo: this.actor,
       }
     );
 
-    // Effets actifs
     context.effects = prepareActiveEffectCategories(
       this.actor.allApplicableEffects()
     );
@@ -119,7 +108,7 @@ export class NCOActorSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Ouvrir la fiche d'un item au clic sur son nom
+    // Ouvrir la fiche d'un item
     html.on('click', '.item-edit', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
       const item = this.actor.items.get(li.data('itemId'));
@@ -129,8 +118,7 @@ export class NCOActorSheet extends ActorSheet {
     // Afficher/masquer la description d'un item
     html.on('click', '.item-name', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
-      const description = li.find('.item-description');
-      description.slideToggle(150);
+      li.find('.item-description').slideToggle(150);
     });
 
     if (!this.isEditable) return;
@@ -146,7 +134,7 @@ export class NCOActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
-    // Gestion des effets actifs
+    // Effets actifs
     html.on('click', '.effect-control', (ev) => {
       const row = ev.currentTarget.closest('li');
       const document =
@@ -156,8 +144,8 @@ export class NCOActorSheet extends ActorSheet {
       onManageActiveEffect(ev, document);
     });
 
-    // Lancer de dés sur les traits — ouvre la dialog de configuration
-    html.on('click', '.trait-roll', this._onTraitRoll.bind(this));
+    // Bouton de lancer de dés
+    html.on('click', '.btn-open-roll', () => NCORollDialog.show(this.actor));
 
     // Clic sur une case d'Exposition (Zalozhniy)
     html.on('click', '.exposure-pip', this._onExposureClick.bind(this));
@@ -174,40 +162,31 @@ export class NCOActorSheet extends ActorSheet {
   }
 
   /**
-   * Crée un nouvel item possédé depuis les données du dataset HTML.
+   * Crée un nouvel item possédé.
    * @param {Event} event
    */
   async _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
-    const type = header.dataset.type;
-    const data = foundry.utils.duplicate(header.dataset);
-    const name = `Nouveau ${type}`;
+    const type   = header.dataset.type;
+    const data   = foundry.utils.duplicate(header.dataset);
+    const name   = `Nouveau ${type}`;
     const itemData = { name, type, system: data };
     delete itemData.system['type'];
     return await Item.create(itemData, { parent: this.actor });
   }
 
   /**
-   * Gère le clic sur un trait : ouvre la dialog de configuration du jet.
-   * @param {Event} event
-   */
-  _onTraitRoll(event) {
-    event.preventDefault();
-    const trait = event.currentTarget.dataset.trait;
-    NCORollDialog.show(this.actor, trait);
-  }
-
-  /**
-   * Gère le clic sur une case de la jauge d'Exposition pour la modifier directement.
+   * Gère le clic sur une case de la jauge d'Exposition.
    * @param {Event} event
    */
   async _onExposureClick(event) {
     event.preventDefault();
-    const index = parseInt(event.currentTarget.dataset.index);
+    const index   = parseInt(event.currentTarget.dataset.index);
     const current = this.actor.system.exposure?.value ?? 0;
-    // Clic sur la case déjà remplie la plus haute → décrémente, sinon → incrémente
     const newValue = index < current ? index : index + 1;
-    await this.actor.update({ 'system.exposure.value': Math.max(0, Math.min(5, newValue)) });
+    await this.actor.update({
+      'system.exposure.value': Math.max(0, Math.min(5, newValue)),
+    });
   }
 }

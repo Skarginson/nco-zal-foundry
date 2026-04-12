@@ -3,27 +3,20 @@ import { rollPool } from '../helpers/dice.mjs';
 /**
  * Dialog de configuration d'un jet de dés NCO.
  *
- * Permet au joueur de saisir :
- * - Le bonus en DA issu de l'équipement
- * - L'aide d'un allié (+1 DA)
- * - Les dés de Danger imposés par la situation
+ * Dans NCO, on commence toujours avec 1 Dé d'Action de base.
+ * Le joueur ajoute des DA selon la situation (trademark, edge, équipement, tags…)
+ * et des DD pour les obstacles (traumatismes, conditions, scale…).
  *
  * @extends {Application}
  */
 export class NCORollDialog extends Application {
   /**
-   * @param {NCOActor} actor       - L'acteur qui lance les dés
-   * @param {string}   trait       - Clé du trait (body, reflex, mind, presence)
-   * @param {object}   [options]   - Options Foundry Application
+   * @param {NCOActor} actor     - L'acteur qui lance les dés
+   * @param {object}   [options] - Options Foundry Application
    */
-  constructor(actor, trait, options = {}) {
+  constructor(actor, options = {}) {
     super(options);
-    this.actor      = actor;
-    this.trait      = trait;
-    // La Couverture est stockée dans system.cover.value, pas dans system.traits
-    this.traitValue = trait === 'cover'
-      ? (actor.system.cover?.value ?? 2)
-      : (actor.system.traits[trait]?.value ?? 0);
+    this.actor = actor;
   }
 
   /** @override */
@@ -39,32 +32,18 @@ export class NCORollDialog extends Application {
 
   /** @override */
   get title() {
-    return game.i18n.format('NCO.Roll.DialogTitle', {
-      trait: game.i18n.localize(this._traitLabel()),
-    });
-  }
-
-  /** Retourne le label localisé du trait selon le mode de jeu actif. */
-  _traitLabel() {
-    if (this.trait === 'cover') return 'NCO.Zalozhniy.Cover';
-    const isZalozhniy =
-      game.settings.get('neon-city-overdrive', 'gameMode') === 'zalozhniy';
-    const labels = isZalozhniy ? CONFIG.NCO.traitsZalozhniy : CONFIG.NCO.traits;
-    return labels[this.trait] ?? `NCO.Trait.${this.trait}`;
+    return game.i18n.format('NCO.Roll.DialogTitle', { actor: this.actor.name });
   }
 
   /** @override */
   getData() {
     return {
-      actor:       this.actor,
-      trait:       this.trait,
-      traitLabel:  game.i18n.localize(this._traitLabel()),
-      traitValue:  this.traitValue,
-      bonusDA:     0,
-      allyHelp:    false,
-      dangerDice:  0,
-      totalDA:     this.traitValue,
-      totalDD:     0,
+      actor:      this.actor,
+      baseDice:   1,
+      bonusDA:    0,
+      dangerDice: 0,
+      totalDA:    1,
+      totalDD:    0,
     };
   }
 
@@ -72,13 +51,11 @@ export class NCORollDialog extends Application {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Mise à jour en temps réel des totaux
     html.find('input').on('input change', () => this._updateTotals(html));
 
     html.find('.btn-cancel').on('click', () => this.close());
     html.find('.btn-roll').on('click', () => this._onRoll(html));
 
-    // Focus sur le champ dés de danger à l'ouverture
     html.find('[name="danger-dice"]').focus();
   }
 
@@ -87,17 +64,17 @@ export class NCORollDialog extends Application {
    * @param {jQuery} html
    */
   _updateTotals(html) {
-    const bonusDA   = parseInt(html.find('[name="bonus-da"]').val())    || 0;
-    const allyHelp  = html.find('[name="ally-help"]').is(':checked') ? 1 : 0;
+    const bonusDA    = parseInt(html.find('[name="bonus-da"]').val())    || 0;
     const dangerDice = parseInt(html.find('[name="danger-dice"]').val()) || 0;
 
-    const totalDA = Math.max(0, this.traitValue + bonusDA + allyHelp);
+    const totalDA = Math.max(0, 1 + bonusDA);
     const totalDD = Math.max(0, dangerDice);
 
     html.find('.total-da').text(totalDA);
     html.find('.total-dd').text(totalDD);
 
-    // Avertissement situation désespérée
+    // Avertissement situation désespérée (totalDA = 0, ce qui ne peut
+    // arriver qu'avec un bonus négatif saisi manuellement)
     html.find('.desperate-warning').toggleClass('hidden', totalDA > 0);
   }
 
@@ -107,26 +84,20 @@ export class NCORollDialog extends Application {
    */
   async _onRoll(html) {
     const bonusDA    = parseInt(html.find('[name="bonus-da"]').val())    || 0;
-    const allyHelp   = html.find('[name="ally-help"]').is(':checked') ? 1 : 0;
     const dangerDice = parseInt(html.find('[name="danger-dice"]').val()) || 0;
 
-    const totalDA = Math.max(0, this.traitValue + bonusDA + allyHelp);
+    const totalDA = Math.max(0, 1 + bonusDA);
     const totalDD = Math.max(0, dangerDice);
 
-    const traitLabel = game.i18n.localize(this._traitLabel());
-
-    await rollPool(this.actor, traitLabel, totalDA, totalDD);
+    await rollPool(this.actor, this.actor.name, totalDA, totalDD);
     this.close();
   }
 
   /**
-   * Crée et affiche la dialog pour un trait donné.
-   * Point d'entrée principal depuis les fiches.
-   *
+   * Crée et affiche la dialog pour un acteur donné.
    * @param {NCOActor} actor
-   * @param {string}   trait
    */
-  static async show(actor, trait) {
-    new NCORollDialog(actor, trait).render(true);
+  static async show(actor) {
+    new NCORollDialog(actor).render(true);
   }
 }

@@ -1,10 +1,16 @@
 /**
  * Logique de résolution de dés pour Neon City Overdrive.
  *
- * Mécanique : pool de Dés d'Action (DA) vs Dés de Danger (DD), tous en d6.
- * On compare le meilleur DA au meilleur DD pour déterminer le résultat.
+ * Mécanique officielle (règles p.28) :
+ * 1. Lancer le pool de Dés d'Action (DA) et de Dés de Danger (DD).
+ * 2. Chaque DD annule un DA — les deux sont défaussés.
+ *    Le DD efface toujours le DA le plus faible disponible.
+ * 3. Trouver le DA le plus élevé parmi les dés restants → c'est le résultat.
+ * 4. BOTCH si tous les DA sont annulés OU si les DA restants sont tous des 1.
+ * 5. Chaque 6 supplémentaire restant = un Boon (exemple : 3 × 6 restants = 2 Boons).
  *
- * Cas particulier : 0 DA → on lance 2 DD et on garde le plus bas (situation désespérée).
+ * Situation désespérée (0 DA de départ) :
+ * Lancer 2 DD et retenir le plus bas comme valeur effective.
  */
 
 /**
@@ -12,33 +18,59 @@
  * @enum {string}
  */
 export const OUTCOME = {
-  CRITICAL:  'critical',   // DA = 6, DA > DD
-  SOLID:     'solid',      // DA = 5, DA > DD
-  SUCCESS:   'success',    // DA = 4, DA > DD
-  PARTIAL:   'partial',    // DA = 3 et DA > DD, ou DA = DD
-  FAILURE:   'failure',    // DA < DD, ou DA <= 2 même si DA > DD
-  DESPERATE: 'desperate',  // Situation désespérée (0 DA)
+  BOTCH:   'botch',
+  FAILURE: 'failure',
+  PARTIAL: 'partial',
+  SUCCESS: 'success',
 };
 
 /**
- * Détermine le résultat narratif d'un jet.
- * @param {number} bestDA    - Meilleur dé d'Action
- * @param {number} bestDD    - Meilleur dé de Danger (null si désespéré)
- * @param {boolean} desperate - Situation désespérée (0 DA)
- * @returns {string} Un des codes de OUTCOME
+ * Applique la mécanique d'annulation NCO sur des valeurs de DA déjà lancées.
+ *
+ * Algorithme :
+ *   - Tri décroissant des DA (le plus fort en premier).
+ *   - Chaque DD efface le DA le plus faible encore disponible (depuis la fin).
+ *   - Les DA restants forment le résultat.
+ *
+ * @param {number[]} daValues  - Valeurs brutes des dés d'action
+ * @param {number}   ddCount   - Nombre de dés de danger
+ * @returns {{
+ *   daDisplay:  Array<{value:number, cancelled:boolean}>,
+ *   remaining:  number[],
+ *   cancelled:  number[],
+ *   boons:      number,
+ *   outcome:    string,
+ * }}
  */
-export function determineOutcome(bestDA, bestDD, desperate = false) {
-  if (desperate) return OUTCOME.DESPERATE;
+export function resolveDicePool(daValues, ddCount) {
+  // Tri décroissant : index 0 = meilleur dé
+  const sorted = [...daValues].sort((a, b) => b - a);
 
-  if (bestDA > bestDD) {
-    if (bestDA === 6) return OUTCOME.CRITICAL;
-    if (bestDA === 5) return OUTCOME.SOLID;
-    if (bestDA === 4) return OUTCOME.SUCCESS;
-    if (bestDA === 3) return OUTCOME.PARTIAL;
-    return OUTCOME.FAILURE; // DA = 1 ou 2, même si > DD
+  const numCancelled = Math.min(ddCount, sorted.length);
+  const remaining    = sorted.slice(0, sorted.length - numCancelled);
+  const cancelled    = sorted.slice(sorted.length - numCancelled);
+
+  // Tableau d'affichage : les N premiers sont actifs, le reste est annulé
+  const daDisplay = sorted.map((value, idx) => ({
+    value,
+    cancelled: idx >= remaining.length,
+  }));
+
+  // BOTCH : plus aucun DA restant, ou tous les restants sont des 1
+  if (remaining.length === 0 || remaining.every(v => v === 1)) {
+    return { daDisplay, remaining, cancelled, boons: 0, outcome: OUTCOME.BOTCH };
   }
-  if (bestDA === bestDD) return OUTCOME.PARTIAL;
-  return OUTCOME.FAILURE;
+
+  const best     = remaining[0]; // déjà le plus haut (tri décroissant)
+  const sixCount = remaining.filter(v => v === 6).length;
+  const boons    = best === 6 ? sixCount - 1 : 0;
+
+  let outcome;
+  if (best === 6)     outcome = OUTCOME.SUCCESS;
+  else if (best >= 4) outcome = OUTCOME.PARTIAL;
+  else                outcome = OUTCOME.FAILURE;
+
+  return { daDisplay, remaining, cancelled, boons, outcome };
 }
 
 /**
@@ -52,54 +84,64 @@ export function determineOutcome(bestDA, bestDD, desperate = false) {
  */
 export async function rollPool(actor, traitLabel, actionDice, dangerDice) {
   const desperate = actionDice <= 0;
-  let daResults = [];
-  let ddResults = [];
+  let daResults   = [];
+  let ddResults   = [];
+  let daDisplay   = [];
+  let remaining   = [];
+  let cancelled   = [];
+  let boons       = 0;
+  let outcome;
+  let desperateBest = null;
 
   if (desperate) {
-    // Situation désespérée : 2 DD, on garde le plus bas comme "résultat d'action"
+    // Situation désespérée : 2 DD, on garde le plus bas
     const ddRoll = await new Roll('2d6').evaluate();
-    ddResults = ddRoll.dice[0].results.map((r) => r.result);
+    ddResults     = ddRoll.dice[0].results.map(r => r.result);
+    desperateBest = Math.min(...ddResults);
+
+    if (desperateBest <= 1)    outcome = OUTCOME.BOTCH;
+    else if (desperateBest === 6) outcome = OUTCOME.SUCCESS;
+    else if (desperateBest >= 4)  outcome = OUTCOME.PARTIAL;
+    else                           outcome = OUTCOME.FAILURE;
   } else {
     if (actionDice > 0) {
       const daRoll = await new Roll(`${actionDice}d6`).evaluate();
-      daResults = daRoll.dice[0].results.map((r) => r.result);
+      daResults = daRoll.dice[0].results.map(r => r.result);
     }
     if (dangerDice > 0) {
       const ddRoll = await new Roll(`${dangerDice}d6`).evaluate();
-      ddResults = ddRoll.dice[0].results.map((r) => r.result);
+      ddResults = ddRoll.dice[0].results.map(r => r.result);
     }
+
+    const resolved = resolveDicePool(daResults, dangerDice);
+    daDisplay = resolved.daDisplay;
+    remaining = resolved.remaining;
+    cancelled = resolved.cancelled;
+    boons     = resolved.boons;
+    outcome   = resolved.outcome;
   }
 
-  // Meilleurs dés de chaque pool
-  const bestDA = desperate
-    ? Math.min(...ddResults)       // désespéré : on garde le plus bas
-    : daResults.length > 0
-      ? Math.max(...daResults)
-      : 0;
-
-  const bestDD = desperate
-    ? null
-    : ddResults.length > 0
-      ? Math.max(...ddResults)
-      : 0;
-
-  const outcome = determineOutcome(bestDA, bestDD ?? 0, desperate);
+  const outcomeKey   = outcome.charAt(0).toUpperCase() + outcome.slice(1);
+  const outcomeLabel = `NCO.Outcome.${outcomeKey}`;
 
   const templateData = {
-    actorName: actor.name,
-    actorImg:  actor.img,
+    actorName:     actor.name,
+    actorImg:      actor.img,
     traitLabel,
     daResults,
     ddResults,
-    bestDA,
-    bestDD,
+    daDisplay,
+    remaining,
+    cancelled,
+    boons,
     outcome,
-    outcomeLabel: `NCO.Outcome.${outcome.charAt(0).toUpperCase() + outcome.slice(1)}`,
+    outcomeLabel,
     desperate,
-    // Pour la colorisation dans le template
-    isSuccess: [OUTCOME.CRITICAL, OUTCOME.SOLID, OUTCOME.SUCCESS].includes(outcome),
-    isPartial:  outcome === OUTCOME.PARTIAL,
-    isFailure:  [OUTCOME.FAILURE, OUTCOME.DESPERATE].includes(outcome),
+    desperateBest,
+    isSuccess: outcome === OUTCOME.SUCCESS,
+    isPartial: outcome === OUTCOME.PARTIAL,
+    isFailure: outcome === OUTCOME.FAILURE,
+    isBotch:   outcome === OUTCOME.BOTCH,
   };
 
   const html = await renderTemplate(
@@ -108,10 +150,10 @@ export async function rollPool(actor, traitLabel, actionDice, dangerDice) {
   );
 
   await ChatMessage.create({
-    speaker: ChatMessage.getSpeaker({ actor }),
-    content: html,
+    speaker:  ChatMessage.getSpeaker({ actor }),
+    content:  html,
     rollMode: game.settings.get('core', 'rollMode'),
-    flags: { 'neon-city-overdrive': { rollData: templateData } },
+    flags:    { 'neon-city-overdrive': { rollData: templateData } },
   });
 
   return templateData;

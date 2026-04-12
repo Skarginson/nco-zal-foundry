@@ -1,21 +1,5 @@
 export const NCO = {};
 
-// Les 4 traits principaux NCO
-NCO.traits = {
-  body:     'NCO.Trait.Body',
-  reflex:   'NCO.Trait.Reflex',
-  mind:     'NCO.Trait.Mind',
-  presence: 'NCO.Trait.Presence',
-};
-
-// Labels équivalents en mode Zalozhniy
-NCO.traitsZalozhniy = {
-  body:     'NCO.Trait.Physique',
-  reflex:   'NCO.Trait.Terrain',
-  mind:     'NCO.Trait.Analyse',
-  presence: 'NCO.Trait.Couverture',
-};
-
 // Types d'items
 NCO.itemTypes = {
   gear:    'NCO.Item.Gear',

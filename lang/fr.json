@@ -19,7 +19,6 @@
     },
     "Actor": {
       "Name": "Nom",
-      "Stress": "Stress",
       "Harm": "Blessures",
       "Cred": "Crédit",
       "Look": "Apparence",
@@ -32,45 +31,36 @@
     },
     "NPC": {
       "Name": "Nom du PNJ",
-      "TagsPlaceholder": "ex : Garde, Armé, Corporate..."
-    },
-    "Trait": {
-      "Body": "Corps",
-      "Reflex": "Réflexes",
-      "Mind": "Esprit",
-      "Presence": "Présence",
-      "Physique": "Physique",
-      "Terrain": "Terrain",
-      "Analyse": "Analyse",
-      "Couverture": "Couverture"
+      "TagsPlaceholder": "ex : Garde, Armé, Corporate...",
+      "DangerDice": "Dés de Danger ajoutés",
+      "Drive": "Drive",
+      "DrivePlaceholder": "Ce que la menace veut obtenir...",
+      "Actions": "Actions",
+      "ActionsPlaceholder": "Ce que la menace fait pendant son tour / conséquences possibles..."
     },
     "Roll": {
       "ActionDice": "Dés d'Action",
       "DangerDice": "Dés de Danger",
-      "TraitHint": "Cliquer pour lancer",
       "RollDice": "Lancer les dés",
-      "DialogTitle": "Jet — {trait}",
-      "TraitDice": "Dés du trait",
+      "DialogTitle": "Jet — {actor}",
+      "BaseDice": "Dé de base",
+      "BonusDA": "Bonus DA (trademark, edge, tags…)",
       "BonusGear": "Bonus équipement",
-      "AllyHelp": "Aide alliée",
       "TotalDA": "Total DA",
       "TotalDD": "Total DD",
-      "DesperateWarning": "Désespéré ! 2 Dés de Danger, on garde le plus bas.",
+      "DesperateWarning": "Désespéré ! Aucun DA disponible — 2 DD lancés, on garde le plus bas.",
       "Cancel": "Annuler",
       "Roll": "Lancer",
       "Kept": "Gardé",
-      "Desperate": "Situation désespérée"
+      "Desperate": "Situation désespérée",
+      "Boons": "Boons",
+      "PoolHint": "Commencez toujours avec 1 dé d'action, puis ajustez selon la situation."
     },
     "Outcome": {
-      "Critical":  "SUCCÈS CRITIQUE",
-      "Solid":     "SUCCÈS SOLIDE",
-      "Success":   "SUCCÈS",
-      "Partial":   "SUCCÈS PARTIEL",
-      "Failure":   "ÉCHEC",
-      "Desperate": "ÉCHEC (Désespéré)"
-    },
-    "Section": {
-      "Traits": "Traits"
+      "Botch":   "BOTCH — Catastrophe !",
+      "Failure": "ÉCHEC",
+      "Partial": "SUCCÈS PARTIEL",
+      "Success": "SUCCÈS"
     },
     "Tab": {
       "Principal": "Principal",

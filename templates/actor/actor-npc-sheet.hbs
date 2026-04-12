@@ -7,6 +7,7 @@
       <h1 class="charname">
         <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'NCO.NPC.Name'}}"/>
       </h1>
+      {{!-- Tags sur une seule ligne dans le header pour visibilité rapide --}}
       <div class="npc-tags">
         <input type="text" name="system.tags" value="{{system.tags}}" placeholder="{{localize 'NCO.NPC.TagsPlaceholder'}}"/>
       </div>
@@ -24,19 +25,9 @@
 
     {{!-- Onglet stats --}}
     <div class="tab stats flexcol" data-group="primary" data-tab="stats">
+
+      {{!-- Hit track + DD --}}
       <div class="npc-stats flexrow">
-
-        {{!-- Pool de dés --}}
-        <div class="stat-group flex-group-center">
-          <label>{{localize 'NCO.Roll.ActionDice'}}</label>
-          <input type="number" name="system.action_dice" value="{{system.action_dice}}" min="0" data-dtype="Number"/>
-        </div>
-        <div class="stat-group flex-group-center">
-          <label>{{localize 'NCO.Roll.DangerDice'}}</label>
-          <input type="number" name="system.danger_dice" value="{{system.danger_dice}}" min="0" data-dtype="Number"/>
-        </div>
-
-        {{!-- Harm --}}
         <div class="stat-group flex-group-center">
           <label>{{localize 'NCO.Actor.Harm'}}</label>
           <div class="flexrow">
@@ -45,14 +36,26 @@
             <input type="number" name="system.harm.max" value="{{system.harm.max}}" min="0" data-dtype="Number"/>
           </div>
         </div>
+        <div class="stat-group flex-group-center">
+          <label>{{localize 'NCO.NPC.DangerDice'}}</label>
+          <input type="number" name="system.danger_dice" value="{{system.danger_dice}}" min="0" data-dtype="Number"/>
+        </div>
       </div>
 
-      {{!-- Bouton de jet --}}
-      <div class="npc-roll-section">
-        <button type="button" class="npc-roll">
-          <i class="fas fa-dice"></i> {{localize 'NCO.Roll.RollDice'}}
-        </button>
+      {{!-- Drive --}}
+      <div class="npc-field-group">
+        <label class="npc-field-label">{{localize 'NCO.NPC.Drive'}}</label>
+        <input type="text" name="system.drive" value="{{system.drive}}"
+               placeholder="{{localize 'NCO.NPC.DrivePlaceholder'}}"/>
       </div>
+
+      {{!-- Actions --}}
+      <div class="npc-field-group">
+        <label class="npc-field-label">{{localize 'NCO.NPC.Actions'}}</label>
+        <textarea name="system.actions"
+                  placeholder="{{localize 'NCO.NPC.ActionsPlaceholder'}}">{{system.actions}}</textarea>
+      </div>
+
     </div>
 
     {{!-- Onglet notes MJ --}}

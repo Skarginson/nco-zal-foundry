@@ -1,33 +1,29 @@
-{{!-- Partiels : Traits, Couverture (Zalozhniy) et Moves --}}
-<div class="traits-section flexrow">
+{{!-- Onglet Principal : bouton de jet + Moves --}}
+<div class="principal-section flexrow">
 
-  {{!-- Colonne gauche : les 4 traits --}}
-  <div class="traits-list flexcol">
-    <h3 class="section-title">{{localize 'NCO.Section.Traits'}}</h3>
+  {{!-- Colonne gauche : lancer les dés --}}
+  <div class="roll-column flexcol">
+    <h3 class="section-title">{{localize 'NCO.Roll.RollDice'}}</h3>
+    <p class="roll-hint">{{localize 'NCO.Roll.PoolHint'}}</p>
+    <button type="button" class="btn-open-roll nco-roll-btn">
+      <i class="fas fa-dice"></i>
+      {{localize 'NCO.Roll.RollDice'}}
+    </button>
 
-    {{#each system.traits as |trait key|}}
-    <div class="trait flexrow flex-group-center">
-      <label class="trait-label trait-roll rollable" data-trait="{{key}}" title="{{localize 'NCO.Roll.TraitHint'}}">
-        {{localize (lookup @root.traitLabels key)}}
-      </label>
-      <div class="trait-value flexrow">
-        <input type="number" name="system.traits.{{key}}.value" value="{{trait.value}}" min="0" max="6" data-dtype="Number"/>
-        <span class="trait-dice-label">{{localize 'NCO.Roll.ActionDice'}}</span>
-      </div>
-    </div>
-    {{/each}}
-
-    {{!-- Couverture : Zalozhniy uniquement --}}
+    {{!-- Jauge d'Exposition : Zalozhniy uniquement --}}
     {{#if @root.isZalozhniy}}
-    <div class="zalozhniy-separator"></div>
-    <div class="trait flexrow flex-group-center trait-cover">
-      <label class="trait-label trait-roll rollable" data-trait="cover" title="{{localize 'NCO.Roll.TraitHint'}}">
-        {{localize 'NCO.Zalozhniy.Cover'}}
-      </label>
-      <div class="trait-value flexrow">
-        <input type="number" name="system.cover.value" value="{{@root.system.cover.value}}" min="1" max="4" data-dtype="Number"/>
-        <span class="trait-dice-label">{{localize 'NCO.Roll.ActionDice'}}</span>
+    <div class="exposure-section">
+      <h4 class="exposure-title">{{localize 'NCO.Zalozhniy.Exposure'}}</h4>
+      <div class="exposure-pips flexrow">
+        {{#each @root.exposureSteps as |step i|}}
+        <span class="exposure-pip {{#if step.filled}}pip-filled{{/if}} {{#if step.critical}}pip-critical{{/if}}"
+              data-index="{{i}}"
+              title="{{i}}"></span>
+        {{/each}}
       </div>
+      {{#if @root.exposureCritical}}
+      <p class="exposure-warning">{{localize 'NCO.Zalozhniy.ExposureCritical'}}</p>
+      {{/if}}
     </div>
     {{/if}}
 

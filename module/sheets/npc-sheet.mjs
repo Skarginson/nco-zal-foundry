@@ -1,9 +1,13 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { rollPool } from '../helpers/dice.mjs';
 
 /**
- * Feuille de PNJ pour Neon City Overdrive.
- * Les PNJ ont des pools de dés fixes et une fiche simplifiée.
+ * Feuille de PNJ (menace) pour Neon City Overdrive.
+ *
+ * Dans NCO, seuls les joueurs lancent des dés (règle p.28).
+ * La fiche de menace sert de référence au MJ : hits, drive, actions et tags.
+ * Les danger_dice indiquent combien de DD les tags de cette menace ajoutent
+ * aux jets des joueurs qui agissent contre elle.
+ *
  * @extends {ActorSheet}
  */
 export class NCONPCSheet extends ActorSheet {
@@ -12,7 +16,7 @@ export class NCONPCSheet extends ActorSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['nco', 'sheet', 'actor', 'npc'],
       width: 480,
-      height: 480,
+      height: 520,
       tabs: [
         {
           navSelector: '.sheet-tabs',
@@ -36,21 +40,19 @@ export class NCONPCSheet extends ActorSheet {
     const actorData = this.document.toObject(false);
 
     context.system = actorData.system;
-    context.flags = actorData.flags;
+    context.flags  = actorData.flags;
     context.config = CONFIG.NCO;
 
-    // Enrichissement des notes MJ
     context.enrichedNotes = await TextEditor.enrichHTML(
       this.actor.system.notes,
       {
-        secrets: this.document.isOwner,
-        async: true,
-        rollData: this.actor.getRollData(),
+        secrets:    this.document.isOwner,
+        async:      true,
+        rollData:   this.actor.getRollData(),
         relativeTo: this.actor,
       }
     );
 
-    // Effets actifs
     context.effects = prepareActiveEffectCategories(
       this.actor.allApplicableEffects()
     );
@@ -66,7 +68,6 @@ export class NCONPCSheet extends ActorSheet {
 
     if (!this.isEditable) return;
 
-    // Gestion des effets actifs
     html.on('click', '.effect-control', (ev) => {
       const row = ev.currentTarget.closest('li');
       const document =
@@ -74,14 +75,6 @@ export class NCONPCSheet extends ActorSheet {
           ? this.actor
           : this.actor.items.get(row.dataset.parentId);
       onManageActiveEffect(ev, document);
-    });
-
-    // Lancer les dés du PNJ
-    html.on('click', '.npc-roll', async (ev) => {
-      ev.preventDefault();
-      const da = this.actor.system.action_dice;
-      const dd = this.actor.system.danger_dice;
-      await rollPool(this.actor, this.actor.name, da, dd);
     });
   }
 }
