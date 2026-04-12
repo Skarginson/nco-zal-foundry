@@ -16,3 +16,4 @@ packs/
 package.json
 package-lock.json
 CHANGELOG.md
+*.pdf
