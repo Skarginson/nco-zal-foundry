@@ -77,6 +77,9 @@
       "Success": "SUCCESS"
     },
     "Tab": {
+      "Trademarks": "Trademarks",
+      "Etat": "State",
+      "Equipement": "Gear & XP",
       "Stats": "Stats",
       "Notes": "Notes",
       "Effets": "Effects"

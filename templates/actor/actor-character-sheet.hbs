@@ -3,7 +3,7 @@
   {{!-- En-tête : portrait + nom + bouton de jet --}}
   <header class="sheet-header flexrow">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="72" width="72"/>
-    <div class="header-fields flexrow">
+    <div class="header-fields flexcol">
       <h1 class="charname">
         <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'NCO.Actor.Name'}}"/>
       </h1>
@@ -14,17 +14,22 @@
     </div>
   </header>
 
-  {{!-- Corps : deux colonnes --}}
-  <div class="char-body flexrow">
+  {{!-- Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="trademarks">{{localize 'NCO.Tab.Trademarks'}}</a>
+    <a class="item" data-tab="etat">{{localize 'NCO.Tab.Etat'}}</a>
+    <a class="item" data-tab="equipement">{{localize 'NCO.Tab.Equipement'}}</a>
+  </nav>
 
-    {{!-- ===== Colonne gauche : Trademarks ===== --}}
-    <div class="col-left flexcol">
+  <section class="sheet-body">
 
-      <div class="col-section-header flexrow">
-        <h3 class="col-title">{{localize 'NCO.Actor.Trademarks'}}</h3>
+    {{!-- ===== Tab Trademarks ===== --}}
+    <div class="tab trademarks flexcol" data-group="primary" data-tab="trademarks">
+
+      <div class="tab-section-header flexrow">
         {{#if editable}}
         <a class="item-create tm-create" data-type="trademark" title="{{localize 'NCO.Item.AddTrademark'}}">
-          <i class="fas fa-plus"></i>
+          <i class="fas fa-plus"></i> {{localize 'NCO.Item.AddTrademark'}}
         </a>
         {{/if}}
       </div>
@@ -58,10 +63,10 @@
       </div>
       {{/each}}
 
-    </div>{{!-- /col-left --}}
+    </div>{{!-- /tab trademarks --}}
 
-    {{!-- ===== Colonne droite : Stats ===== --}}
-    <div class="col-right flexcol">
+    {{!-- ===== Tab État ===== --}}
+    <div class="tab etat flexcol" data-group="primary" data-tab="etat">
 
       {{!-- HITS --}}
       <div class="char-block">
@@ -114,6 +119,13 @@
         </div>
       </div>
 
+      {{!-- STUNT POINTS --}}
+      <div class="char-block stunt-block flexrow">
+        <h4 class="block-title stunt-title">{{localize 'NCO.Actor.StuntPoints'}}</h4>
+        <input type="number" name="system.stunt_points" value="{{system.stunt_points}}"
+               min="0" data-dtype="Number" class="stunt-input"/>
+      </div>
+
       {{!-- TRAUMAS --}}
       <div class="char-block">
         <h4 class="block-title">{{localize 'NCO.Actor.Traumas'}}</h4>
@@ -148,12 +160,10 @@
         </div>
       </div>
 
-      {{!-- STUNT POINTS --}}
-      <div class="char-block stunt-block flexrow">
-        <h4 class="block-title stunt-title">{{localize 'NCO.Actor.StuntPoints'}}</h4>
-        <input type="number" name="system.stunt_points" value="{{system.stunt_points}}"
-               min="0" data-dtype="Number" class="stunt-input"/>
-      </div>
+    </div>{{!-- /tab etat --}}
+
+    {{!-- ===== Tab Équipement & Avancement ===== --}}
+    <div class="tab equipement flexcol" data-group="primary" data-tab="equipement">
 
       {{!-- GEAR + STASH --}}
       <div class="char-block">
@@ -198,7 +208,7 @@
         <h4 class="block-title">{{localize 'NCO.Actor.Drive'}}</h4>
         <input type="text" name="system.drive" value="{{system.drive}}" class="drive-input"
                placeholder="{{localize 'NCO.Actor.DrivePlaceholder'}}"/>
-        <div class="pip-row flexrow">
+        <div class="pip-row flexrow" style="margin-top: 6px;">
           {{#each driveBoxes as |box|}}
           <span class="pip drive-pip {{#if box.filled}}pip-on{{/if}}" data-index="{{box.index}}"></span>
           {{/each}}
@@ -218,8 +228,8 @@
         </div>
       </div>
 
-    </div>{{!-- /col-right --}}
+    </div>{{!-- /tab equipement --}}
 
-  </div>{{!-- /char-body --}}
+  </section>
 
 </form>

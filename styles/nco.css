@@ -225,8 +225,14 @@
 
 .nco.sheet .sheet-body {
   background: var(--nco-bg);
-  padding: 16px;
+  padding: 14px 16px;
   overflow-y: auto;
+  flex: 1;
+}
+
+/* Tabs du personnage : colonnes flexcol avec gap */
+.nco.sheet.character .sheet-body .tab {
+  gap: 6px;
 }
 
 /* ============================================
@@ -1176,18 +1182,17 @@
 }
 
 /* ============================================
-   Fiche personnage — layout sans onglets
+   Fiche personnage — en-tête avec bouton de jet
    ============================================ */
 
-/* Bouton de jet dans l'en-tête */
 .nco.sheet.character .sheet-header {
   gap: 12px;
 }
 
 .nco.sheet.character .header-fields {
   flex: 1;
-  align-items: flex-start;
   gap: 8px;
+  justify-content: space-between;
 }
 
 .nco.sheet.character .charname {
@@ -1210,66 +1215,36 @@
   gap: 5px;
   white-space: nowrap;
   transition: background 0.15s;
-  flex-shrink: 0;
+  align-self: flex-end;
 }
 
 .nco.sheet.character .nco-roll-btn:hover {
   background: var(--nco-primary-dark);
 }
 
-/* Corps : deux colonnes */
-.nco.sheet.character .char-body {
-  flex: 1;
-  overflow: hidden;
-  gap: 0;
-}
-
-.nco.sheet.character .col-left {
-  width: 42%;
-  flex: none;
-  background: var(--nco-surface-low);
-  border-right: 1px solid var(--nco-border);
-  padding: 12px 10px;
-  overflow-y: auto;
-  gap: 8px;
-}
-
-.nco.sheet.character .col-right {
-  flex: 1;
-  padding: 10px 12px;
-  overflow-y: auto;
-  gap: 6px;
-}
-
-/* En-tête de section trademarks */
-.col-section-header {
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
-}
-
-.col-title {
-  font-family: var(--nco-font-heading);
-  font-size: 0.9em;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--nco-text-muted);
-  border-bottom: 1px solid var(--nco-border);
-  flex: 1;
-  padding-bottom: 3px;
-  margin: 0;
+/* En-tête d'onglet trademarks */
+.tab-section-header {
+  margin-bottom: 8px;
 }
 
 .tm-create {
-  color: var(--nco-text-dim);
-  font-size: 0.85em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82em;
+  font-weight: 600;
+  color: var(--nco-text-muted);
   cursor: pointer;
-  padding: 2px 4px;
-  transition: color 0.15s;
+  padding: 4px 8px;
+  border: 1px dashed var(--nco-border);
+  border-radius: 3px;
+  transition: color 0.15s, border-color 0.15s;
 }
 
-.tm-create:hover { color: var(--nco-primary); }
+.tm-create:hover {
+  color: var(--nco-primary);
+  border-color: var(--nco-primary);
+}
 
 /* Bloc trademark */
 .trademark-block {

@@ -10,8 +10,15 @@ export class NCOActorSheet extends ActorSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['nco', 'sheet', 'actor', 'character'],
-      width: 700,
-      height: 820,
+      width: 520,
+      height: 600,
+      tabs: [
+        {
+          navSelector: '.sheet-tabs',
+          contentSelector: '.sheet-body',
+          initial: 'trademarks',
+        },
+      ],
     });
   }
 
