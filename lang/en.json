@@ -19,15 +19,29 @@
     },
     "Actor": {
       "Name": "Name",
-      "Harm": "Harm",
-      "Cred": "Cred",
-      "Look": "Look",
-      "LookPlaceholder": "Physical description...",
+      "Hits": "Hits",
       "Drive": "Drive",
       "DrivePlaceholder": "What motivates you?",
-      "Style": "Style",
-      "StylePlaceholder": "How do you operate?",
-      "Biography": "Biography"
+      "Trademarks": "Trademarks",
+      "Conditions": "Conditions",
+      "Traumas": "Traumas",
+      "Flaws": "Flaws",
+      "StuntPoints": "Stunt Points",
+      "Stash": "Stash",
+      "XP": "Experience Points"
+    },
+    "Condition": {
+      "Angry":      "Angry",
+      "Dazed":      "Dazed",
+      "Exhausted":  "Exhausted",
+      "Scared":     "Scared",
+      "Restrained": "Restrained",
+      "Weakened":   "Weakened",
+      "Extra":      ""
+    },
+    "Trademark": {
+      "NamePlaceholder": "Trademark name…",
+      "EdgePlaceholder": "Edge…"
     },
     "NPC": {
       "Name": "NPC Name",
@@ -63,15 +77,9 @@
       "Success": "SUCCESS"
     },
     "Tab": {
-      "Principal": "Main",
-      "Identite": "Identity",
-      "Equipement": "Equipment",
-      "Mission": "Mission",
-      "Effets": "Effects",
       "Stats": "Stats",
       "Notes": "Notes",
-      "Description": "Description",
-      "Details": "Details"
+      "Effets": "Effects"
     },
     "Item": {
       "Gear": "Gear",
@@ -80,12 +88,14 @@
       "Tag": "Tag",
       "Asset": "Asset",
       "Threat": "Threat",
+      "Trademark": "Trademark",
       "AddGear": "Add Gear",
       "AddMove": "Add Move",
       "AddContact": "Add Contact",
       "AddTag": "Add Tag",
       "AddAsset": "Add Asset",
       "AddThreat": "Add Threat",
+      "AddTrademark": "Add Trademark",
       "EmptyGear": "No equipment.",
       "EmptyContact": "No contacts.",
       "EmptyTag": "No tags.",
@@ -126,12 +136,6 @@
       "Passive": "Passive Effects",
       "Inactive": "Inactive Effects"
     },
-    "Zalozhniy": {
-      "Sanity": "Sanity",
-      "Cover": "Cover",
-      "Exposure": "Exposure",
-      "ExposureCritical": "Extraction required! Exposure at maximum."
-    },
     "Asset": {
       "TypeLabel": "Type",
       "Type": {
@@ -158,12 +162,13 @@
       "npc": "NPC"
     },
     "Item": {
-      "gear": "Gear",
-      "move": "Move",
-      "contact": "Contact",
-      "tag": "Tag",
-      "asset": "Asset",
-      "threat": "Threat"
+      "gear":      "Gear",
+      "move":      "Move",
+      "contact":   "Contact",
+      "tag":       "Tag",
+      "asset":     "Asset",
+      "threat":    "Threat",
+      "trademark": "Trademark"
     }
   }
 }

@@ -5,11 +5,9 @@
 export const preloadHandlebarsTemplates = async function () {
   return loadTemplates([
     // Partiels de la fiche personnage
-    'systems/neon-city-overdrive/templates/actor/parts/actor-traits.hbs',
-    'systems/neon-city-overdrive/templates/actor/parts/actor-items.hbs',
     'systems/neon-city-overdrive/templates/actor/parts/actor-effects.hbs',
-    'systems/neon-city-overdrive/templates/actor/parts/actor-mission.hbs',
-    // Partiels item
+    // Fiche items
+    'systems/neon-city-overdrive/templates/item/item-trademark-sheet.hbs',
     'systems/neon-city-overdrive/templates/item/parts/item-effects.hbs',
     // Dialog et chat
     'systems/neon-city-overdrive/templates/dialog/roll-dialog.hbs',

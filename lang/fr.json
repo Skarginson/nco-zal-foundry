@@ -19,15 +19,29 @@
     },
     "Actor": {
       "Name": "Nom",
-      "Harm": "Blessures",
-      "Cred": "Crédit",
-      "Look": "Apparence",
-      "LookPlaceholder": "Description physique...",
-      "Drive": "Motivation",
+      "Hits": "Blessures",
+      "Drive": "Drive",
       "DrivePlaceholder": "Ce qui vous pousse à agir...",
-      "Style": "Style",
-      "StylePlaceholder": "Comment vous opérez...",
-      "Biography": "Biographie"
+      "Trademarks": "Trademarks",
+      "Conditions": "Conditions",
+      "Traumas": "Traumas",
+      "Flaws": "Défauts",
+      "StuntPoints": "Points de Stunt",
+      "Stash": "Stash",
+      "XP": "Points d'Expérience"
+    },
+    "Condition": {
+      "Angry":      "Angry",
+      "Dazed":      "Dazed",
+      "Exhausted":  "Exhausted",
+      "Scared":     "Scared",
+      "Restrained": "Restrained",
+      "Weakened":   "Weakened",
+      "Extra":      ""
+    },
+    "Trademark": {
+      "NamePlaceholder": "Nom du trademark…",
+      "EdgePlaceholder": "Edge…"
     },
     "NPC": {
       "Name": "Nom du PNJ",
@@ -63,15 +77,9 @@
       "Success": "SUCCÈS"
     },
     "Tab": {
-      "Principal": "Principal",
-      "Identite": "Identité",
-      "Equipement": "Équipement",
-      "Mission": "Mission",
-      "Effets": "Effets",
       "Stats": "Stats",
       "Notes": "Notes",
-      "Description": "Description",
-      "Details": "Détails"
+      "Effets": "Effets"
     },
     "Item": {
       "Gear": "Équipement",
@@ -80,12 +88,14 @@
       "Tag": "Tag",
       "Asset": "Ressource",
       "Threat": "Menace",
+      "Trademark": "Trademark",
       "AddGear": "Ajouter équipement",
       "AddMove": "Ajouter move",
       "AddContact": "Ajouter contact",
       "AddTag": "Ajouter tag",
       "AddAsset": "Ajouter ressource",
       "AddThreat": "Ajouter menace",
+      "AddTrademark": "Ajouter trademark",
       "EmptyGear": "Aucun équipement.",
       "EmptyContact": "Aucun contact.",
       "EmptyTag": "Aucun tag.",
@@ -126,12 +136,6 @@
       "Passive": "Effets passifs",
       "Inactive": "Effets inactifs"
     },
-    "Zalozhniy": {
-      "Sanity": "Sanité",
-      "Cover": "Couverture",
-      "Exposure": "Exposition",
-      "ExposureCritical": "Extraction urgente ! Exposition maximale."
-    },
     "Asset": {
       "TypeLabel": "Type",
       "Type": {
@@ -158,12 +162,13 @@
       "npc": "PNJ"
     },
     "Item": {
-      "gear": "Équipement",
-      "move": "Move",
-      "contact": "Contact",
-      "tag": "Tag",
-      "asset": "Ressource",
-      "threat": "Menace"
+      "gear":      "Équipement",
+      "move":      "Move",
+      "contact":   "Contact",
+      "tag":       "Tag",
+      "asset":     "Ressource",
+      "threat":    "Menace",
+      "trademark": "Trademark"
     }
   }
 }

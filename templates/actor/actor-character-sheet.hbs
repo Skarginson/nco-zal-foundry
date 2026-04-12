@@ -1,102 +1,225 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
 
-  {{!-- En-tête : portrait + nom + ressources --}}
+  {{!-- En-tête : portrait + nom + bouton de jet --}}
   <header class="sheet-header flexrow">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="90" width="90"/>
-    <div class="header-fields flexcol">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="72" width="72"/>
+    <div class="header-fields flexrow">
       <h1 class="charname">
         <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'NCO.Actor.Name'}}"/>
       </h1>
-      <div class="header-resources flexrow">
-
-        {{!-- Hit track (3 cases) --}}
-        <div class="resource flex-group-center">
-          <label class="resource-label">{{localize 'NCO.Actor.Harm'}}</label>
-          <div class="resource-content flexrow">
-            <input type="number" name="system.harm.value" value="{{system.harm.value}}" min="0" data-dtype="Number"/>
-            <span>/</span>
-            <input type="number" name="system.harm.max" value="{{system.harm.max}}" min="0" data-dtype="Number"/>
-          </div>
-        </div>
-        <div class="resource flex-group-center">
-          <label class="resource-label">{{localize 'NCO.Actor.Cred'}}</label>
-          <div class="resource-content flexrow">
-            <input type="number" name="system.cred" value="{{system.cred}}" min="0" data-dtype="Number"/>
-          </div>
-        </div>
-
-        {{!-- Sanité : Zalozhniy uniquement, si activée dans les settings --}}
-        {{#if sanityEnabled}}
-        <div class="resource flex-group-center resource-zalozhniy">
-          <label class="resource-label zal-label">{{localize 'NCO.Zalozhniy.Sanity'}}</label>
-          <div class="resource-content flexrow">
-            <input type="number" name="system.sanity.value" value="{{system.sanity.value}}" min="0" data-dtype="Number"/>
-            <span>/</span>
-            <input type="number" name="system.sanity.max" value="{{system.sanity.max}}" min="0" data-dtype="Number"/>
-          </div>
-        </div>
-        {{/if}}
-
-      </div>
+      <button type="button" class="btn-open-roll nco-roll-btn">
+        <i class="fas fa-dice-d6"></i>
+        {{localize 'NCO.Roll.RollDice'}}
+      </button>
     </div>
   </header>
 
-  {{!-- Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="principal">{{localize 'NCO.Tab.Principal'}}</a>
-    <a class="item" data-tab="identite">{{localize 'NCO.Tab.Identite'}}</a>
-    <a class="item" data-tab="equipement">{{localize 'NCO.Tab.Equipement'}}</a>
-    {{#if isZalozhniy}}
-    <a class="item" data-tab="mission">{{localize 'NCO.Tab.Mission'}}</a>
-    {{/if}}
-    <a class="item" data-tab="effets">{{localize 'NCO.Tab.Effets'}}</a>
-  </nav>
+  {{!-- Corps : deux colonnes --}}
+  <div class="char-body flexrow">
 
-  <section class="sheet-body">
+    {{!-- ===== Colonne gauche : Trademarks ===== --}}
+    <div class="col-left flexcol">
 
-    {{!-- Onglet principal : Traits (+ Couverture si Zalozhniy) --}}
-    <div class="tab principal" data-group="primary" data-tab="principal">
-      {{> "systems/neon-city-overdrive/templates/actor/parts/actor-traits.hbs"}}
-    </div>
+      <div class="col-section-header flexrow">
+        <h3 class="col-title">{{localize 'NCO.Actor.Trademarks'}}</h3>
+        {{#if editable}}
+        <a class="item-create tm-create" data-type="trademark" title="{{localize 'NCO.Item.AddTrademark'}}">
+          <i class="fas fa-plus"></i>
+        </a>
+        {{/if}}
+      </div>
 
-    {{!-- Onglet identité --}}
-    <div class="tab identite flexcol" data-group="primary" data-tab="identite">
-      <div class="identity-fields flexcol">
-        <div class="form-group">
-          <label>{{localize 'NCO.Actor.Look'}}</label>
-          <input type="text" name="system.look" value="{{system.look}}" placeholder="{{localize 'NCO.Actor.LookPlaceholder'}}"/>
+      {{#each trademarks as |tm|}}
+      <div class="trademark-block" data-item-id="{{tm._id}}">
+        <div class="trademark-header flexrow">
+          {{#if @root.editable}}
+          <input type="text" class="trademark-name-input" value="{{tm.name}}"
+                 placeholder="{{localize 'NCO.Trademark.NamePlaceholder'}}"/>
+          <a class="tm-delete" title="{{localize 'NCO.Item.Delete'}}">
+            <i class="fas fa-times"></i>
+          </a>
+          {{else}}
+          <span class="trademark-name-ro">{{tm.name}}</span>
+          {{/if}}
         </div>
-        <div class="form-group">
-          <label>{{localize 'NCO.Actor.Drive'}}</label>
-          <input type="text" name="system.drive" value="{{system.drive}}" placeholder="{{localize 'NCO.Actor.DrivePlaceholder'}}"/>
-        </div>
-        <div class="form-group">
-          <label>{{localize 'NCO.Actor.Style'}}</label>
-          <input type="text" name="system.style" value="{{system.style}}" placeholder="{{localize 'NCO.Actor.StylePlaceholder'}}"/>
-        </div>
-        <div class="form-group biography-group">
-          <label>{{localize 'NCO.Actor.Biography'}}</label>
-          {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
+        <div class="trademark-edges flexcol">
+          {{#each tm.edgesArray as |edge|}}
+          <div class="edge-row flexrow">
+            <span class="edge-bullet">+</span>
+            {{#if @root.editable}}
+            <input type="text" class="trademark-edge-input" data-field="{{edge.field}}"
+                   value="{{edge.value}}" placeholder="{{localize 'NCO.Trademark.EdgePlaceholder'}}"/>
+            {{else}}
+            <span class="edge-text">{{edge.value}}</span>
+            {{/if}}
+          </div>
+          {{/each}}
         </div>
       </div>
-    </div>
+      {{/each}}
 
-    {{!-- Onglet équipement --}}
-    <div class="tab equipement" data-group="primary" data-tab="equipement">
-      {{> "systems/neon-city-overdrive/templates/actor/parts/actor-items.hbs"}}
-    </div>
+    </div>{{!-- /col-left --}}
 
-    {{!-- Onglet mission (Zalozhniy uniquement) --}}
-    {{#if isZalozhniy}}
-    <div class="tab mission" data-group="primary" data-tab="mission">
-      {{> "systems/neon-city-overdrive/templates/actor/parts/actor-mission.hbs"}}
-    </div>
-    {{/if}}
+    {{!-- ===== Colonne droite : Stats ===== --}}
+    <div class="col-right flexcol">
 
-    {{!-- Onglet effets actifs --}}
-    <div class="tab effets flexcol" data-group="primary" data-tab="effets">
-      {{> "systems/neon-city-overdrive/templates/actor/parts/actor-effects.hbs"}}
-    </div>
+      {{!-- HITS --}}
+      <div class="char-block">
+        <h4 class="block-title">{{localize 'NCO.Actor.Hits'}}</h4>
+        <div class="pip-row flexrow">
+          {{#each hitBoxes as |box|}}
+          <span class="pip hit-pip {{#if box.filled}}pip-on{{/if}}" data-index="{{box.index}}"></span>
+          {{/each}}
+        </div>
+      </div>
 
-  </section>
+      {{!-- CONDITIONS --}}
+      <div class="char-block">
+        <h4 class="block-title">{{localize 'NCO.Actor.Conditions'}}</h4>
+        <div class="conditions-grid">
+          <label class="cond-label">
+            <input type="checkbox" name="system.conditions.angry"
+                   {{#if system.conditions.angry}}checked{{/if}}/>
+            {{localize 'NCO.Condition.Angry'}}
+          </label>
+          <label class="cond-label">
+            <input type="checkbox" name="system.conditions.dazed"
+                   {{#if system.conditions.dazed}}checked{{/if}}/>
+            {{localize 'NCO.Condition.Dazed'}}
+          </label>
+          <label class="cond-label">
+            <input type="checkbox" name="system.conditions.exhausted"
+                   {{#if system.conditions.exhausted}}checked{{/if}}/>
+            {{localize 'NCO.Condition.Exhausted'}}
+          </label>
+          <label class="cond-label">
+            <input type="checkbox" name="system.conditions.scared"
+                   {{#if system.conditions.scared}}checked{{/if}}/>
+            {{localize 'NCO.Condition.Scared'}}
+          </label>
+          <label class="cond-label">
+            <input type="checkbox" name="system.conditions.restrained"
+                   {{#if system.conditions.restrained}}checked{{/if}}/>
+            {{localize 'NCO.Condition.Restrained'}}
+          </label>
+          <label class="cond-label">
+            <input type="checkbox" name="system.conditions.weakened"
+                   {{#if system.conditions.weakened}}checked{{/if}}/>
+            {{localize 'NCO.Condition.Weakened'}}
+          </label>
+          <label class="cond-label cond-extra">
+            <input type="checkbox" name="system.conditions.extra"
+                   {{#if system.conditions.extra}}checked{{/if}}/>
+          </label>
+        </div>
+      </div>
+
+      {{!-- TRAUMAS --}}
+      <div class="char-block">
+        <h4 class="block-title">{{localize 'NCO.Actor.Traumas'}}</h4>
+        <div class="line-row flexrow">
+          <span class="line-dash">—</span>
+          <input type="text" name="system.trauma1" value="{{system.trauma1}}"/>
+        </div>
+        <div class="line-row flexrow">
+          <span class="line-dash">—</span>
+          <input type="text" name="system.trauma2" value="{{system.trauma2}}"/>
+        </div>
+        <div class="line-row flexrow">
+          <span class="line-dash">—</span>
+          <input type="text" name="system.trauma3" value="{{system.trauma3}}"/>
+        </div>
+        <div class="line-row flexrow">
+          <span class="line-dash">—</span>
+          <input type="text" name="system.trauma4" value="{{system.trauma4}}"/>
+        </div>
+      </div>
+
+      {{!-- FLAWS --}}
+      <div class="char-block">
+        <h4 class="block-title">{{localize 'NCO.Actor.Flaws'}}</h4>
+        <div class="line-row flexrow">
+          <span class="line-dash">—</span>
+          <input type="text" name="system.flaw1" value="{{system.flaw1}}"/>
+        </div>
+        <div class="line-row flexrow">
+          <span class="line-dash">—</span>
+          <input type="text" name="system.flaw2" value="{{system.flaw2}}"/>
+        </div>
+      </div>
+
+      {{!-- STUNT POINTS --}}
+      <div class="char-block stunt-block flexrow">
+        <h4 class="block-title stunt-title">{{localize 'NCO.Actor.StuntPoints'}}</h4>
+        <input type="number" name="system.stunt_points" value="{{system.stunt_points}}"
+               min="0" data-dtype="Number" class="stunt-input"/>
+      </div>
+
+      {{!-- GEAR + STASH --}}
+      <div class="char-block">
+        <div class="block-header flexrow">
+          <h4 class="block-title">{{localize 'NCO.Item.Gear'}}</h4>
+          {{#if editable}}
+          <a class="item-create" data-type="gear" title="{{localize 'NCO.Item.AddGear'}}">
+            <i class="fas fa-plus"></i>
+          </a>
+          {{/if}}
+        </div>
+        <ul class="gear-list">
+          {{#each gear as |item|}}
+          <li class="gear-item flexrow" data-item-id="{{item._id}}">
+            <span class="gear-name">{{item.name}}</span>
+            {{#if item.system.action_dice_bonus}}
+            <span class="gear-bonus">+{{item.system.action_dice_bonus}} DA</span>
+            {{/if}}
+            {{#if @root.editable}}
+            <div class="item-controls flexrow">
+              <a class="item-edit" title="{{localize 'NCO.Item.Edit'}}"><i class="fas fa-edit"></i></a>
+              <a class="item-delete" title="{{localize 'NCO.Item.Delete'}}"><i class="fas fa-trash"></i></a>
+            </div>
+            {{/if}}
+          </li>
+          {{else}}
+          <li class="gear-empty">{{localize 'NCO.Item.EmptyGear'}}</li>
+          {{/each}}
+        </ul>
+        <div class="stash-row flexrow">
+          <span class="stash-label">{{localize 'NCO.Actor.Stash'}}</span>
+          <div class="pip-row flexrow">
+            {{#each stashBoxes as |box|}}
+            <span class="pip stash-pip {{#if box.filled}}pip-on{{/if}}" data-index="{{box.index}}"></span>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+
+      {{!-- DRIVE --}}
+      <div class="char-block">
+        <h4 class="block-title">{{localize 'NCO.Actor.Drive'}}</h4>
+        <input type="text" name="system.drive" value="{{system.drive}}" class="drive-input"
+               placeholder="{{localize 'NCO.Actor.DrivePlaceholder'}}"/>
+        <div class="pip-row flexrow">
+          {{#each driveBoxes as |box|}}
+          <span class="pip drive-pip {{#if box.filled}}pip-on{{/if}}" data-index="{{box.index}}"></span>
+          {{/each}}
+        </div>
+      </div>
+
+      {{!-- EXPERIENCE POINTS --}}
+      <div class="char-block">
+        <h4 class="block-title">{{localize 'NCO.Actor.XP'}}</h4>
+        <div class="xp-track flexrow">
+          {{#each xpGroups as |group gi|}}
+          {{#if gi}}<span class="xp-sep">|</span>{{/if}}
+          {{#each group as |box|}}
+          <span class="pip xp-pip {{#if box.filled}}pip-on{{/if}}" data-index="{{box.index}}"></span>
+          {{/each}}
+          {{/each}}
+        </div>
+      </div>
+
+    </div>{{!-- /col-right --}}
+
+  </div>{{!-- /char-body --}}
+
 </form>

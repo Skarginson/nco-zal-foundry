@@ -2,25 +2,38 @@
   "Actor": {
     "types": ["character", "npc"],
     "character": {
-      "biography": "",
-      "look": "",
       "drive": "",
-      "style": "",
-      "harm": {
+      "hits": {
         "value": 0,
-        "min": 0,
         "max": 3
       },
-      "cred": 0,
-      "sanity": {
-        "value": 6,
-        "min": 0,
-        "max": 6
+      "conditions": {
+        "angry":      false,
+        "dazed":      false,
+        "exhausted":  false,
+        "scared":     false,
+        "restrained": false,
+        "weakened":   false,
+        "extra":      false
       },
-      "exposure": {
+      "trauma1": "",
+      "trauma2": "",
+      "trauma3": "",
+      "trauma4": "",
+      "flaw1": "",
+      "flaw2": "",
+      "stunt_points": 0,
+      "stash": {
         "value": 0,
-        "min": 0,
         "max": 5
+      },
+      "drive_track": {
+        "value": 0,
+        "max": 9
+      },
+      "xp": {
+        "value": 0,
+        "max": 15
       }
     },
     "npc": {
@@ -37,7 +50,7 @@
     }
   },
   "Item": {
-    "types": ["gear", "move", "contact", "tag", "asset", "threat"],
+    "types": ["gear", "move", "contact", "tag", "asset", "threat", "trademark"],
     "gear": {
       "description": "",
       "tags": "",
@@ -72,6 +85,14 @@
       "danger_dice_pool": 2,
       "exposure_threshold": 3,
       "notes": ""
+    },
+    "trademark": {
+      "description": "",
+      "edge1": "",
+      "edge2": "",
+      "edge3": "",
+      "edge4": "",
+      "edge5": ""
     }
   }
 }

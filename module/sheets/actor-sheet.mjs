@@ -10,15 +10,8 @@ export class NCOActorSheet extends ActorSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['nco', 'sheet', 'actor', 'character'],
-      width: 680,
-      height: 700,
-      tabs: [
-        {
-          navSelector: '.sheet-tabs',
-          contentSelector: '.sheet-body',
-          initial: 'principal',
-        },
-      ],
+      width: 700,
+      height: 820,
     });
   }
 
@@ -33,35 +26,31 @@ export class NCOActorSheet extends ActorSheet {
   async getData() {
     const context = super.getData();
     const actorData = this.document.toObject(false);
+    const sys = actorData.system;
 
-    context.system = actorData.system;
+    context.system = sys;
     context.flags  = actorData.flags;
     context.config = CONFIG.NCO;
 
-    context.isZalozhniy   = game.settings.get('neon-city-overdrive', 'gameMode') === 'zalozhniy';
-    context.sanityEnabled = game.settings.get('neon-city-overdrive', 'sanityEnabled');
+    // Jauges visualisées sous forme de cases cliquables
+    const hitsVal      = sys.hits?.value      ?? 0;
+    const stashVal     = sys.stash?.value     ?? 0;
+    const driveTrackVal = sys.drive_track?.value ?? 0;
+    const xpVal        = sys.xp?.value        ?? 0;
 
-    // Données Zalozhniy : jauge d'exposition
-    if (context.isZalozhniy) {
-      const exposure = actorData.system.exposure?.value ?? 0;
-      context.exposureCritical = exposure >= 5;
-      context.exposureSteps = Array.from({ length: 6 }, (_, i) => ({
-        filled:   i < exposure,
-        critical: i === 4,
-      }));
-    }
+    context.hitBoxes   = Array.from({ length: 3 }, (_, i) => ({ filled: i < hitsVal,       index: i }));
+    context.stashBoxes = Array.from({ length: 5 }, (_, i) => ({ filled: i < stashVal,      index: i }));
+    context.driveBoxes = Array.from({ length: 9 }, (_, i) => ({ filled: i < driveTrackVal, index: i }));
+
+    // XP : 3 groupes de 5
+    context.xpGroups = [0, 1, 2].map((g) =>
+      Array.from({ length: 5 }, (_, i) => {
+        const idx = g * 5 + i;
+        return { filled: idx < xpVal, index: idx };
+      })
+    );
 
     this._prepareItems(context);
-
-    context.enrichedBiography = await TextEditor.enrichHTML(
-      this.actor.system.biography,
-      {
-        secrets:  this.document.isOwner,
-        async:    true,
-        rollData: this.actor.getRollData(),
-        relativeTo: this.actor,
-      }
-    );
 
     context.effects = prepareActiveEffectCategories(
       this.actor.allApplicableEffects()
@@ -71,35 +60,33 @@ export class NCOActorSheet extends ActorSheet {
   }
 
   /**
-   * Trie et classe les items par type pour affichage dans la fiche.
+   * Trie et classe les items par type.
    * @param {object} context
    */
   _prepareItems(context) {
-    const gear     = [];
-    const moves    = [];
-    const contacts = [];
-    const tags     = [];
-    const assets   = [];
-    const threats  = [];
+    const gear       = [];
+    const trademarks = [];
 
     for (const item of context.items) {
       item.img = item.img || Item.DEFAULT_ICON;
       switch (item.type) {
-        case 'gear':    gear.push(item);     break;
-        case 'move':    moves.push(item);    break;
-        case 'contact': contacts.push(item); break;
-        case 'tag':     tags.push(item);     break;
-        case 'asset':   assets.push(item);   break;
-        case 'threat':  threats.push(item);  break;
+        case 'gear':      gear.push(item);       break;
+        case 'trademark':
+          // Pré-calcule un tableau ordonné des edges pour le template
+          item.edgesArray = [
+            { field: 'edge1', value: item.system.edge1 },
+            { field: 'edge2', value: item.system.edge2 },
+            { field: 'edge3', value: item.system.edge3 },
+            { field: 'edge4', value: item.system.edge4 },
+            { field: 'edge5', value: item.system.edge5 },
+          ];
+          trademarks.push(item);
+          break;
       }
     }
 
-    context.gear     = gear;
-    context.moves    = moves;
-    context.contacts = contacts;
-    context.tags     = tags;
-    context.assets   = assets;
-    context.threats  = threats;
+    context.gear       = gear;
+    context.trademarks = trademarks;
   }
 
   /* -------------------------------------------- */
@@ -108,85 +95,117 @@ export class NCOActorSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Ouvrir la fiche d'un item
+    // Ouvrir la fiche d'un item via le bouton edit
     html.on('click', '.item-edit', (ev) => {
-      const li = $(ev.currentTarget).parents('.item');
+      const li   = $(ev.currentTarget).parents('[data-item-id]');
       const item = this.actor.items.get(li.data('itemId'));
-      item.sheet.render(true);
-    });
-
-    // Afficher/masquer la description d'un item
-    html.on('click', '.item-name', (ev) => {
-      const li = $(ev.currentTarget).parents('.item');
-      li.find('.item-description').slideToggle(150);
+      if (item) item.sheet.render(true);
     });
 
     if (!this.isEditable) return;
 
     // Créer un item
-    html.on('click', '.item-create', this._onItemCreate.bind(this));
+    html.on('click', '.item-create, .tm-create', this._onItemCreate.bind(this));
 
-    // Supprimer un item
+    // Supprimer un item standard (gear)
     html.on('click', '.item-delete', (ev) => {
-      const li = $(ev.currentTarget).parents('.item');
+      const li   = $(ev.currentTarget).parents('[data-item-id]');
       const item = this.actor.items.get(li.data('itemId'));
-      item.delete();
-      li.slideUp(200, () => this.render(false));
+      if (item) {
+        item.delete();
+        li.slideUp(200, () => this.render(false));
+      }
+    });
+
+    // Supprimer un trademark via la croix dans le bloc
+    html.on('click', '.tm-delete', (ev) => {
+      const block  = $(ev.currentTarget).closest('.trademark-block');
+      const itemId = block.data('itemId');
+      const item   = this.actor.items.get(itemId);
+      if (item) {
+        item.delete();
+        block.slideUp(200, () => this.render(false));
+      }
+    });
+
+    // Édition inline : nom du trademark
+    html.on('change', '.trademark-name-input', async (ev) => {
+      const block  = $(ev.currentTarget).closest('.trademark-block');
+      const itemId = block.data('itemId');
+      const item   = this.actor.items.get(itemId);
+      if (item) await item.update({ name: ev.currentTarget.value });
+    });
+
+    // Édition inline : edge d'un trademark
+    html.on('change', '.trademark-edge-input', async (ev) => {
+      const block  = $(ev.currentTarget).closest('.trademark-block');
+      const itemId = block.data('itemId');
+      const item   = this.actor.items.get(itemId);
+      if (item) await item.update({ [`system.${ev.currentTarget.dataset.field}`]: ev.currentTarget.value });
     });
 
     // Effets actifs
     html.on('click', '.effect-control', (ev) => {
-      const row = ev.currentTarget.closest('li');
-      const document =
-        row.dataset.parentId === this.actor.id
-          ? this.actor
-          : this.actor.items.get(row.dataset.parentId);
+      const row      = ev.currentTarget.closest('li');
+      const document = row.dataset.parentId === this.actor.id
+        ? this.actor
+        : this.actor.items.get(row.dataset.parentId);
       onManageActiveEffect(ev, document);
     });
 
     // Bouton de lancer de dés
     html.on('click', '.btn-open-roll', () => NCORollDialog.show(this.actor));
 
-    // Clic sur une case d'Exposition (Zalozhniy)
-    html.on('click', '.exposure-pip', this._onExposureClick.bind(this));
+    // Cases cliquables : Hits
+    html.on('click', '.hit-pip', (ev) =>
+      this._onPipClick(ev, 'system.hits.value', 3)
+    );
+    // Cases cliquables : Stash
+    html.on('click', '.stash-pip', (ev) =>
+      this._onPipClick(ev, 'system.stash.value', 5)
+    );
+    // Cases cliquables : Drive track
+    html.on('click', '.drive-pip', (ev) =>
+      this._onPipClick(ev, 'system.drive_track.value', 9)
+    );
+    // Cases cliquables : XP
+    html.on('click', '.xp-pip', (ev) =>
+      this._onPipClick(ev, 'system.xp.value', 15)
+    );
 
     // Drag & drop pour macros
     if (this.actor.isOwner) {
       const handler = (ev) => this._onDragStart(ev);
-      html.find('li.item').each((i, li) => {
-        if (li.classList.contains('inventory-header')) return;
-        li.setAttribute('draggable', true);
-        li.addEventListener('dragstart', handler, false);
+      html.find('[data-item-id]').each((i, el) => {
+        el.setAttribute('draggable', true);
+        el.addEventListener('dragstart', handler, false);
       });
     }
   }
 
   /**
-   * Crée un nouvel item possédé.
-   * @param {Event} event
+   * Gère le clic sur une case de jauge (pip).
+   * Cliquer sur une case remplie dépile jusqu'à cet index ; sur une vide, remplit jusqu'à lui.
    */
-  async _onItemCreate(event) {
+  async _onPipClick(event, fieldPath, maxVal) {
     event.preventDefault();
-    const header = event.currentTarget;
-    const type   = header.dataset.type;
-    const data   = foundry.utils.duplicate(header.dataset);
-    const name   = `Nouveau ${type}`;
-    const itemData = { name, type, system: data };
-    delete itemData.system['type'];
-    return await Item.create(itemData, { parent: this.actor });
+    const index   = parseInt(event.currentTarget.dataset.index);
+    const current = foundry.utils.getProperty(this.actor.system, fieldPath.replace('system.', '')) ?? 0;
+    const newValue = index < current ? index : index + 1;
+    await this.actor.update({ [fieldPath]: Math.max(0, Math.min(maxVal, newValue)) });
   }
 
   /**
-   * Gère le clic sur une case de la jauge d'Exposition.
-   * @param {Event} event
+   * Crée un nouvel item possédé.
    */
-  async _onExposureClick(event) {
+  async _onItemCreate(event) {
     event.preventDefault();
-    const index   = parseInt(event.currentTarget.dataset.index);
-    const current = this.actor.system.exposure?.value ?? 0;
-    const newValue = index < current ? index : index + 1;
-    await this.actor.update({
-      'system.exposure.value': Math.max(0, Math.min(5, newValue)),
-    });
+    const header   = event.currentTarget;
+    const type     = header.dataset.type;
+    const data     = foundry.utils.duplicate(header.dataset);
+    const name     = `Nouveau ${type}`;
+    const itemData = { name, type, system: data };
+    delete itemData.system['type'];
+    return await Item.create(itemData, { parent: this.actor });
   }
 }
