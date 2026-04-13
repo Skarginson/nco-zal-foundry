@@ -194,11 +194,12 @@
 .nco.sheet .sheet-tabs {
   background: var(--nco-surface-low);
   border-bottom: 1px solid var(--nco-border);
-  padding: 0 6px;
+  padding: 0 4px;
   display: flex;
   gap: 0;
   flex-shrink: 0;
-  min-height: 0;
+  height: auto !important;
+  min-height: 0 !important;
   line-height: 1;
 }
 
@@ -236,7 +237,7 @@
 
 /* Tabs du personnage : colonnes flexcol avec gap */
 .nco.sheet.character .sheet-body .tab {
-  gap: 6px;
+  gap: 1 px;
 }
 
 /* ============================================
