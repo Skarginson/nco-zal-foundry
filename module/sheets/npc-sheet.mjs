@@ -11,8 +11,10 @@ export class NCONPCSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
     classes: ['nco', 'sheet', 'actor', 'npc'],
     position: { width: 480, height: 520 },
+    window: { resizable: true },
     form: { submitOnChange: true, closeOnSubmit: false },
     actions: {
+      editImage: NCONPCSheet._onEditImage,
       changeTab: NCONPCSheet._onChangeTab,
       // Effets actifs
       create: NCONPCSheet._onEffectAction,
@@ -79,6 +81,16 @@ export class NCONPCSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   /* -------------------------------------------- */
   /* Action Handlers                               */
   /* -------------------------------------------- */
+
+  static async _onEditImage(event, target) {
+    const attr    = target.dataset.edit;
+    const current = foundry.utils.getProperty(this.document._source, attr);
+    new FilePicker({
+      type:     'image',
+      current:  current,
+      callback: (src) => this.document.update({ [attr]: src }),
+    }).browse();
+  }
 
   static _onChangeTab(event, target) {
     this._activeTab = target.dataset.tab;

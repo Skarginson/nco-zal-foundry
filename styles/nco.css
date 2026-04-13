@@ -82,7 +82,7 @@
   font-family: var(--nco-font-body);
   font-size: 0.8em;
   font-weight: 600;
-  color: var(--nco-text-muted);
+  color: var(--nco-text);
 }
 
 /* ============================================
@@ -115,7 +115,7 @@
   border-bottom: 2px solid var(--nco-border-dim);
   color: var(--nco-text);
   font-family: var(--nco-font-heading);
-  font-size: 1.6em;
+  font-size: 1.1em;
   font-weight: 700;
   width: 100%;
   padding: 2px 0;
@@ -1449,6 +1449,9 @@
   font-size: 0.82em;
   color: var(--nco-text);
   cursor: pointer;
+  background: var(--nco-bg);
+  border-radius: 3px;
+  padding: 2px 5px;
 }
 
 .cond-label input[type="checkbox"] {
@@ -1501,12 +1504,13 @@
   padding: 3px 4px;
   border-radius: 2px;
   min-height: 24px;
+  flex-wrap: nowrap;
 }
 
 .gear-item:hover { background: var(--nco-surface-low); }
 
 .gear-name {
-  flex: 1;
+  flex-shrink: 0;
   font-size: 0.85em;
   color: var(--nco-text);
 }
@@ -1535,9 +1539,10 @@
 }
 
 .gear-tags {
+  flex: 1;
   flex-wrap: wrap;
   gap: 4px;
-  padding: 3px 0 2px 8px;
+  padding: 0 6px;
 }
 
 .gear-item .item-controls {

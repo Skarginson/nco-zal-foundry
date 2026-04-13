@@ -14,6 +14,7 @@ export class NCOItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     position: { width: 480, height: 400 },
     form: { submitOnChange: true, closeOnSubmit: false },
     actions: {
+      editImage: NCOItemSheet._onEditImage,
       // Effets actifs
       create: NCOItemSheet._onEffectAction,
       edit:   NCOItemSheet._onEffectAction,
@@ -62,6 +63,16 @@ export class NCOItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
   /* -------------------------------------------- */
   /* Action Handlers                               */
   /* -------------------------------------------- */
+
+  static async _onEditImage(event, target) {
+    const attr    = target.dataset.edit;
+    const current = foundry.utils.getProperty(this.document._source, attr);
+    new FilePicker({
+      type:     'image',
+      current:  current,
+      callback: (src) => this.document.update({ [attr]: src }),
+    }).browse();
+  }
 
   static _onEffectAction(event, target) {
     if (!target.classList.contains('effect-control')) return;

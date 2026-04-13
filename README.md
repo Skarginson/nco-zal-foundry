@@ -11,20 +11,20 @@ Système FoundryVTT non officiel pour **Neon City Overdrive** (Peter Rudin-Burge
 
 ## Mécanique centrale
 
-NCO repose sur un pool de **dés d'Action (DA)** contre des **dés de Danger (DD)**, tous en d6.
+NCO repose sur un pool de **dés d'Action (DA)** et de **dés de Danger (DD)**, tous en d6, lancés ensemble.
 
 1. Le joueur constitue son pool : **1 DA de base** + bonus des Trademarks, Edges et Équipements actifs
 2. La situation ou les ennemis imposent des **DD**
-3. On compare le **meilleur DA** au **meilleur DD**
+3. **Chaque DD annule un DA de valeur égale** (un DD à 5 efface un DA à 5)
+4. On lit le **DA le plus haut restant** après annulations
 
 | Résultat | Condition |
 |---|---|
-| **Succès critique** | Meilleur DA = 6 et DA > DD |
-| **Succès solide** | Meilleur DA = 5 et DA > DD |
-| **Succès** | Meilleur DA = 4 et DA > DD |
-| **Succès partiel** | Meilleur DA = 3 et DA > DD, ou DA = DD |
-| **Échec** | DA < DD ou DA ≤ 2 |
-| **Désespéré** | 0 DA — on lance 2 DD et on prend le plus bas |
+| **Boon** *(succès + avantage)* | Plusieurs 6 restants après annulation |
+| **Succès** | Meilleur DA restant = 6 |
+| **Succès partiel** | Meilleur DA restant = 4 ou 5 |
+| **Échec** | Meilleur DA restant = 3 ou moins |
+| **Botch** *(désastre)* | Tous les DA annulés, ou seuls des 1 restent |
 
 ---
 
