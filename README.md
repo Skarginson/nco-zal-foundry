@@ -1,10 +1,11 @@
 # Neon City Overdrive — FoundryVTT System
 
-![Foundry v11](https://img.shields.io/badge/foundry-v11-green)
-![Foundry v12](https://img.shields.io/badge/foundry-v12-green)
+![Foundry v12+](https://img.shields.io/badge/foundry-v12%2B-green)
+![Verified v13](https://img.shields.io/badge/verified-v13-brightgreen)
 ![Version](https://img.shields.io/badge/version-0.1.0-blue)
+![Langues](https://img.shields.io/badge/langues-FR%20%7C%20EN-lightgrey)
 
-Système FoundryVTT pour **Neon City Overdrive** (Peter Rudin-Burgess / Free League Publishing), avec support intégré du cadre **Zalozhniy Quartet** (espionnage / horreur cosmique).
+Système FoundryVTT non officiel pour **Neon City Overdrive** (Peter Rudin-Burgess / Free League Publishing), avec support intégré du cadre **Zalozhniy Quartet** (espionnage / horreur cosmique).
 
 ---
 
@@ -12,81 +13,90 @@ Système FoundryVTT pour **Neon City Overdrive** (Peter Rudin-Burgess / Free Lea
 
 NCO repose sur un pool de **dés d'Action (DA)** contre des **dés de Danger (DD)**, tous en d6.
 
-1. Le joueur lance ses DA, la situation impose des DD
-2. On compare le **meilleur DA** au **meilleur DD**
-3. Le résultat dépend de la valeur du meilleur DA et de la comparaison :
+1. Le joueur constitue son pool : **1 DA de base** + bonus des Trademarks, Edges et Équipements actifs
+2. La situation ou les ennemis imposent des **DD**
+3. On compare le **meilleur DA** au **meilleur DD**
 
 | Résultat | Condition |
 |---|---|
-| **Succès critique** | DA = 6 et DA > DD |
-| **Succès solide** | DA = 5 et DA > DD |
-| **Succès** | DA = 4 et DA > DD |
-| **Succès partiel** | DA = 3 et DA > DD, ou DA = DD |
-| **Échec** | DA < DD, ou DA ≤ 2 |
-| **Désespéré** | 0 DA — on lance 2 DD et on garde le plus bas |
+| **Succès critique** | Meilleur DA = 6 et DA > DD |
+| **Succès solide** | Meilleur DA = 5 et DA > DD |
+| **Succès** | Meilleur DA = 4 et DA > DD |
+| **Succès partiel** | Meilleur DA = 3 et DA > DD, ou DA = DD |
+| **Échec** | DA < DD ou DA ≤ 2 |
+| **Désespéré** | 0 DA — on lance 2 DD et on prend le plus bas |
 
 ---
 
 ## Fonctionnalités
 
-### Fiches de personnage
-- 4 traits (Body / Reflex / Mind / Presence) avec valeur en dés
-- Jauges Stress (0–8), Blessures (0–4), Crédit
-- Onglets : Principal · Identité · Équipement · Effets
+### Fiche de personnage
 
-### Fiches PNJ
-- Pool de dés fixes (DA / DD)
-- Jauge de Blessures configurable
-- Notes MJ
+**Onglet Trademarks**
+- Trademarks activables (clic pour activer / désactiver)
+- Jusqu'à 5 Edges par Trademark, activables individuellement quand le Trademark est actif
+- Ajout / suppression / édition inline
+
+**Onglet État**
+- Hits (3 cases cliquables)
+- 6 Conditions (Angry, Dazed, Exhausted, Scared, Restrained, Weakened)
+- Stunt Points (3 cases)
+- 8 Traumas + 2 Flaws (champs texte)
+
+**Onglet Équipement & XP**
+- Gear basique (nom) et spécial (nom + jusqu'à 5 tags activables)
+- Stash (5 cases)
+- Drive (texte + 9 cases de progression)
+- XP (15 cases en 3 groupes)
+
+**Dialog de jet de dés**
+- Pré-rempli automatiquement depuis les Trademarks/Edges/Tags actifs
+- Saisie manuelle des DD
+- Totaux mis à jour en temps réel
+- Résultat posté dans le chat avec dés colorés
+
+### Fiche de PNJ (Menace)
+
+- Tags, Drive, Actions (description des actions disponibles)
+- Harm (valeur/max configurable) + Danger Dice pool
+- Notes MJ (éditeur ProseMirror)
+- Effets actifs
 
 ### Items
-| Type | Description |
-|---|---|
-| **Gear** | Équipement avec bonus en DA et coût en Crédit |
-| **Move** | Capacité spéciale avec déclencheur et effet |
-| **Contact** | Allié avec expertise et loyauté |
-| **Tag** | Descripteur narratif (positif / négatif / neutre) |
 
-### Lancer de dés
-- Clic sur un trait → dialog de configuration
-- Saisie du bonus équipement, aide alliée (+1 DA), dés de danger
-- Totaux mis à jour en temps réel
-- Message de chat avec les dés colorés (meilleur dé mis en évidence) et badge de résultat
+| Type | Usage | Champs clés |
+|---|---|---|
+| **Trademark** | Identité du personnage | Nom, 5 Edges activables |
+| **Gear** | Équipement | Basique ou Spécial (5 tags activables) |
+| **Move** | Capacité spéciale | Déclencheur, effet, bonus DA |
+| **Contact** | Allié | Loyauté, expertise |
+| **Tag** | Descripteur narratif | Type (positif / négatif / neutre) |
+| **Asset** *(Zalozhniy)* | Ressource d'agent | Type, fiabilité, état "grillé" |
+| **Threat** *(Zalozhniy)* | Antagoniste structuré | Pool DD, seuil d'exposition |
 
 ---
 
-## Zalozhniy Quartet
+## Mode Zalozhniy Quartet
 
-Activez le mode Zalozhniy dans **Paramètres → Système** pour accéder aux règles d'espionnage / horreur :
+Activez dans **Paramètres → Système → Mode de jeu** pour les règles espionnage / horreur :
 
-**Modifications :**
-- Renommage des traits (Physique / Terrain / Analyse / Couverture)
-- **Couverture** : trait 1–4 représentant la solidité de la légende du personnage
-- **Sanité** : jauge 0–6 (activable séparément)
-- **Exposition** : track de mission 0–5, cliquable directement sur la fiche
-
-**Nouveaux types d'items :**
-- **Asset** (Ressource) : humain / technique / financier / information — avec fiabilité et état "grillé"
-- **Threat** (Menace) : antagoniste structuré avec pool DD et seuil d'exposition
+- **Assets** : ressources humaines, techniques, financières ou informationnelles — avec état "grillé"
+- **Threats** : antagonistes avec pool de DD dédié et seuil d'exposition
+- **Sanité** *(optionnelle)* : activable séparément dans les paramètres
 
 ---
 
 ## Installation
 
-### Via lien symbolique (développement)
+### Via lien symbolique (développement local)
 
 ```bash
 ln -s /chemin/vers/nco-zal-foundry ~/.local/share/FoundryVTT/Data/systems/neon-city-overdrive
 ```
 
-### Via téléchargement
+### Via copie
 
-Copiez le contenu du repo dans :
-```
-<FoundryData>/systems/neon-city-overdrive/
-```
-
-Puis redémarrez Foundry et créez un monde avec le système **Neon City Overdrive**.
+Copiez le contenu du repo dans `<FoundryData>/systems/neon-city-overdrive/`, puis redémarrez Foundry et créez un monde avec le système **Neon City Overdrive**.
 
 ---
 
@@ -97,19 +107,19 @@ neon-city-overdrive/
 ├── system.json
 ├── template.json
 ├── module/
-│   ├── nco.mjs                  # Point d'entrée
-│   ├── documents/               # Classes Actor et Item
-│   ├── sheets/                  # Feuilles de personnage
-│   ├── helpers/                 # Dés, config, settings, effets
-│   └── apps/                    # Dialog de jet de dés
+│   ├── nco.mjs              # Point d'entrée, hooks, helpers Handlebars
+│   ├── documents/           # Classes NCOActor et NCOItem
+│   ├── sheets/              # Fiches personnage, PNJ, items (ApplicationV2)
+│   ├── apps/                # Dialog de jet de dés
+│   └── helpers/             # Dés, config, settings, effets actifs
 ├── templates/
-│   ├── actor/                   # Fiches HBS
-│   ├── item/                    # Fiches items
-│   ├── dialog/                  # Dialog de configuration
-│   └── chat/                    # Messages de résultat
+│   ├── actor/               # Fiches HBS actor + partials
+│   ├── item/                # Fiches HBS items
+│   ├── dialog/              # Dialog de configuration du jet
+│   └── chat/                # Messages de résultat
 ├── lang/
-│   ├── en.json
-│   └── fr.json
+│   ├── fr.json
+│   └── en.json
 └── styles/
     └── nco.css
 ```
@@ -118,7 +128,8 @@ neon-city-overdrive/
 
 ## Compatibilité
 
-- Foundry VTT v11 et v12
+- Foundry VTT **v12+**, vérifié sur **v13**
+- Utilise l'API **ApplicationV2** (AppV2)
 - Langues : Français · English
 
 ---
@@ -126,5 +137,5 @@ neon-city-overdrive/
 ## Références
 
 - [Neon City Overdrive](https://freeleaguepublishing.com/) — Peter Rudin-Burgess / Free League Publishing
+- [Zalozhniy Quartet](https://freeleaguepublishing.com/) — Free League Publishing
 - [Foundry VTT System Development](https://foundryvtt.com/article/system-development/)
-- [Foundry API](https://foundryvtt.com/api/)

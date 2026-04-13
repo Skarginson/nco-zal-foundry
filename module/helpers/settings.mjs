@@ -15,10 +15,9 @@ export function registerSettings() {
     },
     default: 'nco_standard',
     onChange: () => {
-      // Rafraîchit toutes les fiches ouvertes quand le mode change
-      Object.values(ui.windows)
-        .filter((w) => w instanceof ActorSheet || w instanceof ItemSheet)
-        .forEach((w) => w.render(false));
+      for (const app of foundry.applications.instances.values()) {
+        if (app.document instanceof Actor || app.document instanceof Item) app.render();
+      }
     },
   });
 
@@ -31,9 +30,9 @@ export function registerSettings() {
     type: Boolean,
     default: false,
     onChange: () => {
-      Object.values(ui.windows)
-        .filter((w) => w instanceof ActorSheet)
-        .forEach((w) => w.render(false));
+      for (const app of foundry.applications.instances.values()) {
+        if (app.document instanceof Actor) app.render();
+      }
     },
   });
 }
