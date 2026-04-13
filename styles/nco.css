@@ -194,7 +194,7 @@
 .nco.sheet .sheet-tabs {
   background: var(--nco-surface-low);
   border-bottom: 1px solid var(--nco-border);
-  padding: 0 8px;
+  padding: 0 6px;
   display: flex;
   gap: 0;
   flex-shrink: 0;
@@ -204,10 +204,10 @@
 
 .nco.sheet .sheet-tabs .item {
   font-family: var(--nco-font-body);
-  font-size: 0.78em;
+  font-size: 0.75em;
   font-weight: 600;
   color: var(--nco-text-muted);
-  padding: 6px 10px;
+  padding: 4px 8px;
   border-bottom: 2px solid transparent;
   transition: color 0.15s, border-color 0.15s;
   cursor: pointer;

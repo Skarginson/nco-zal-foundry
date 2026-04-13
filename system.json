@@ -16,21 +16,6 @@
     { "lang": "en", "name": "English", "path": "lang/en.json" },
     { "lang": "fr", "name": "Français", "path": "lang/fr.json" }
   ],
-  "documentTypes": {
-    "Actor": {
-      "character": {},
-      "npc": {}
-    },
-    "Item": {
-      "gear": {},
-      "move": {},
-      "contact": {},
-      "tag": {},
-      "asset": {},
-      "threat": {},
-      "trademark": {}
-    }
-  },
   "packs": [],
   "packFolders": [],
   "socket": false,
