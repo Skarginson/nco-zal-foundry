@@ -79,7 +79,18 @@ export class NCOActorSheet extends foundry.appv1.sheets.ActorSheet {
     for (const item of context.items) {
       item.img = item.img || Item.DEFAULT_ICON;
       switch (item.type) {
-        case 'gear':      gear.push(item);       break;
+        case 'gear':
+          if (item.system.gear_type === 'special') {
+            item.tagsArray = [1, 2, 3, 4, 5]
+              .map((n) => ({
+                field:  `tag${n}`,
+                value:  item.system[`tag${n}`],
+                active: item.system[`tag${n}_active`],
+              }))
+              .filter((t) => t.value?.trim());
+          }
+          gear.push(item);
+          break;
         case 'trademark':
           item.edgesArray = [1, 2, 3, 4, 5]
             .map((n) => ({
@@ -146,14 +157,20 @@ export class NCOActorSheet extends foundry.appv1.sheets.ActorSheet {
       onManageActiveEffect(ev, document);
     });
 
-    // Bouton de lancer de dés — pré-remplit le bonus depuis les trademarks/edges actifs
+    // Bouton de lancer de dés — pré-remplit le bonus depuis les trademarks/edges/gear actifs
     html.on('click', '.btn-open-roll', () => {
       let bonusDA = 0;
       for (const item of this.actor.items) {
-        if (item.type !== 'trademark' || !item.system.active) continue;
-        bonusDA++; // +1 par trademark actif
-        for (let n = 1; n <= 5; n++) {
-          if (item.system[`edge${n}`]?.trim() && item.system[`edge${n}_active`]) bonusDA++;
+        if (item.type === 'trademark') {
+          if (!item.system.active) continue;
+          bonusDA++;
+          for (let n = 1; n <= 5; n++) {
+            if (item.system[`edge${n}`]?.trim() && item.system[`edge${n}_active`]) bonusDA++;
+          }
+        } else if (item.type === 'gear' && item.system.gear_type === 'special') {
+          for (let n = 1; n <= 5; n++) {
+            if (item.system[`tag${n}`]?.trim() && item.system[`tag${n}_active`]) bonusDA++;
+          }
         }
       }
       NCORollDialog.show(this.actor, { bonusDA });
@@ -175,12 +192,23 @@ export class NCOActorSheet extends foundry.appv1.sheets.ActorSheet {
     });
 
     // Activer / désactiver un edge (seulement si le trademark parent est actif)
-    html.on('click', '.edge-toggle', async (ev) => {
+    html.on('click', '.trademark-block .edge-toggle', async (ev) => {
       ev.stopPropagation();
       const block  = $(ev.currentTarget).closest('.trademark-block');
       const itemId = block.data('itemId');
       const item   = this.actor.items.get(itemId);
       if (!item || !item.system.active) return;
+      const field = ev.currentTarget.dataset.field;
+      await item.update({ [`system.${field}_active`]: !item.system[`${field}_active`] });
+    });
+
+    // Activer / désactiver un tag de gear special
+    html.on('click', '.gear-item .edge-toggle', async (ev) => {
+      ev.stopPropagation();
+      const li     = $(ev.currentTarget).closest('.gear-item');
+      const itemId = li.data('itemId');
+      const item   = this.actor.items.get(itemId);
+      if (!item) return;
       const field = ev.currentTarget.dataset.field;
       await item.update({ [`system.${field}_active`]: !item.system[`${field}_active`] });
     });

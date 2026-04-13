@@ -109,10 +109,11 @@
       "NamePlaceholder": "Item name..."
     },
     "Gear": {
+      "Type": "Type",
+      "TypeBasic": "Basic",
+      "TypeSpecial": "Special",
       "Tags": "Tags",
-      "ActionDiceBonus": "Action Dice Bonus",
-      "HarmCapacity": "Harm Capacity",
-      "CredCost": "Cred Cost"
+      "TagPlaceholder": "Tag…"
     },
     "Move": {
       "Trigger": "Trigger",

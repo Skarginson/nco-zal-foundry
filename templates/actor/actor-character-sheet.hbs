@@ -161,15 +161,27 @@
         </div>
         <ul class="gear-list">
           {{#each gear as |item|}}
-          <li class="gear-item flexrow" data-item-id="{{item._id}}">
-            <span class="gear-name">{{item.name}}</span>
-            {{#if item.system.action_dice_bonus}}
-            <span class="gear-bonus">+{{item.system.action_dice_bonus}} DA</span>
-            {{/if}}
-            {{#if @root.editable}}
-            <div class="item-controls flexrow">
-              <a class="item-edit" title="{{localize 'NCO.Item.Edit'}}"><i class="fas fa-edit"></i></a>
-              <a class="item-delete" title="{{localize 'NCO.Item.Delete'}}"><i class="fas fa-trash"></i></a>
+          <li class="gear-item flexcol" data-item-id="{{item._id}}">
+            <div class="gear-item-row flexrow">
+              <span class="gear-name {{#if (eq item.system.gear_type 'special')}}gear-special{{/if}}">
+                {{item.name}}
+              </span>
+              {{#if @root.editable}}
+              <div class="item-controls flexrow">
+                <a class="item-edit" title="{{localize 'NCO.Item.Edit'}}"><i class="fas fa-edit"></i></a>
+                <a class="item-delete" title="{{localize 'NCO.Item.Delete'}}"><i class="fas fa-trash"></i></a>
+              </div>
+              {{/if}}
+            </div>
+            {{#if (eq item.system.gear_type 'special')}}
+            <div class="gear-tags flexrow">
+              {{#each item.tagsArray as |tag|}}
+              <button type="button"
+                      class="edge-toggle {{#if tag.active}}is-active{{/if}}"
+                      data-field="{{tag.field}}">
+                {{tag.value}}
+              </button>
+              {{/each}}
             </div>
             {{/if}}
           </li>

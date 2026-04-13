@@ -109,10 +109,11 @@
       "NamePlaceholder": "Nom de l'item..."
     },
     "Gear": {
+      "Type": "Type",
+      "TypeBasic": "Basique",
+      "TypeSpecial": "Spécial",
       "Tags": "Tags",
-      "ActionDiceBonus": "Bonus en Dés d'Action",
-      "HarmCapacity": "Capacité de Blessures",
-      "CredCost": "Coût en Crédit"
+      "TagPlaceholder": "Tag…"
     },
     "Move": {
       "Trigger": "Déclencheur",

@@ -58,11 +58,12 @@
   "Item": {
     "types": ["gear", "move", "contact", "tag", "asset", "threat", "trademark"],
     "gear": {
-      "description": "",
-      "tags": "",
-      "action_dice_bonus": 0,
-      "harm_capacity": 0,
-      "cred_cost": 0
+      "gear_type": "basic",
+      "tag1": "", "tag1_active": false,
+      "tag2": "", "tag2_active": false,
+      "tag3": "", "tag3_active": false,
+      "tag4": "", "tag4_active": false,
+      "tag5": "", "tag5_active": false
     },
     "move": {
       "description": "",

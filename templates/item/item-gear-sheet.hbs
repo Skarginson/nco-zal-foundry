@@ -3,42 +3,50 @@
     <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" width="60" height="60"/>
     <div class="header-fields flexcol">
       <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'NCO.Item.NamePlaceholder'}}"/></h1>
-      <div class="item-type-label">{{localize 'NCO.Item.Gear'}}</div>
     </div>
   </header>
 
-  <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="description">{{localize 'NCO.Tab.Description'}}</a>
-    <a class="item" data-tab="details">{{localize 'NCO.Tab.Details'}}</a>
-    <a class="item" data-tab="effets">{{localize 'NCO.Tab.Effets'}}</a>
-  </nav>
+  <section class="sheet-body flexcol" style="padding: 12px 16px; gap: 10px; overflow-y: auto;">
 
-  <section class="sheet-body">
-    <div class="tab description" data-group="primary" data-tab="description">
-      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    {{!-- Type --}}
+    <div class="form-group">
+      <label style="font-size:0.72em; font-weight:700; text-transform:uppercase; color:var(--nco-text-muted);">
+        {{localize 'NCO.Gear.Type'}}
+      </label>
+      <select name="system.gear_type">
+        <option value="basic"   {{#if (eq system.gear_type 'basic')}}selected{{/if}}>{{localize 'NCO.Gear.TypeBasic'}}</option>
+        <option value="special" {{#if (eq system.gear_type 'special')}}selected{{/if}}>{{localize 'NCO.Gear.TypeSpecial'}}</option>
+      </select>
     </div>
 
-    <div class="tab details flexcol" data-group="primary" data-tab="details">
-      <div class="form-group">
-        <label>{{localize 'NCO.Gear.Tags'}}</label>
-        <input type="text" name="system.tags" value="{{system.tags}}" placeholder="ex: silencieux, lourd, illegal"/>
+    {{!-- Tags (special uniquement) --}}
+    {{#if (eq system.gear_type 'special')}}
+    <div class="form-group">
+      <label style="font-size:0.72em; font-weight:700; text-transform:uppercase; color:var(--nco-text-muted);">
+        {{localize 'NCO.Gear.Tags'}}
+      </label>
+      <div class="flexrow" style="gap:6px; align-items:center; margin-bottom:4px;">
+        <span style="color:var(--nco-primary); font-weight:700; flex-shrink:0;">+</span>
+        <input type="text" name="system.tag1" value="{{system.tag1}}" placeholder="{{localize 'NCO.Gear.TagPlaceholder'}}" style="flex:1;"/>
       </div>
-      <div class="form-group">
-        <label>{{localize 'NCO.Gear.ActionDiceBonus'}}</label>
-        <input type="number" name="system.action_dice_bonus" value="{{system.action_dice_bonus}}" min="0" data-dtype="Number"/>
+      <div class="flexrow" style="gap:6px; align-items:center; margin-bottom:4px;">
+        <span style="color:var(--nco-primary); font-weight:700; flex-shrink:0;">+</span>
+        <input type="text" name="system.tag2" value="{{system.tag2}}" placeholder="{{localize 'NCO.Gear.TagPlaceholder'}}" style="flex:1;"/>
       </div>
-      <div class="form-group">
-        <label>{{localize 'NCO.Gear.HarmCapacity'}}</label>
-        <input type="number" name="system.harm_capacity" value="{{system.harm_capacity}}" min="0" data-dtype="Number"/>
+      <div class="flexrow" style="gap:6px; align-items:center; margin-bottom:4px;">
+        <span style="color:var(--nco-primary); font-weight:700; flex-shrink:0;">+</span>
+        <input type="text" name="system.tag3" value="{{system.tag3}}" placeholder="{{localize 'NCO.Gear.TagPlaceholder'}}" style="flex:1;"/>
       </div>
-      <div class="form-group">
-        <label>{{localize 'NCO.Gear.CredCost'}}</label>
-        <input type="number" name="system.cred_cost" value="{{system.cred_cost}}" min="0" data-dtype="Number"/>
+      <div class="flexrow" style="gap:6px; align-items:center; margin-bottom:4px;">
+        <span style="color:var(--nco-primary); font-weight:700; flex-shrink:0;">+</span>
+        <input type="text" name="system.tag4" value="{{system.tag4}}" placeholder="{{localize 'NCO.Gear.TagPlaceholder'}}" style="flex:1;"/>
+      </div>
+      <div class="flexrow" style="gap:6px; align-items:center; margin-bottom:4px;">
+        <span style="color:var(--nco-primary); font-weight:700; flex-shrink:0;">+</span>
+        <input type="text" name="system.tag5" value="{{system.tag5}}" placeholder="{{localize 'NCO.Gear.TagPlaceholder'}}" style="flex:1;"/>
       </div>
     </div>
+    {{/if}}
 
-    <div class="tab effets flexcol" data-group="primary" data-tab="effets">
-      {{> "systems/neon-city-overdrive/templates/item/parts/item-effects.hbs"}}
-    </div>
   </section>
 </form>

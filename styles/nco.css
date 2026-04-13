@@ -1524,6 +1524,22 @@
   padding: 2px 2px 4px;
 }
 
+.gear-item-row {
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+}
+
+.gear-special {
+  font-weight: 600;
+}
+
+.gear-tags {
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 3px 0 2px 8px;
+}
+
 .gear-item .item-controls {
   gap: 3px;
   opacity: 0;
