@@ -17,7 +17,7 @@
       </div>
       <div class="dice-row flexrow">
         <label class="dice-label">{{localize 'NCO.Roll.BonusDA'}}</label>
-        <input type="number" name="bonus-da" value="0" min="-1" max="10" class="dice-input"/>
+        <input type="number" name="bonus-da" value="{{bonusDA}}" min="-10" max="20" class="dice-input"/>
       </div>
     </div>
 
@@ -37,7 +37,7 @@
     <div class="dice-totals flexrow">
       <div class="total-block flex-group-center">
         <span class="total-label">{{localize 'NCO.Roll.TotalDA'}}</span>
-        <span class="total-da total-action">1</span>
+        <span class="total-da total-action">{{totalDA}}</span>
       </div>
       <span class="total-vs">vs</span>
       <div class="total-block flex-group-center">
