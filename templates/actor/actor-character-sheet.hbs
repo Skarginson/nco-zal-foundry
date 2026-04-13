@@ -1,8 +1,8 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
 
-  {{!-- En-tête : portrait + nom + bouton de jet --}}
+  {{!-- En-tête --}}
   <header class="sheet-header flexrow">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="72" width="72"/>
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
     <div class="header-fields flexcol">
       <h1 class="charname">
         <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'NCO.Actor.Name'}}"/>
@@ -26,13 +26,13 @@
     {{!-- ===== Tab Trademarks ===== --}}
     <div class="tab trademarks flexcol" data-group="primary" data-tab="trademarks">
 
-      <div class="tab-section-header flexrow">
-        {{#if editable}}
+      {{#if editable}}
+      <div class="tab-section-header">
         <a class="item-create tm-create" data-type="trademark" title="{{localize 'NCO.Item.AddTrademark'}}">
           <i class="fas fa-plus"></i> {{localize 'NCO.Item.AddTrademark'}}
         </a>
-        {{/if}}
       </div>
+      {{/if}}
 
       {{#each trademarks as |tm|}}
       <div class="trademark-block" data-item-id="{{tm._id}}">
@@ -63,12 +63,12 @@
       </div>
       {{/each}}
 
-    </div>{{!-- /tab trademarks --}}
+    </div>
 
     {{!-- ===== Tab État ===== --}}
     <div class="tab etat flexcol" data-group="primary" data-tab="etat">
 
-      {{!-- HITS --}}
+      {{!-- HITS : 3 cases cliquables --}}
       <div class="char-block">
         <h4 class="block-title">{{localize 'NCO.Actor.Hits'}}</h4>
         <div class="pip-row flexrow">
@@ -78,91 +78,74 @@
         </div>
       </div>
 
-      {{!-- CONDITIONS --}}
+      {{!-- CONDITIONS : 6 cases --}}
       <div class="char-block">
         <h4 class="block-title">{{localize 'NCO.Actor.Conditions'}}</h4>
         <div class="conditions-grid">
           <label class="cond-label">
-            <input type="checkbox" name="system.conditions.angry"
-                   {{#if system.conditions.angry}}checked{{/if}}/>
+            <input type="checkbox" name="system.conditions.angry" {{#if system.conditions.angry}}checked{{/if}}/>
             {{localize 'NCO.Condition.Angry'}}
           </label>
           <label class="cond-label">
-            <input type="checkbox" name="system.conditions.dazed"
-                   {{#if system.conditions.dazed}}checked{{/if}}/>
+            <input type="checkbox" name="system.conditions.dazed" {{#if system.conditions.dazed}}checked{{/if}}/>
             {{localize 'NCO.Condition.Dazed'}}
           </label>
           <label class="cond-label">
-            <input type="checkbox" name="system.conditions.exhausted"
-                   {{#if system.conditions.exhausted}}checked{{/if}}/>
+            <input type="checkbox" name="system.conditions.exhausted" {{#if system.conditions.exhausted}}checked{{/if}}/>
             {{localize 'NCO.Condition.Exhausted'}}
           </label>
           <label class="cond-label">
-            <input type="checkbox" name="system.conditions.scared"
-                   {{#if system.conditions.scared}}checked{{/if}}/>
+            <input type="checkbox" name="system.conditions.scared" {{#if system.conditions.scared}}checked{{/if}}/>
             {{localize 'NCO.Condition.Scared'}}
           </label>
           <label class="cond-label">
-            <input type="checkbox" name="system.conditions.restrained"
-                   {{#if system.conditions.restrained}}checked{{/if}}/>
+            <input type="checkbox" name="system.conditions.restrained" {{#if system.conditions.restrained}}checked{{/if}}/>
             {{localize 'NCO.Condition.Restrained'}}
           </label>
           <label class="cond-label">
-            <input type="checkbox" name="system.conditions.weakened"
-                   {{#if system.conditions.weakened}}checked{{/if}}/>
+            <input type="checkbox" name="system.conditions.weakened" {{#if system.conditions.weakened}}checked{{/if}}/>
             {{localize 'NCO.Condition.Weakened'}}
           </label>
-          <label class="cond-label cond-extra">
-            <input type="checkbox" name="system.conditions.extra"
-                   {{#if system.conditions.extra}}checked{{/if}}/>
-          </label>
         </div>
       </div>
 
-      {{!-- STUNT POINTS --}}
-      <div class="char-block stunt-block flexrow">
-        <h4 class="block-title stunt-title">{{localize 'NCO.Actor.StuntPoints'}}</h4>
-        <input type="number" name="system.stunt_points" value="{{system.stunt_points}}"
-               min="0" data-dtype="Number" class="stunt-input"/>
+      {{!-- STUNT POINTS : 3 cases cliquables --}}
+      <div class="char-block">
+        <h4 class="block-title">{{localize 'NCO.Actor.StuntPoints'}}</h4>
+        <div class="pip-row flexrow">
+          {{#each stuntBoxes as |box|}}
+          <span class="pip stunt-pip {{#if box.filled}}pip-on{{/if}}" data-index="{{box.index}}"></span>
+          {{/each}}
+        </div>
       </div>
 
-      {{!-- TRAUMAS --}}
+      {{!-- TRAUMAS : 8 champs en 2 colonnes --}}
       <div class="char-block">
         <h4 class="block-title">{{localize 'NCO.Actor.Traumas'}}</h4>
-        <div class="line-row flexrow">
-          <span class="line-dash">—</span>
-          <input type="text" name="system.trauma1" value="{{system.trauma1}}"/>
-        </div>
-        <div class="line-row flexrow">
-          <span class="line-dash">—</span>
-          <input type="text" name="system.trauma2" value="{{system.trauma2}}"/>
-        </div>
-        <div class="line-row flexrow">
-          <span class="line-dash">—</span>
-          <input type="text" name="system.trauma3" value="{{system.trauma3}}"/>
-        </div>
-        <div class="line-row flexrow">
-          <span class="line-dash">—</span>
-          <input type="text" name="system.trauma4" value="{{system.trauma4}}"/>
+        <div class="trauma-grid">
+          <input type="text" name="system.trauma1" value="{{system.trauma1}}" placeholder="—"/>
+          <input type="text" name="system.trauma2" value="{{system.trauma2}}" placeholder="—"/>
+          <input type="text" name="system.trauma3" value="{{system.trauma3}}" placeholder="—"/>
+          <input type="text" name="system.trauma4" value="{{system.trauma4}}" placeholder="—"/>
+          <input type="text" name="system.trauma5" value="{{system.trauma5}}" placeholder="—"/>
+          <input type="text" name="system.trauma6" value="{{system.trauma6}}" placeholder="—"/>
+          <input type="text" name="system.trauma7" value="{{system.trauma7}}" placeholder="—"/>
+          <input type="text" name="system.trauma8" value="{{system.trauma8}}" placeholder="—"/>
         </div>
       </div>
 
       {{!-- FLAWS --}}
       <div class="char-block">
         <h4 class="block-title">{{localize 'NCO.Actor.Flaws'}}</h4>
-        <div class="line-row flexrow">
-          <span class="line-dash">—</span>
-          <input type="text" name="system.flaw1" value="{{system.flaw1}}"/>
-        </div>
-        <div class="line-row flexrow">
-          <span class="line-dash">—</span>
-          <input type="text" name="system.flaw2" value="{{system.flaw2}}"/>
+        <div class="trauma-grid">
+          <input type="text" name="system.flaw1" value="{{system.flaw1}}" placeholder="—"/>
+          <input type="text" name="system.flaw2" value="{{system.flaw2}}" placeholder="—"/>
         </div>
       </div>
 
-    </div>{{!-- /tab etat --}}
+    </div>
 
-    {{!-- ===== Tab Équipement & Avancement ===== --}}
+    {{!-- ===== Tab Équipement & XP ===== --}}
     <div class="tab equipement flexcol" data-group="primary" data-tab="equipement">
 
       {{!-- GEAR + STASH --}}
@@ -215,7 +198,7 @@
         </div>
       </div>
 
-      {{!-- EXPERIENCE POINTS --}}
+      {{!-- XP --}}
       <div class="char-block">
         <h4 class="block-title">{{localize 'NCO.Actor.XP'}}</h4>
         <div class="xp-track flexrow">
@@ -228,7 +211,7 @@
         </div>
       </div>
 
-    </div>{{!-- /tab equipement --}}
+    </div>
 
   </section>
 

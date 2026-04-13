@@ -194,20 +194,24 @@
 .nco.sheet .sheet-tabs {
   background: var(--nco-surface-low);
   border-bottom: 1px solid var(--nco-border);
-  padding: 0 12px;
+  padding: 0 8px;
   display: flex;
   gap: 0;
+  flex-shrink: 0;
+  min-height: 0;
+  line-height: 1;
 }
 
 .nco.sheet .sheet-tabs .item {
   font-family: var(--nco-font-body);
-  font-size: 0.8em;
+  font-size: 0.78em;
   font-weight: 600;
   color: var(--nco-text-muted);
-  padding: 9px 14px;
+  padding: 6px 10px;
   border-bottom: 2px solid transparent;
   transition: color 0.15s, border-color 0.15s;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .nco.sheet .sheet-tabs .item:hover {
@@ -1186,22 +1190,29 @@
    ============================================ */
 
 .nco.sheet.character .sheet-header {
-  gap: 12px;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.nco.sheet.character .profile-img {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
 }
 
 .nco.sheet.character .header-fields {
   flex: 1;
+  flex-direction: column;
   gap: 8px;
-  justify-content: space-between;
+  align-items: stretch;
 }
 
 .nco.sheet.character .charname {
-  flex: 1;
   margin: 0;
 }
 
 .nco.sheet.character .nco-roll-btn {
-  padding: 6px 14px;
+  padding: 7px 14px;
   background: var(--nco-primary);
   color: #fff;
   border: none;
@@ -1210,12 +1221,11 @@
   font-size: 0.82em;
   font-weight: 700;
   cursor: pointer;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 5px;
-  white-space: nowrap;
+  justify-content: center;
+  gap: 6px;
   transition: background 0.15s;
-  align-self: flex-end;
 }
 
 .nco.sheet.character .nco-roll-btn:hover {
@@ -1427,58 +1437,33 @@
 
 .cond-extra { grid-column: 1 / -1; }
 
-/* TRAUMAS / FLAWS */
-.line-row {
-  align-items: center;
-  gap: 5px;
-  margin-bottom: 3px;
+/* TRAUMAS / FLAWS — grille 2 colonnes */
+.trauma-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
 }
 
-.line-dash {
-  font-size: 0.85em;
-  color: var(--nco-text-muted);
-  flex-shrink: 0;
-  width: 10px;
-  text-align: center;
-}
-
-.line-row input[type="text"] {
-  flex: 1;
+.trauma-grid input[type="text"] {
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--nco-border-dim);
   font-size: 0.85em;
   color: var(--nco-text);
-  padding: 1px 2px;
+  padding: 2px 2px;
+  width: 100%;
+  font-family: var(--nco-font-body);
 }
 
-.line-row input[type="text"]:focus {
+.trauma-grid input[type="text"]:focus {
   outline: none;
   border-bottom-color: var(--nco-primary);
 }
 
-/* STUNT POINTS */
-.stunt-block {
-  align-items: center;
-  gap: 10px;
-}
-
-.stunt-title {
-  flex: 1;
-  margin-bottom: 0;
-  border-bottom: none;
-}
-
-.stunt-input {
-  width: 48px;
-  text-align: center;
-  font-size: 1.1em;
-  font-weight: 700;
-  background: var(--nco-surface-low);
-  border: 1px solid var(--nco-border);
-  border-radius: 3px;
-  color: var(--nco-text);
-  padding: 3px 4px;
+/* STUNT POINTS — pip cliquable */
+.stunt-pip.pip-on {
+  background: var(--nco-partial);
+  border-color: var(--nco-partial-dark);
 }
 
 /* GEAR */

@@ -13,16 +13,22 @@
         "exhausted":  false,
         "scared":     false,
         "restrained": false,
-        "weakened":   false,
-        "extra":      false
+        "weakened":   false
       },
       "trauma1": "",
       "trauma2": "",
       "trauma3": "",
       "trauma4": "",
+      "trauma5": "",
+      "trauma6": "",
+      "trauma7": "",
+      "trauma8": "",
       "flaw1": "",
       "flaw2": "",
-      "stunt_points": 0,
+      "stunt_points": {
+        "value": 0,
+        "max": 3
+      },
       "stash": {
         "value": 0,
         "max": 5

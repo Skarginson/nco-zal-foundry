@@ -40,14 +40,16 @@ export class NCOActorSheet extends ActorSheet {
     context.config = CONFIG.NCO;
 
     // Jauges visualisées sous forme de cases cliquables
-    const hitsVal      = sys.hits?.value      ?? 0;
-    const stashVal     = sys.stash?.value     ?? 0;
-    const driveTrackVal = sys.drive_track?.value ?? 0;
-    const xpVal        = sys.xp?.value        ?? 0;
+    const hitsVal       = sys.hits?.value         ?? 0;
+    const stashVal      = sys.stash?.value        ?? 0;
+    const driveTrackVal = sys.drive_track?.value  ?? 0;
+    const xpVal         = sys.xp?.value           ?? 0;
+    const stuntVal      = sys.stunt_points?.value ?? 0;
 
     context.hitBoxes   = Array.from({ length: 3 }, (_, i) => ({ filled: i < hitsVal,       index: i }));
     context.stashBoxes = Array.from({ length: 5 }, (_, i) => ({ filled: i < stashVal,      index: i }));
     context.driveBoxes = Array.from({ length: 9 }, (_, i) => ({ filled: i < driveTrackVal, index: i }));
+    context.stuntBoxes = Array.from({ length: 3 }, (_, i) => ({ filled: i < stuntVal,      index: i }));
 
     // XP : 3 groupes de 5
     context.xpGroups = [0, 1, 2].map((g) =>
@@ -163,22 +165,12 @@ export class NCOActorSheet extends ActorSheet {
     // Bouton de lancer de dés
     html.on('click', '.btn-open-roll', () => NCORollDialog.show(this.actor));
 
-    // Cases cliquables : Hits
-    html.on('click', '.hit-pip', (ev) =>
-      this._onPipClick(ev, 'system.hits.value', 3)
-    );
-    // Cases cliquables : Stash
-    html.on('click', '.stash-pip', (ev) =>
-      this._onPipClick(ev, 'system.stash.value', 5)
-    );
-    // Cases cliquables : Drive track
-    html.on('click', '.drive-pip', (ev) =>
-      this._onPipClick(ev, 'system.drive_track.value', 9)
-    );
-    // Cases cliquables : XP
-    html.on('click', '.xp-pip', (ev) =>
-      this._onPipClick(ev, 'system.xp.value', 15)
-    );
+    // Cases cliquables
+    html.on('click', '.hit-pip',   (ev) => this._onPipClick(ev, 'system.hits.value',         3));
+    html.on('click', '.stash-pip', (ev) => this._onPipClick(ev, 'system.stash.value',        5));
+    html.on('click', '.drive-pip', (ev) => this._onPipClick(ev, 'system.drive_track.value',  9));
+    html.on('click', '.xp-pip',    (ev) => this._onPipClick(ev, 'system.xp.value',          15));
+    html.on('click', '.stunt-pip', (ev) => this._onPipClick(ev, 'system.stunt_points.value', 3));
 
     // Drag & drop pour macros
     if (this.actor.isOwner) {
