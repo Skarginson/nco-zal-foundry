@@ -10,7 +10,7 @@ import { onManageActiveEffect, prepareActiveEffectCategories } from '../helpers/
  *
  * @extends {ActorSheet}
  */
-export class NCONPCSheet extends ActorSheet {
+export class NCONPCSheet extends foundry.appv1.sheets.ActorSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

@@ -4,8 +4,8 @@
   "description": "Système FoundryVTT pour Neon City Overdrive et le Zalozhniy Quartet",
   "version": "0.1.0",
   "compatibility": {
-    "minimum": "11",
-    "verified": "12"
+    "minimum": "12",
+    "verified": "13"
   },
   "authors": [{ "name": "Ulysse" }],
   "license": "LICENSE.txt",

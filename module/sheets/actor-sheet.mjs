@@ -5,7 +5,7 @@ import { NCORollDialog } from '../apps/roll-dialog.mjs';
  * Feuille de personnage (character) pour Neon City Overdrive.
  * @extends {ActorSheet}
  */
-export class NCOActorSheet extends ActorSheet {
+export class NCOActorSheet extends foundry.appv1.sheets.ActorSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

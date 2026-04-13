@@ -144,7 +144,7 @@ export async function rollPool(actor, traitLabel, actionDice, dangerDice) {
     isBotch:   outcome === OUTCOME.BOTCH,
   };
 
-  const html = await renderTemplate(
+  const html = await foundry.applications.handlebars.renderTemplate(
     'systems/neon-city-overdrive/templates/chat/roll-result.hbs',
     templateData
   );

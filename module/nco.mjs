@@ -44,19 +44,21 @@ Hooks.once('init', function () {
   CONFIG.ActiveEffect.legacyTransferral = false;
 
   // Enregistrement des feuilles
-  Actors.unregisterSheet('core', ActorSheet);
-  Actors.registerSheet('neon-city-overdrive', NCOActorSheet, {
+  const ActorSheets = foundry.documents.collections.Actors;
+  const ItemSheets  = foundry.documents.collections.Items;
+  ActorSheets.unregisterSheet('core', foundry.appv1.sheets.ActorSheet);
+  ActorSheets.registerSheet('neon-city-overdrive', NCOActorSheet, {
     types: ['character'],
     makeDefault: true,
     label: 'NCO.SheetLabels.Character',
   });
-  Actors.registerSheet('neon-city-overdrive', NCONPCSheet, {
+  ActorSheets.registerSheet('neon-city-overdrive', NCONPCSheet, {
     types: ['npc'],
     makeDefault: true,
     label: 'NCO.SheetLabels.NPC',
   });
-  Items.unregisterSheet('core', ItemSheet);
-  Items.registerSheet('neon-city-overdrive', NCOItemSheet, {
+  ItemSheets.unregisterSheet('core', foundry.appv1.sheets.ItemSheet);
+  ItemSheets.registerSheet('neon-city-overdrive', NCOItemSheet, {
     makeDefault: true,
     label: 'NCO.SheetLabels.Item',
   });

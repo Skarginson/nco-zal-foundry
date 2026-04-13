@@ -5,7 +5,7 @@ import { onManageActiveEffect, prepareActiveEffectCategories } from '../helpers/
  * Chaque type a son propre template HBS.
  * @extends {ItemSheet}
  */
-export class NCOItemSheet extends ItemSheet {
+export class NCOItemSheet extends foundry.appv1.sheets.ItemSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

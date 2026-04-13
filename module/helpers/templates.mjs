@@ -3,7 +3,7 @@
  * @return {Promise}
  */
 export const preloadHandlebarsTemplates = async function () {
-  return loadTemplates([
+  return foundry.applications.handlebars.loadTemplates([
     // Partiels de la fiche personnage
     'systems/neon-city-overdrive/templates/actor/parts/actor-effects.hbs',
     // Fiche items
