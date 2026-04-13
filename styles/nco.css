@@ -205,7 +205,7 @@
 
 .nco.sheet .sheet-tabs .item {
   font-family: var(--nco-font-body);
-  font-size: 0.75em;
+  font-size: 1.5em;
   font-weight: 600;
   color: var(--nco-text-muted);
   padding: 1px 2px;
@@ -1260,92 +1260,113 @@
 /* Bloc trademark */
 .trademark-block {
   background: var(--nco-surface);
-  border: 1px solid var(--nco-border);
+  border: 1px solid var(--nco-border-dim);
   border-radius: 4px;
-  border-top: 3px solid var(--nco-primary);
   padding: 6px 8px;
   margin-bottom: 6px;
+  transition: border-color 0.15s;
+}
+
+.trademark-block.tm-is-active {
+  border-color: var(--nco-primary);
+  border-left: 3px solid var(--nco-primary);
 }
 
 .trademark-header {
   align-items: center;
   gap: 4px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
-.trademark-name-input {
+/* Bouton trademark (toggle actif) */
+.tm-toggle {
   flex: 1;
-  font-family: var(--nco-font-heading);
-  font-size: 0.95em;
-  font-weight: 700;
-  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-align: left;
+  background: none;
   border: none;
-  border-bottom: 1px solid var(--nco-border-dim);
-  color: var(--nco-text);
-  padding: 1px 2px;
-}
-
-.trademark-name-input:focus {
-  outline: none;
-  border-bottom-color: var(--nco-primary);
-}
-
-.trademark-name-ro {
+  cursor: pointer;
   font-family: var(--nco-font-heading);
-  font-size: 0.95em;
+  font-size: 1em;
   font-weight: 700;
+  color: var(--nco-text-muted);
+  padding: 2px 0;
+  transition: color 0.15s;
+}
+
+.tm-toggle .tm-icon {
+  font-size: 0.55em;
+  color: var(--nco-border);
+  transition: color 0.15s;
+}
+
+.tm-toggle.is-active {
+  color: var(--nco-primary-dark);
+}
+
+.tm-toggle.is-active .tm-icon {
+  color: var(--nco-primary);
+}
+
+.tm-toggle:hover {
   color: var(--nco-text);
 }
 
-.tm-delete {
+/* Boutons d'édition/suppression */
+.tm-edit, .tm-delete {
   color: var(--nco-text-dim);
   font-size: 0.78em;
   cursor: pointer;
-  padding: 2px 3px;
+  padding: 2px 4px;
   opacity: 0;
   transition: color 0.15s, opacity 0.15s;
 }
 
+.trademark-block:hover .tm-edit,
 .trademark-block:hover .tm-delete { opacity: 1; }
+
+.tm-edit:hover  { color: var(--nco-primary); }
 .tm-delete:hover { color: var(--nco-error); }
 
 /* Edges */
-.trademark-edges { gap: 2px; }
-
-.edge-row {
-  align-items: center;
+.trademark-edges {
+  flex-wrap: wrap;
   gap: 4px;
-  min-height: 22px;
+  padding-top: 4px;
 }
 
-.edge-bullet {
-  font-size: 0.8em;
-  font-weight: 700;
-  color: var(--nco-primary);
-  flex-shrink: 0;
-  width: 10px;
-  text-align: center;
+/* Bouton edge (toggle actif) */
+.edge-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: var(--nco-surface-low);
+  border: 1px solid var(--nco-border-dim);
+  border-radius: 3px;
+  color: var(--nco-text-muted);
+  font-family: var(--nco-font-body);
+  font-size: 0.78em;
+  font-weight: 600;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
-.trademark-edge-input {
-  flex: 1;
-  font-size: 0.82em;
-  background: transparent;
-  border: none;
-  border-bottom: 1px dotted var(--nco-border-dim);
-  color: var(--nco-text);
-  padding: 1px 2px;
+.edge-toggle:hover:not(:disabled) {
+  border-color: var(--nco-primary);
+  color: var(--nco-primary-dark);
 }
 
-.trademark-edge-input:focus {
-  outline: none;
-  border-bottom-color: var(--nco-primary);
+.edge-toggle.is-active {
+  background: var(--nco-primary-light);
+  border-color: var(--nco-primary);
+  color: var(--nco-primary-dark);
 }
 
-.edge-text {
-  flex: 1;
-  font-size: 0.82em;
-  color: var(--nco-text);
+.edge-toggle.edge-locked {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 /* ============================================

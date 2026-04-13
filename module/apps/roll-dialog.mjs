@@ -16,7 +16,8 @@ export class NCORollDialog extends Application {
    */
   constructor(actor, options = {}) {
     super(options);
-    this.actor = actor;
+    this.actor    = actor;
+    this.bonusDA  = options.bonusDA ?? 0;
   }
 
   /** @override */
@@ -40,9 +41,9 @@ export class NCORollDialog extends Application {
     return {
       actor:      this.actor,
       baseDice:   1,
-      bonusDA:    0,
+      bonusDA:    this.bonusDA,
       dangerDice: 0,
-      totalDA:    1,
+      totalDA:    1 + this.bonusDA,
       totalDD:    0,
     };
   }
@@ -97,7 +98,7 @@ export class NCORollDialog extends Application {
    * Crée et affiche la dialog pour un acteur donné.
    * @param {NCOActor} actor
    */
-  static async show(actor) {
-    new NCORollDialog(actor).render(true);
+  static async show(actor, options = {}) {
+    new NCORollDialog(actor, options).render(true);
   }
 }

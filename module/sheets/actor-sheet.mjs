@@ -81,14 +81,14 @@ export class NCOActorSheet extends ActorSheet {
       switch (item.type) {
         case 'gear':      gear.push(item);       break;
         case 'trademark':
-          // Pré-calcule un tableau ordonné des edges pour le template
-          item.edgesArray = [
-            { field: 'edge1', value: item.system.edge1 },
-            { field: 'edge2', value: item.system.edge2 },
-            { field: 'edge3', value: item.system.edge3 },
-            { field: 'edge4', value: item.system.edge4 },
-            { field: 'edge5', value: item.system.edge5 },
-          ];
+          item.edgesArray = [1, 2, 3, 4, 5]
+            .map((n) => ({
+              field:  `edge${n}`,
+              value:  item.system[`edge${n}`],
+              active: item.system[`edge${n}_active`],
+              usable: item.system.active,
+            }))
+            .filter((e) => e.value?.trim());
           trademarks.push(item);
           break;
       }
@@ -105,9 +105,9 @@ export class NCOActorSheet extends ActorSheet {
     super.activateListeners(html);
 
     // Ouvrir la fiche d'un item via le bouton edit
-    html.on('click', '.item-edit', (ev) => {
-      const li   = $(ev.currentTarget).parents('[data-item-id]');
-      const item = this.actor.items.get(li.data('itemId'));
+    html.on('click', '.item-edit, .tm-edit', (ev) => {
+      const container = $(ev.currentTarget).closest('[data-item-id]');
+      const item = this.actor.items.get(container.data('itemId'));
       if (item) item.sheet.render(true);
     });
 
@@ -137,22 +137,6 @@ export class NCOActorSheet extends ActorSheet {
       }
     });
 
-    // Édition inline : nom du trademark
-    html.on('change', '.trademark-name-input', async (ev) => {
-      const block  = $(ev.currentTarget).closest('.trademark-block');
-      const itemId = block.data('itemId');
-      const item   = this.actor.items.get(itemId);
-      if (item) await item.update({ name: ev.currentTarget.value });
-    });
-
-    // Édition inline : edge d'un trademark
-    html.on('change', '.trademark-edge-input', async (ev) => {
-      const block  = $(ev.currentTarget).closest('.trademark-block');
-      const itemId = block.data('itemId');
-      const item   = this.actor.items.get(itemId);
-      if (item) await item.update({ [`system.${ev.currentTarget.dataset.field}`]: ev.currentTarget.value });
-    });
-
     // Effets actifs
     html.on('click', '.effect-control', (ev) => {
       const row      = ev.currentTarget.closest('li');
@@ -162,8 +146,44 @@ export class NCOActorSheet extends ActorSheet {
       onManageActiveEffect(ev, document);
     });
 
-    // Bouton de lancer de dés
-    html.on('click', '.btn-open-roll', () => NCORollDialog.show(this.actor));
+    // Bouton de lancer de dés — pré-remplit le bonus depuis les trademarks/edges actifs
+    html.on('click', '.btn-open-roll', () => {
+      let bonusDA = 0;
+      for (const item of this.actor.items) {
+        if (item.type !== 'trademark' || !item.system.active) continue;
+        bonusDA++; // +1 par trademark actif
+        for (let n = 1; n <= 5; n++) {
+          if (item.system[`edge${n}`]?.trim() && item.system[`edge${n}_active`]) bonusDA++;
+        }
+      }
+      NCORollDialog.show(this.actor, { bonusDA });
+    });
+
+    // Activer / désactiver un trademark
+    html.on('click', '.tm-toggle', async (ev) => {
+      const block  = $(ev.currentTarget).closest('.trademark-block');
+      const itemId = block.data('itemId');
+      const item   = this.actor.items.get(itemId);
+      if (!item) return;
+      const newActive = !item.system.active;
+      const update = { 'system.active': newActive };
+      // Désactiver toutes les edges si le trademark est désactivé
+      if (!newActive) {
+        for (let n = 1; n <= 5; n++) update[`system.edge${n}_active`] = false;
+      }
+      await item.update(update);
+    });
+
+    // Activer / désactiver un edge (seulement si le trademark parent est actif)
+    html.on('click', '.edge-toggle', async (ev) => {
+      ev.stopPropagation();
+      const block  = $(ev.currentTarget).closest('.trademark-block');
+      const itemId = block.data('itemId');
+      const item   = this.actor.items.get(itemId);
+      if (!item || !item.system.active) return;
+      const field = ev.currentTarget.dataset.field;
+      await item.update({ [`system.${field}_active`]: !item.system[`${field}_active`] });
+    });
 
     // Cases cliquables
     html.on('click', '.hit-pip',   (ev) => this._onPipClick(ev, 'system.hits.value',         3));

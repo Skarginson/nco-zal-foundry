@@ -94,11 +94,12 @@
     },
     "trademark": {
       "description": "",
-      "edge1": "",
-      "edge2": "",
-      "edge3": "",
-      "edge4": "",
-      "edge5": ""
+      "active": false,
+      "edge1": "", "edge1_active": false,
+      "edge2": "", "edge2_active": false,
+      "edge3": "", "edge3_active": false,
+      "edge4": "", "edge4_active": false,
+      "edge5": "", "edge5_active": false
     }
   }
 }

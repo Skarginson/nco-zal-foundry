@@ -35,31 +35,32 @@
       {{/if}}
 
       {{#each trademarks as |tm|}}
-      <div class="trademark-block" data-item-id="{{tm._id}}">
+      <div class="trademark-block {{#if tm.system.active}}tm-is-active{{/if}}" data-item-id="{{tm._id}}">
         <div class="trademark-header flexrow">
+          <button type="button" class="tm-toggle {{#if tm.system.active}}is-active{{/if}}">
+            <i class="fas fa-circle-dot tm-icon"></i>
+            {{tm.name}}
+          </button>
           {{#if @root.editable}}
-          <input type="text" class="trademark-name-input" value="{{tm.name}}"
-                 placeholder="{{localize 'NCO.Trademark.NamePlaceholder'}}"/>
+          <a class="item-edit tm-edit" title="{{localize 'NCO.Item.Edit'}}">
+            <i class="fas fa-pen"></i>
+          </a>
           <a class="tm-delete" title="{{localize 'NCO.Item.Delete'}}">
             <i class="fas fa-times"></i>
           </a>
-          {{else}}
-          <span class="trademark-name-ro">{{tm.name}}</span>
           {{/if}}
         </div>
-        <div class="trademark-edges flexcol">
+        {{#if tm.edgesArray.length}}
+        <div class="trademark-edges flexrow">
           {{#each tm.edgesArray as |edge|}}
-          <div class="edge-row flexrow">
-            <span class="edge-bullet">+</span>
-            {{#if @root.editable}}
-            <input type="text" class="trademark-edge-input" data-field="{{edge.field}}"
-                   value="{{edge.value}}" placeholder="{{localize 'NCO.Trademark.EdgePlaceholder'}}"/>
-            {{else}}
-            <span class="edge-text">{{edge.value}}</span>
-            {{/if}}
-          </div>
+          <button type="button"
+                  class="edge-toggle {{#if edge.active}}is-active{{/if}} {{#unless edge.usable}}edge-locked{{/unless}}"
+                  data-field="{{edge.field}}">
+            {{edge.value}}
+          </button>
           {{/each}}
         </div>
+        {{/if}}
       </div>
       {{/each}}
 
