@@ -45,7 +45,7 @@ export class NCONPCSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     context.config   = CONFIG.NCO;
     context.cssClass = this.isEditable ? 'editable' : 'locked';
 
-    context.enrichedNotes = await TextEditor.enrichHTML(
+    context.enrichedNotes = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       this.actor.system.notes,
       {
         secrets:    this.document.isOwner,

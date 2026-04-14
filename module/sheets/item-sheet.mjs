@@ -5,7 +5,7 @@ const { ItemSheetV2 } = foundry.applications.sheets;
 
 /**
  * Feuille générique pour tous les types d'items NCO.
- * Le template est sélectionné dynamiquement selon le type de l'item.
+ * Le template est résolu dynamiquement via _renderHTML selon le type de l'item.
  */
 export class NCOItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
 
@@ -14,8 +14,6 @@ export class NCOItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     position: { width: 480, height: 400 },
     form: { submitOnChange: true, closeOnSubmit: false },
     actions: {
-      editImage: NCOItemSheet._onEditImage,
-      // Effets actifs
       create: NCOItemSheet._onEffectAction,
       edit:   NCOItemSheet._onEffectAction,
       delete: NCOItemSheet._onEffectAction,
@@ -23,15 +21,22 @@ export class NCOItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     },
   };
 
-  // Part défini comme objet vide ; le template est résolu dans _renderHTML
   static PARTS = { main: {} };
+
+  static #KNOWN_TYPES = ['gear', 'move', 'contact', 'tag', 'trademark'];
+
+  get #template() {
+    const type = NCOItemSheet.#KNOWN_TYPES.includes(this.item.type)
+      ? this.item.type
+      : 'gear';
+    return `systems/neon-city-overdrive/templates/item/item-${type}-sheet.hbs`;
+  }
 
   /* -------------------------------------------- */
 
-  /** @override — sélectionne le template selon le type d'item. */
-  async _renderHTML(context, options) {
-    const template = `systems/neon-city-overdrive/templates/item/item-${this.item.type}-sheet.hbs`;
-    return { main: await renderTemplate(template, context) };
+  /** @override — précharge le bon template avant le rendu */
+  async _preRender(context, options) {
+    await foundry.applications.handlebars.loadTemplates([this.#template]);
   }
 
   /** @override */
@@ -45,8 +50,8 @@ export class NCOItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     context.config     = CONFIG.NCO;
     context.cssClass   = this.isEditable ? 'editable' : 'locked';
 
-    context.enrichedDescription = await TextEditor.enrichHTML(
-      this.item.system.description,
+    context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
+      this.item.system.description ?? '',
       {
         secrets:    this.document.isOwner,
         async:      true,
@@ -56,23 +61,22 @@ export class NCOItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     );
 
     context.effects = prepareActiveEffectCategories(this.item.effects);
-
     return context;
+  }
+
+  /** @override — rend le template dynamique et retourne {main: HTMLElement} */
+  async _renderHTML(context, options) {
+    const html = await foundry.applications.handlebars.renderTemplate(this.#template, context);
+    const div  = document.createElement('div');
+    div.innerHTML = html;
+    const el = div.firstElementChild;
+    el.setAttribute('data-application-part', 'main');
+    return { main: el };
   }
 
   /* -------------------------------------------- */
   /* Action Handlers                               */
   /* -------------------------------------------- */
-
-  static async _onEditImage(event, target) {
-    const attr    = target.dataset.edit;
-    const current = foundry.utils.getProperty(this.document._source, attr);
-    new FilePicker({
-      type:     'image',
-      current:  current,
-      callback: (src) => this.document.update({ [attr]: src }),
-    }).browse();
-  }
 
   static _onEffectAction(event, target) {
     if (!target.classList.contains('effect-control')) return;

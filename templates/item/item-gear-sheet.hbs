@@ -1,12 +1,11 @@
-<form class="{{cssClass}} item flexcol" autocomplete="off">
+<section class="{{cssClass}} flexcol" data-application-part="main">
   <header class="sheet-header flexrow">
-    <img class="item-img" src="{{item.img}}" data-edit="img" data-action="editImage" title="{{item.name}}" width="60" height="60"/>
     <div class="header-fields flexcol">
       <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'NCO.Item.NamePlaceholder'}}"/></h1>
     </div>
   </header>
 
-  <section class="sheet-body flexcol" style="padding: 12px 16px; gap: 10px; overflow-y: auto;">
+  <div class="sheet-body flexcol" style="padding: 12px 16px; gap: 10px; overflow-y: auto;">
 
     {{!-- Type --}}
     <div class="form-group">
@@ -48,5 +47,5 @@
     </div>
     {{/if}}
 
-  </section>
-</form>
+  </div>
+</section>
