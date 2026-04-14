@@ -5,7 +5,7 @@
 ![Version](https://img.shields.io/badge/version-0.1.0-blue)
 ![Langues](https://img.shields.io/badge/langues-FR%20%7C%20EN-lightgrey)
 
-Système FoundryVTT non officiel pour **Neon City Overdrive** (Peter Rudin-Burgess / Free League Publishing), avec support intégré du cadre **Zalozhniy Quartet** (espionnage / horreur cosmique).
+Système FoundryVTT non officiel pour **Neon City Overdrive** (Peter Rudin-Burgess / Free League Publishing).
 
 ---
 
@@ -51,7 +51,8 @@ NCO repose sur un pool de **dés d'Action (DA)** et de **dés de Danger (DD)**, 
 
 **Dialog de jet de dés**
 - Pré-rempli automatiquement depuis les Trademarks/Edges/Tags actifs
-- Saisie manuelle des DD
+- Chaque case de Trauma non vide ajoute automatiquement 1 DD (affiché séparément)
+- Saisie manuelle de DD supplémentaires
 - Totaux mis à jour en temps réel
 - Résultat posté dans le chat avec dés colorés
 
@@ -66,23 +67,11 @@ NCO repose sur un pool de **dés d'Action (DA)** et de **dés de Danger (DD)**, 
 
 | Type | Usage | Champs clés |
 |---|---|---|
-| **Trademark** | Identité du personnage | Nom, 5 Edges activables |
-| **Gear** | Équipement | Basique ou Spécial (5 tags activables) |
+| **Trademark** | Identité du personnage | Nom, 5 Edges activables (pas d'image ni de notes) |
+| **Gear** | Équipement | Basique ou Spécial (5 tags activables, pas d'image ni de notes) |
 | **Move** | Capacité spéciale | Déclencheur, effet, bonus DA |
 | **Contact** | Allié | Loyauté, expertise |
 | **Tag** | Descripteur narratif | Type (positif / négatif / neutre) |
-| **Asset** *(Zalozhniy)* | Ressource d'agent | Type, fiabilité, état "grillé" |
-| **Threat** *(Zalozhniy)* | Antagoniste structuré | Pool DD, seuil d'exposition |
-
----
-
-## Mode Zalozhniy Quartet
-
-Activez dans **Paramètres → Système → Mode de jeu** pour les règles espionnage / horreur :
-
-- **Assets** : ressources humaines, techniques, financières ou informationnelles — avec état "grillé"
-- **Threats** : antagonistes avec pool de DD dédié et seuil d'exposition
-- **Sanité** *(optionnelle)* : activable séparément dans les paramètres
 
 ---
 
@@ -137,5 +126,4 @@ neon-city-overdrive/
 ## Références
 
 - [Neon City Overdrive](https://freeleaguepublishing.com/) — Peter Rudin-Burgess / Free League Publishing
-- [Zalozhniy Quartet](https://freeleaguepublishing.com/) — Free League Publishing
 - [Foundry VTT System Development](https://foundryvtt.com/article/system-development/)

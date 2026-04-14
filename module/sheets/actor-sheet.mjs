@@ -178,7 +178,14 @@ export class NCOActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
         }
       }
     }
-    NCORollDialog.show(this.actor, { bonusDA });
+
+    // Chaque case de trauma non vide ajoute 1 DD
+    let traumaDD = 0;
+    for (let n = 1; n <= 8; n++) {
+      if (this.actor.system[`trauma${n}`]?.trim()) traumaDD++;
+    }
+
+    NCORollDialog.show(this.actor, { bonusDA, traumaDD });
   }
 
   static _onItemCreate(event, target) {

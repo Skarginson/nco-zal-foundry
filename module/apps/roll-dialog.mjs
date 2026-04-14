@@ -24,12 +24,13 @@ export class NCORollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   };
 
   constructor(actor, options = {}) {
-    const { bonusDA = 0, ...appOptions } = options;
+    const { bonusDA = 0, traumaDD = 0, ...appOptions } = options;
     // ID unique par acteur pour éviter les doublons
     appOptions.id = `nco-roll-dialog-${actor.id}`;
     super(appOptions);
-    this.actor   = actor;
-    this.bonusDA = bonusDA;
+    this.actor    = actor;
+    this.bonusDA  = bonusDA;
+    this.traumaDD = traumaDD;
   }
 
   /** @override */
@@ -43,9 +44,9 @@ export class NCORollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
       actor:      this.actor,
       baseDice:   1,
       bonusDA:    this.bonusDA,
-      dangerDice: 0,
+      traumaDD:   this.traumaDD,
       totalDA:    1 + this.bonusDA,
-      totalDD:    0,
+      totalDD:    this.traumaDD,
     };
   }
 
@@ -54,10 +55,11 @@ export class NCORollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     super._onRender(context, options);
 
     // Mise à jour des totaux en temps réel
-    this.element.querySelectorAll('input').forEach((input) => {
+    this.element.querySelectorAll('input[type="number"]').forEach((input) => {
       input.addEventListener('input', () => this._updateTotals());
     });
 
+    this._updateTotals();
     this.element.querySelector('[name="danger-dice"]')?.focus();
   }
 
@@ -68,7 +70,7 @@ export class NCORollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     const bonusDA    = parseInt(this.element.querySelector('[name="bonus-da"]')?.value)    || 0;
     const dangerDice = parseInt(this.element.querySelector('[name="danger-dice"]')?.value) || 0;
     const totalDA    = Math.max(0, 1 + bonusDA);
-    const totalDD    = Math.max(0, dangerDice);
+    const totalDD    = Math.max(0, this.traumaDD + dangerDice);
 
     this.element.querySelector('.total-da').textContent = totalDA;
     this.element.querySelector('.total-dd').textContent = totalDD;
@@ -87,7 +89,7 @@ export class NCORollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     const bonusDA    = parseInt(this.element.querySelector('[name="bonus-da"]')?.value)    || 0;
     const dangerDice = parseInt(this.element.querySelector('[name="danger-dice"]')?.value) || 0;
     const totalDA    = Math.max(0, 1 + bonusDA);
-    const totalDD    = Math.max(0, dangerDice);
+    const totalDD    = Math.max(0, this.traumaDD + dangerDice);
 
     await rollPool(this.actor, this.actor.name, totalDA, totalDD);
     this.close();

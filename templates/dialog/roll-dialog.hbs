@@ -25,6 +25,12 @@
 
     {{!-- Dés de Danger --}}
     <div class="dice-section danger-section">
+      {{#if traumaDD}}
+      <div class="dice-row flexrow">
+        <label class="dice-label danger-label">{{localize 'NCO.Roll.TraumaDD'}}</label>
+        <span class="dice-base">{{traumaDD}}</span>
+      </div>
+      {{/if}}
       <div class="dice-row flexrow">
         <label class="dice-label danger-label">{{localize 'NCO.Roll.DangerDice'}}</label>
         <input type="number" name="danger-dice" value="0" min="0" max="10" class="dice-input"/>
@@ -42,7 +48,7 @@
       <span class="total-vs">vs</span>
       <div class="total-block flex-group-center">
         <span class="total-label">{{localize 'NCO.Roll.TotalDD'}}</span>
-        <span class="total-dd total-danger">0</span>
+        <span class="total-dd total-danger">{{totalDD}}</span>
       </div>
     </div>
 
