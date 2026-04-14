@@ -1,8 +1,8 @@
-<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+<section class="{{cssClass}} {{actor.type}} flexcol">
 
   {{!-- En-tête --}}
   <header class="sheet-header flexrow">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" data-action="editImage" title="{{actor.name}}" height="100" width="68"/>
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" data-action="editImage" title="{{actor.name}}" height="130" width="88"/>
     <div class="header-fields flexcol">
       <h1 class="charname">
         <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'NCO.Actor.Name'}}"/>
@@ -38,19 +38,21 @@
       {{#each trademarks as |tm|}}
       <div class="trademark-block {{#if tm.system.active}}tm-is-active{{/if}}" data-item-id="{{tm._id}}">
         <div class="trademark-header flexrow">
+          {{#if @root.editable}}
+          {{/if}}
           <button type="button" class="tm-toggle {{#if tm.system.active}}is-active{{/if}}"
                   data-action="toggleTrademark">
             <i class="fas fa-circle-dot tm-icon"></i>
             {{tm.name}}
           </button>
-          {{#if @root.editable}}
-          <a class="item-edit tm-edit" data-action="itemEdit" title="{{localize 'NCO.Item.Edit'}}">
-            <i class="fas fa-pen"></i>
-          </a>
-          <a class="tm-delete" data-action="tmDelete" title="{{localize 'NCO.Item.Delete'}}">
-            <i class="fas fa-times"></i>
-          </a>
-          {{/if}}
+          <div class="tm-controls">
+            <a class="item-edit tm-edit" data-action="itemEdit" title="{{localize 'NCO.Item.Edit'}}">
+              <i class="fas fa-pen"></i>
+            </a>
+            <a class="tm-delete" data-action="tmDelete" title="{{localize 'NCO.Item.Delete'}}">
+              <i class="fas fa-times"></i>
+            </a>
+          </div>
         </div>
         {{#if tm.edgesArray.length}}
         <div class="trademark-edges flexrow">
@@ -253,4 +255,4 @@
 
   </section>
 
-</form>
+</section>

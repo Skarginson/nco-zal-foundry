@@ -47,11 +47,6 @@
   --nco-botch-light: #ede9fe;
   --nco-botch-dark:  #4c1d95;
 
-  /* Zalozhniy */
-  --nco-zal:       #7c3aed;
-  --nco-zal-light: #ede9fe;
-  --nco-zal-dark:  #4c1d95;
-
   /* Typographie */
   --nco-font-heading: 'EB Garamond', Georgia, serif;
   --nco-font-body:    'Source Sans 3', system-ui, sans-serif;
@@ -79,8 +74,8 @@
   flex-direction: column;
 }
 
-/* Le formulaire doit remplir toute la hauteur disponible */
-.nco.sheet .window-content > form {
+/* Le contenu doit remplir toute la hauteur disponible */
+.nco.sheet .window-content > section {
   flex: 1;
   min-height: 0;
   overflow: hidden;
@@ -121,14 +116,14 @@
 .nco.sheet .charname input {
   background: transparent;
   border: none;
-  border-bottom: 2px solid var(--nco-border-dim);
+  border-bottom: 3px solid var(--nco-border-dim);
   color: var(--nco-text);
   font-family: var(--nco-font-heading);
   font-size: 0.9em;
   font-weight: 700;
   width: 100%;
   min-width: 0;
-  padding: 2px 0;
+  padding: 4px 0;
   line-height: 1.2;
 }
 
@@ -187,14 +182,6 @@
   text-align: center;
   width: 36px;
   padding: 0;
-}
-
-.nco.sheet .resource-zalozhniy {
-  border-color: var(--nco-zal);
-}
-
-.nco.sheet .resource-zalozhniy .resource-label {
-  color: var(--nco-zal);
 }
 
 /* ============================================
@@ -488,8 +475,7 @@
   margin-bottom: 10px;
 }
 
-.nco.sheet .form-group label,
-.nco.sheet .zal-label {
+.nco.sheet .form-group label {
   font-family: var(--nco-font-body);
   font-size: 0.72em;
   font-weight: 700;
@@ -646,157 +632,6 @@
   border-color: var(--nco-primary);
   outline: none;
 }
-
-/* ============================================
-   Zalozhniy — Exposition
-   ============================================ */
-
-.nco.sheet .exposure-section {
-  margin-top: 20px;
-  padding-top: 14px;
-  border-top: 1px solid var(--nco-border-dim);
-}
-
-.nco.sheet .exposure-title {
-  font-family: var(--nco-font-body);
-  font-size: 0.72em;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--nco-zal);
-  margin: 0 0 8px 0;
-}
-
-.nco.sheet .exposure-pips {
-  gap: 5px;
-  flex-wrap: wrap;
-}
-
-.nco.sheet .exposure-pip {
-  width: 28px;
-  height: 28px;
-  border: 2px solid var(--nco-border);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-  user-select: none;
-}
-
-.nco.sheet .exposure-pip:hover {
-  border-color: var(--nco-zal);
-}
-
-.nco.sheet .exposure-pip.pip-filled {
-  background: var(--nco-zal);
-  border-color: var(--nco-zal-dark);
-}
-
-.nco.sheet .exposure-pip.pip-critical.pip-filled {
-  background: var(--nco-error);
-  border-color: var(--nco-error-dark);
-}
-
-.nco.sheet .exposure-warning {
-  background: var(--nco-error-light);
-  border-left: 3px solid var(--nco-error);
-  border-radius: 3px;
-  color: var(--nco-error-dark);
-  font-size: 0.82em;
-  font-weight: 600;
-  padding: 6px 10px;
-  margin-top: 8px;
-}
-
-.nco.sheet .mission-divider {
-  height: 1px;
-  background: var(--nco-border-dim);
-  margin: 14px 0;
-}
-
-/* Assets */
-.nco.sheet .asset-burned {
-  opacity: 0.5;
-}
-
-.nco.sheet .text-burned {
-  text-decoration: line-through;
-  color: var(--nco-text-dim);
-}
-
-.nco.sheet .asset-type-badge {
-  font-size: 0.7em;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 1px 7px;
-  border-radius: 3px;
-  background: var(--nco-zal-light);
-  color: var(--nco-zal-dark);
-  border: 1px solid var(--nco-zal);
-}
-
-.nco.sheet .asset-reliability {
-  font-size: 0.9em;
-  color: var(--nco-zal);
-  letter-spacing: 2px;
-}
-
-/* Threats */
-.nco.sheet .threat-item {
-  border-color: var(--nco-error-light) !important;
-}
-
-.nco.sheet .threat-item:hover {
-  border-color: var(--nco-error) !important;
-}
-
-.nco.sheet .threat-dd {
-  font-size: 0.78em;
-  font-weight: 700;
-  color: var(--nco-error-dark);
-  background: var(--nco-error-light);
-  border: 1px solid var(--nco-error);
-  border-radius: 3px;
-  padding: 1px 7px;
-}
-
-.nco.sheet .threat-exposure {
-  font-size: 0.78em;
-  font-weight: 700;
-  color: var(--nco-success);
-}
-
-/* Reliability */
-.reliability-track {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.reliability-pip {
-  font-size: 1em;
-  color: var(--nco-border);
-}
-
-.reliability-pip.pip-on {
-  color: var(--nco-zal);
-}
-
-.reliability-input {
-  width: 36px !important;
-  text-align: center;
-  margin-left: 8px;
-}
-
-.burned-label {
-  font-size: 0.78em;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--nco-error);
-  margin-left: 6px;
-}
-
-.zal-label   { color: var(--nco-zal) !important; }
-.threat-label { color: var(--nco-error) !important; }
 
 /* ============================================
    Roll Dialog
@@ -1063,7 +898,7 @@
 
 .action-label   { color: var(--nco-primary); }
 .danger-label   { color: var(--nco-error); }
-.desperate-label { color: var(--nco-zal); }
+.desperate-label { color: var(--nco-botch); }
 
 .dice-results {
   flex-wrap: wrap;
@@ -1109,9 +944,9 @@
 }
 
 .die-best-desperate {
-  background: var(--nco-zal-light);
-  border-color: var(--nco-zal);
-  color: var(--nco-zal-dark);
+  background: var(--nco-botch-light);
+  border-color: var(--nco-botch);
+  color: var(--nco-botch-dark);
 }
 
 .best-die-label {
@@ -1207,8 +1042,8 @@
 }
 
 .nco.sheet.character .profile-img {
-  width: 68px;
-  height: 100px;
+  width: 88px;
+  height: 130px;
   flex-shrink: 0;
 }
 
@@ -1225,19 +1060,19 @@
 }
 
 .nco.sheet.character .nco-roll-btn {
-  padding: 7px 14px;
+  padding: 35px 18px;
   background: var(--nco-primary);
   color: #fff;
   border: none;
   border-radius: 4px;
   font-family: var(--nco-font-body);
-  font-size: 0.82em;
+  font-size: 1em;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   transition: background 0.15s;
 }
 
@@ -1285,7 +1120,7 @@
 }
 
 .trademark-header {
-  align-items: center;
+  align-items: center; 
   gap: 4px;
   margin-bottom: 4px;
 }
@@ -1327,17 +1162,26 @@
 }
 
 /* Boutons d'édition/suppression */
-.tm-edit, .tm-delete {
-  color: var(--nco-text-dim);
-  font-size: 0.78em;
-  cursor: pointer;
-  padding: 2px 4px;
+.tm-controls {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  flex: 0 0 auto;
+  margin-left: auto;
   opacity: 0;
-  transition: color 0.15s, opacity 0.15s;
+  transition: opacity 0.15s;
 }
 
-.trademark-block:hover .tm-edit,
-.trademark-block:hover .tm-delete { opacity: 1; }
+.trademark-block:hover .tm-controls { opacity: 1; }
+
+.tm-edit, .tm-delete {
+  color: var(--nco-text-dim);
+  text-align: right;
+  font-size: 0.72em;
+  cursor: pointer;
+  padding: 2px 3px;
+  transition: color 0.15s;
+}
 
 .tm-edit:hover  { color: var(--nco-primary); }
 .tm-delete:hover { color: var(--nco-error); }
@@ -1471,6 +1315,7 @@
   width: 13px;
   height: 13px;
   flex-shrink: 0;
+  accent-color: var(--nco-primary);
 }
 
 .cond-extra { grid-column: 1 / -1; }
@@ -1523,7 +1368,7 @@
 .gear-item:hover { background: var(--nco-surface-low); }
 
 .gear-name {
-  flex-shrink: 0;
+  flex: 0 0 auto;
   font-size: 0.85em;
   color: var(--nco-text);
 }
@@ -1565,19 +1410,20 @@
 }
 
 .gear-item .item-controls {
-  flex-shrink: 0;
-  gap: 3px;
+  flex: 0 0 auto;
+  gap: 1px;
   opacity: 0;
   transition: opacity 0.15s;
+  margin-left: auto;
 }
 
 .gear-item:hover .item-controls { opacity: 1; }
 
 .gear-item .item-controls a {
   color: var(--nco-text-dim);
-  font-size: 0.78em;
+  font-size: 0.72em;
   cursor: pointer;
-  padding: 1px 3px;
+  padding: 1px 2px;
   transition: color 0.15s;
 }
 
