@@ -56,7 +56,7 @@
     }
   },
   "Item": {
-    "types": ["gear", "move", "contact", "tag", "asset", "threat", "trademark"],
+    "types": ["gear", "move", "contact", "tag", "trademark"],
     "gear": {
       "gear_type": "basic",
       "tag1": "", "tag1_active": false,
@@ -79,19 +79,6 @@
     "tag": {
       "description": "",
       "type": "positive"
-    },
-    "asset": {
-      "description": "",
-      "type": "human",
-      "reliability": 1,
-      "burned": false
-    },
-    "threat": {
-      "description": "",
-      "tags": "",
-      "danger_dice_pool": 2,
-      "exposure_threshold": 3,
-      "notes": ""
     },
     "trademark": {
       "description": "",

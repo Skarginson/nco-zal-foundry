@@ -10,22 +10,6 @@
       {{localize 'NCO.Roll.RollDice'}}
     </button>
 
-    {{!-- Jauge d'Exposition : Zalozhniy uniquement --}}
-    {{#if @root.isZalozhniy}}
-    <div class="exposure-section">
-      <h4 class="exposure-title">{{localize 'NCO.Zalozhniy.Exposure'}}</h4>
-      <div class="exposure-pips flexrow">
-        {{#each @root.exposureSteps as |step i|}}
-        <span class="exposure-pip {{#if step.filled}}pip-filled{{/if}} {{#if step.critical}}pip-critical{{/if}}"
-              data-index="{{i}}"
-              title="{{i}}"></span>
-        {{/each}}
-      </div>
-      {{#if @root.exposureCritical}}
-      <p class="exposure-warning">{{localize 'NCO.Zalozhniy.ExposureCritical'}}</p>
-      {{/if}}
-    </div>
-    {{/if}}
 
   </div>
 

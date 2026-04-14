@@ -1,7 +1,7 @@
 {
   "id": "neon-city-overdrive",
   "title": "Neon City Overdrive",
-  "description": "Système FoundryVTT pour Neon City Overdrive et le Zalozhniy Quartet",
+  "description": "Système FoundryVTT pour Neon City Overdrive",
   "version": "0.1.0",
   "compatibility": {
     "minimum": "12",

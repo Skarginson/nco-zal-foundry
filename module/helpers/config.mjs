@@ -15,10 +15,3 @@ NCO.tagTypes = {
   neutral:  'NCO.Tag.Neutral',
 };
 
-// Types d'assets (Zalozhniy)
-NCO.assetTypes = {
-  human:       'NCO.Asset.Type.Human',
-  technical:   'NCO.Asset.Type.Technical',
-  financial:   'NCO.Asset.Type.Financial',
-  information: 'NCO.Asset.Type.Information',
-};

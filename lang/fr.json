@@ -5,18 +5,6 @@
       "NPC": "Fiche NCO — PNJ",
       "Item": "Fiche NCO — Item"
     },
-    "Settings": {
-      "GameMode": {
-        "Name": "Mode de jeu",
-        "Hint": "Basculer entre Neon City Overdrive standard et le Zalozhniy Quartet.",
-        "Standard": "Neon City Overdrive",
-        "Zalozhniy": "Zalozhniy Quartet"
-      },
-      "Sanity": {
-        "Name": "Jauge de Sanité",
-        "Hint": "Activer la jauge de Sanité (Zalozhniy Quartet)."
-      }
-    },
     "Actor": {
       "Name": "Nom",
       "Hits": "Blessures",
@@ -55,6 +43,7 @@
     "Roll": {
       "ActionDice": "Dés d'Action",
       "DangerDice": "Dés de Danger",
+      "TraumaDD": "Traumas (DD)",
       "RollDice": "Lancer les dés",
       "DialogTitle": "Jet — {actor}",
       "BaseDice": "Dé de base",
@@ -89,21 +78,15 @@
       "Move": "Move",
       "Contact": "Contact",
       "Tag": "Tag",
-      "Asset": "Ressource",
-      "Threat": "Menace",
       "Trademark": "Trademark",
       "AddGear": "Ajouter équipement",
       "AddMove": "Ajouter move",
       "AddContact": "Ajouter contact",
       "AddTag": "Ajouter tag",
-      "AddAsset": "Ajouter ressource",
-      "AddThreat": "Ajouter menace",
       "AddTrademark": "Ajouter trademark",
       "EmptyGear": "Aucun équipement.",
       "EmptyContact": "Aucun contact.",
       "EmptyTag": "Aucun tag.",
-      "EmptyAsset": "Aucune ressource.",
-      "EmptyThreat": "Aucune menace.",
       "Edit": "Modifier",
       "Delete": "Supprimer",
       "NamePlaceholder": "Nom de l'item..."
@@ -139,25 +122,6 @@
       "Temporary": "Effets temporaires",
       "Passive": "Effets passifs",
       "Inactive": "Effets inactifs"
-    },
-    "Asset": {
-      "TypeLabel": "Type",
-      "Type": {
-        "Human":       "Humain",
-        "Technical":   "Technique",
-        "Financial":   "Financier",
-        "Information": "Information"
-      },
-      "Reliability": "Fiabilité",
-      "Burned": "Grillé",
-      "BurnedLabel": "Ressource compromise"
-    },
-    "Threat": {
-      "Tags": "Tags",
-      "TagsPlaceholder": "ex : Armé, Corporate, Surnaturel...",
-      "DangerDicePool": "Pool de Dés de Danger",
-      "ExposureThreshold": "Seuil d'Exposition",
-      "NotesPlaceholder": "Notes MJ..."
     }
   },
   "TYPES": {
@@ -170,8 +134,6 @@
       "move":      "Move",
       "contact":   "Contact",
       "tag":       "Tag",
-      "asset":     "Ressource",
-      "threat":    "Menace",
       "trademark": "Trademark"
     }
   }

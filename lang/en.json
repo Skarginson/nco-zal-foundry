@@ -5,18 +5,6 @@
       "NPC": "NCO NPC Sheet",
       "Item": "NCO Item Sheet"
     },
-    "Settings": {
-      "GameMode": {
-        "Name": "Game Mode",
-        "Hint": "Switch between standard Neon City Overdrive and Zalozhniy Quartet.",
-        "Standard": "Neon City Overdrive",
-        "Zalozhniy": "Zalozhniy Quartet"
-      },
-      "Sanity": {
-        "Name": "Sanity Track",
-        "Hint": "Enable the Sanity track (Zalozhniy Quartet)."
-      }
-    },
     "Actor": {
       "Name": "Name",
       "Hits": "Hits",
@@ -55,6 +43,7 @@
     "Roll": {
       "ActionDice": "Action Dice",
       "DangerDice": "Danger Dice",
+      "TraumaDD": "Traumas (DD)",
       "RollDice": "Roll Dice",
       "DialogTitle": "Roll — {actor}",
       "BaseDice": "Base die",
@@ -89,21 +78,15 @@
       "Move": "Move",
       "Contact": "Contact",
       "Tag": "Tag",
-      "Asset": "Asset",
-      "Threat": "Threat",
       "Trademark": "Trademark",
       "AddGear": "Add Gear",
       "AddMove": "Add Move",
       "AddContact": "Add Contact",
       "AddTag": "Add Tag",
-      "AddAsset": "Add Asset",
-      "AddThreat": "Add Threat",
       "AddTrademark": "Add Trademark",
       "EmptyGear": "No equipment.",
       "EmptyContact": "No contacts.",
       "EmptyTag": "No tags.",
-      "EmptyAsset": "No assets.",
-      "EmptyThreat": "No threats.",
       "Edit": "Edit",
       "Delete": "Delete",
       "NamePlaceholder": "Item name..."
@@ -139,25 +122,6 @@
       "Temporary": "Temporary Effects",
       "Passive": "Passive Effects",
       "Inactive": "Inactive Effects"
-    },
-    "Asset": {
-      "TypeLabel": "Type",
-      "Type": {
-        "Human":       "Human",
-        "Technical":   "Technical",
-        "Financial":   "Financial",
-        "Information": "Information"
-      },
-      "Reliability": "Reliability",
-      "Burned": "Burned",
-      "BurnedLabel": "Asset compromised"
-    },
-    "Threat": {
-      "Tags": "Tags",
-      "TagsPlaceholder": "e.g. Armed, Corporate, Supernatural...",
-      "DangerDicePool": "Danger Dice Pool",
-      "ExposureThreshold": "Exposure Threshold",
-      "NotesPlaceholder": "GM notes..."
     }
   },
   "TYPES": {
@@ -170,8 +134,6 @@
       "move":      "Move",
       "contact":   "Contact",
       "tag":       "Tag",
-      "asset":     "Asset",
-      "threat":    "Threat",
       "trademark": "Trademark"
     }
   }
