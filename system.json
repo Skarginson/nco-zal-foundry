@@ -5,9 +5,9 @@
   "version": "0.1.0",
   "compatibility": {
     "minimum": "12",
-    "verified": "13"
+    "verified": "14"
   },
-  "authors": [{ "name": "Ulysse" }],
+  "authors": [{ "name": "Skarginson" }],
   "license": "LICENSE.txt",
   "readme": "README.md",
   "esmodules": ["module/nco.mjs"],
@@ -19,5 +19,18 @@
   "packs": [],
   "packFolders": [],
   "socket": false,
-  "primaryTokenAttribute": "hits"
+  "primaryTokenAttribute": "hits",
+  "documentTypes": {
+    "Actor": {
+      "character": {},
+      "npc": {}
+    },
+    "Item": {
+      "gear":      {},
+      "move":      {},
+      "contact":   {},
+      "tag":       {},
+      "trademark": {}
+    }
+  }
 }
