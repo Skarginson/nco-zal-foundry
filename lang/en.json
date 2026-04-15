@@ -75,18 +75,10 @@
     },
     "Item": {
       "Gear": "Gear",
-      "Move": "Move",
-      "Contact": "Contact",
-      "Tag": "Tag",
       "Trademark": "Trademark",
       "AddGear": "Add Gear",
-      "AddMove": "Add Move",
-      "AddContact": "Add Contact",
-      "AddTag": "Add Tag",
       "AddTrademark": "Add Trademark",
       "EmptyGear": "No equipment.",
-      "EmptyContact": "No contacts.",
-      "EmptyTag": "No tags.",
       "Edit": "Edit",
       "Delete": "Delete",
       "NamePlaceholder": "Item name..."
@@ -97,24 +89,6 @@
       "TypeSpecial": "Special",
       "Tags": "Tags",
       "TagPlaceholder": "Tag…"
-    },
-    "Move": {
-      "Trigger": "Trigger",
-      "TriggerPlaceholder": "When you...",
-      "Effect": "Effect",
-      "EffectPlaceholder": "Effect description...",
-      "DiceBonus": "Dice Bonus"
-    },
-    "Contact": {
-      "Expertise": "Expertise",
-      "ExpertisePlaceholder": "e.g. Street info, Tech, Weapons...",
-      "Loyalty": "Loyalty (0–3)"
-    },
-    "Tag": {
-      "Type": "Type",
-      "Positive": "Positive",
-      "Negative": "Negative",
-      "Neutral": "Neutral"
     },
     "Effect": {
       "Source": "Source",
@@ -131,9 +105,6 @@
     },
     "Item": {
       "gear":      "Gear",
-      "move":      "Move",
-      "contact":   "Contact",
-      "tag":       "Tag",
       "trademark": "Trademark"
     }
   }

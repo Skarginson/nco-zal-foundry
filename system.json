@@ -27,9 +27,6 @@
     },
     "Item": {
       "gear":      {},
-      "move":      {},
-      "contact":   {},
-      "tag":       {},
       "trademark": {}
     }
   }

@@ -1,7 +1,7 @@
 # Neon City Overdrive — FoundryVTT System
 
 ![Foundry v12+](https://img.shields.io/badge/foundry-v12%2B-green)
-![Verified v13](https://img.shields.io/badge/verified-v13-brightgreen)
+![Verified v14](https://img.shields.io/badge/verified-v14-brightgreen)
 ![Version](https://img.shields.io/badge/version-0.1.0-blue)
 ![Langues](https://img.shields.io/badge/langues-FR%20%7C%20EN-lightgrey)
 
@@ -67,11 +67,8 @@ NCO repose sur un pool de **dés d'Action (DA)** et de **dés de Danger (DD)**, 
 
 | Type | Usage | Champs clés |
 |---|---|---|
-| **Trademark** | Identité du personnage | Nom, 5 Edges activables (pas d'image ni de notes) |
-| **Gear** | Équipement | Basique ou Spécial (5 tags activables, pas d'image ni de notes) |
-| **Move** | Capacité spéciale | Déclencheur, effet, bonus DA |
-| **Contact** | Allié | Loyauté, expertise |
-| **Tag** | Descripteur narratif | Type (positif / négatif / neutre) |
+| **Trademark** | Identité du personnage | Nom, 5 Edges activables |
+| **Gear** | Équipement | Basique ou Spécial (5 tags activables) |
 
 ---
 
@@ -117,7 +114,7 @@ neon-city-overdrive/
 
 ## Compatibilité
 
-- Foundry VTT **v12+**, vérifié sur **v13**
+- Foundry VTT **v12+**, vérifié sur **v14**
 - Utilise l'API **ApplicationV2** (AppV2)
 - Langues : Français · English
 

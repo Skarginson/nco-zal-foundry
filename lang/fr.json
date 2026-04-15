@@ -75,18 +75,10 @@
     },
     "Item": {
       "Gear": "Équipement",
-      "Move": "Move",
-      "Contact": "Contact",
-      "Tag": "Tag",
       "Trademark": "Trademark",
       "AddGear": "Ajouter équipement",
-      "AddMove": "Ajouter move",
-      "AddContact": "Ajouter contact",
-      "AddTag": "Ajouter tag",
       "AddTrademark": "Ajouter trademark",
       "EmptyGear": "Aucun équipement.",
-      "EmptyContact": "Aucun contact.",
-      "EmptyTag": "Aucun tag.",
       "Edit": "Modifier",
       "Delete": "Supprimer",
       "NamePlaceholder": "Nom de l'item..."
@@ -97,24 +89,6 @@
       "TypeSpecial": "Spécial",
       "Tags": "Tags",
       "TagPlaceholder": "Tag…"
-    },
-    "Move": {
-      "Trigger": "Déclencheur",
-      "TriggerPlaceholder": "Quand vous...",
-      "Effect": "Effet",
-      "EffectPlaceholder": "Description de l'effet...",
-      "DiceBonus": "Bonus en dés"
-    },
-    "Contact": {
-      "Expertise": "Expertise",
-      "ExpertisePlaceholder": "ex : Info de rue, Technique, Armes...",
-      "Loyalty": "Loyauté (0–3)"
-    },
-    "Tag": {
-      "Type": "Type",
-      "Positive": "Positif",
-      "Negative": "Négatif",
-      "Neutral": "Neutre"
     },
     "Effect": {
       "Source": "Source",
@@ -131,9 +105,6 @@
     },
     "Item": {
       "gear":      "Équipement",
-      "move":      "Move",
-      "contact":   "Contact",
-      "tag":       "Tag",
       "trademark": "Trademark"
     }
   }

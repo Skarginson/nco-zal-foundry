@@ -23,7 +23,7 @@ export class NCOItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
 
   static PARTS = { main: {} };
 
-  static #KNOWN_TYPES = ['gear', 'move', 'contact', 'tag', 'trademark'];
+  static #KNOWN_TYPES = ['gear', 'trademark'];
 
   get #template() {
     const type = NCOItemSheet.#KNOWN_TYPES.includes(this.item.type)
