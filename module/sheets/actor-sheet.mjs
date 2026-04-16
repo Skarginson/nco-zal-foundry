@@ -1,5 +1,6 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { NCORollDialog } from '../apps/roll-dialog.mjs';
+import { NCOXPDialog }   from '../apps/xp-dialog.mjs';
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -26,6 +27,8 @@ export class NCOActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       toggleEdge:      NCOActorSheet._onToggleEdge,
       toggleGearTag:   NCOActorSheet._onToggleGearTag,
       pipClick:        NCOActorSheet._onPipClick,
+      driveBoxClick:   NCOActorSheet._onDriveBoxClick,
+      spendXP:         NCOActorSheet._onSpendXP,
       // Effets actifs (data-action dans le partial effects)
       create: NCOActorSheet._onEffectAction,
       edit:   NCOActorSheet._onEffectAction,
@@ -58,16 +61,37 @@ export class NCOActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     context.cssClass = this.isEditable ? 'editable' : 'locked';
 
     // Jauges
-    const hitsVal       = sys.hits?.value         ?? 0;
-    const stashVal      = sys.stash?.value        ?? 0;
-    const driveTrackVal = sys.drive_track?.value  ?? 0;
-    const xpVal         = sys.xp?.value           ?? 0;
-    const stuntVal      = sys.stunt_points?.value ?? 0;
+    const hitsVal  = sys.hits?.value         ?? 0;
+    const hitsMax  = sys.hits?.max           ?? 3;
+    const stashVal = sys.stash?.value        ?? 0;
+    const xpVal    = sys.xp?.value           ?? 0;
+    const stuntVal = sys.stunt_points?.value ?? 0;
+    const stuntMax = sys.stunt_points?.max   ?? 3;
 
-    context.hitBoxes   = Array.from({ length: 3 }, (_, i) => ({ filled: i < hitsVal,       index: i }));
-    context.stashBoxes = Array.from({ length: 5 }, (_, i) => ({ filled: i < stashVal,      index: i }));
-    context.driveBoxes = Array.from({ length: 9 }, (_, i) => ({ filled: i < driveTrackVal, index: i }));
-    context.stuntBoxes = Array.from({ length: 3 }, (_, i) => ({ filled: i < stuntVal,      index: i }));
+    context.hitsMax  = hitsMax;
+    context.stuntMax = stuntMax;
+
+    context.hitBoxes   = Array.from({ length: hitsMax }, (_, i) => ({ filled: i < hitsVal,  index: i }));
+    context.stashBoxes = Array.from({ length: 5 },       (_, i) => ({ filled: i < stashVal, index: i }));
+    context.stuntBoxes = Array.from({ length: stuntMax }, (_, i) => ({ filled: i < stuntVal, index: i }));
+
+    // Drive track : états par case (0=vide, 1=tick, 2=croix)
+    const rawDriveBoxes = sys.drive_track?.boxes;
+    if (Array.isArray(rawDriveBoxes) && rawDriveBoxes.length === 9) {
+      context.driveBoxes = rawDriveBoxes.map((state, i) => ({
+        index:   i,
+        isTick:  state === 1,
+        isCross: state === 2,
+      }));
+    } else {
+      // Migration depuis l'ancien format { value: N }
+      const legacyVal = sys.drive_track?.value ?? 0;
+      context.driveBoxes = Array.from({ length: 9 }, (_, i) => ({
+        index:   i,
+        isTick:  false,
+        isCross: i < legacyVal,
+      }));
+    }
 
     // XP : 3 groupes de 5
     context.xpGroups = [0, 1, 2].map((g) =>
@@ -123,8 +147,10 @@ export class NCOActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       }
     }
 
-    context.gear       = gear;
-    context.trademarks = trademarks;
+    context.gear              = gear;
+    context.trademarks        = trademarks;
+    context.trademarkCount    = trademarks.length;
+    context.trademarkMaxReached = trademarks.length >= 5;
   }
 
   /* -------------------------------------------- */
@@ -241,6 +267,90 @@ export class NCOActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     const current = foundry.utils.getProperty(this.actor.system, field.replace('system.', '')) ?? 0;
     const newValue = index < current ? index : index + 1;
     await this.actor.update({ [field]: Math.max(0, Math.min(maxVal, newValue)) });
+  }
+
+  /**
+   * Cycle l'état d'une case de la piste Drive : vide (0) → tick (1) → croix (2) → vide.
+   */
+  static async _onDriveBoxClick(event, target) {
+    const index = parseInt(target.dataset.index);
+    const rawBoxes = this.actor.system.drive_track?.boxes;
+    let boxes;
+    if (Array.isArray(rawBoxes) && rawBoxes.length === 9) {
+      boxes = [...rawBoxes];
+    } else {
+      const legacyVal = this.actor.system.drive_track?.value ?? 0;
+      boxes = Array.from({ length: 9 }, (_, i) => (i < legacyVal ? 2 : 0));
+    }
+    boxes[index] = (boxes[index] + 1) % 3;
+    await this.actor.update({ 'system.drive_track.boxes': boxes });
+  }
+
+  /**
+   * Ouvre le dialog de dépense de 5 XP et applique l'avancée choisie.
+   */
+  static async _onSpendXP(event, target) {
+    const actor    = this.actor;
+    const xp       = actor.system.xp?.value           ?? 0;
+    const hitsMax  = actor.system.hits?.max            ?? 3;
+    const stuntMax = actor.system.stunt_points?.max    ?? 3;
+    const trademarks = actor.items.filter(i => i.type === 'trademark');
+
+    if (xp < 5) {
+      ui.notifications.warn(game.i18n.localize('NCO.XP.NotEnough'));
+      return;
+    }
+
+    const eligibleTm = trademarks.filter(tm =>
+      [1, 2, 3, 4, 5].some(n => !tm.system[`edge${n}`]?.trim())
+    );
+
+    const canTm    = trademarks.length < 5;
+    const canEdge  = eligibleTm.length > 0;
+    const canHits  = hitsMax < 4;
+    const canStunt = stuntMax < 5;
+
+    if (!canTm && !canEdge && !canHits && !canStunt) {
+      ui.notifications.info(game.i18n.localize('NCO.XP.NothingAvailable'));
+      return;
+    }
+
+    const result = await NCOXPDialog.show(actor);
+    if (!result?.advancement) return;
+
+    const i18n = key => game.i18n.localize(key);
+
+    const { advancement, trademark_id } = result;
+
+    switch (advancement) {
+      case 'trademark': {
+        const item = await Item.create(
+          { name: i18n('NCO.XP.NewTrademarkName'), type: 'trademark' },
+          { parent: actor }
+        );
+        item?.sheet?.render(true);
+        break;
+      }
+      case 'edge': {
+        const tm   = actor.items.get(trademark_id);
+        if (!tm) return;
+        const slot = [1, 2, 3, 4, 5].find(n => !tm.system[`edge${n}`]?.trim());
+        if (slot === undefined) return;
+        await tm.update({ [`system.edge${slot}`]: i18n('NCO.XP.NewEdgeName') });
+        tm.sheet?.render(true);
+        break;
+      }
+      case 'hits':
+        await actor.update({ 'system.hits.max': hitsMax + 1 });
+        break;
+      case 'stunt':
+        await actor.update({ 'system.stunt_points.max': stuntMax + 1 });
+        break;
+      default:
+        return;
+    }
+
+    await actor.update({ 'system.xp.value': xp - 5 });
   }
 
   /** Gère les actions create/edit/delete/toggle des effets actifs. */

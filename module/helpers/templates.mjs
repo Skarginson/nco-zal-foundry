@@ -11,6 +11,7 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/neon-city-overdrive/templates/item/parts/item-effects.hbs',
     // Dialog et chat
     'systems/neon-city-overdrive/templates/dialog/roll-dialog.hbs',
+    'systems/neon-city-overdrive/templates/dialog/xp-dialog.hbs',
     'systems/neon-city-overdrive/templates/chat/roll-result.hbs',
   ]);
 };

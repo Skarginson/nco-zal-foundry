@@ -28,10 +28,13 @@
 
       {{#if editable}}
       <div class="tab-section-header">
+        {{#unless trademarkMaxReached}}
         <a class="item-create tm-create" data-type="trademark" data-action="itemCreate"
            title="{{localize 'NCO.Item.AddTrademark'}}">
           <i class="fas fa-plus"></i> {{localize 'NCO.Item.AddTrademark'}}
         </a>
+        {{/unless}}
+        <span class="tm-count {{#if trademarkMaxReached}}tm-max{{/if}}">{{trademarkCount}}/5</span>
       </div>
       {{/if}}
 
@@ -83,7 +86,7 @@
                 data-index="{{box.index}}"
                 data-action="pipClick"
                 data-field="system.hits.value"
-                data-max="3"></span>
+                data-max="{{@root.hitsMax}}"></span>
           {{/each}}
         </div>
       </div>
@@ -128,7 +131,7 @@
                 data-index="{{box.index}}"
                 data-action="pipClick"
                 data-field="system.stunt_points.value"
-                data-max="3"></span>
+                data-max="{{@root.stuntMax}}"></span>
           {{/each}}
         </div>
       </div>
@@ -225,11 +228,9 @@
                placeholder="{{localize 'NCO.Actor.DrivePlaceholder'}}"/>
         <div class="pip-row flexrow" style="margin-top: 6px;">
           {{#each driveBoxes as |box|}}
-          <span class="pip drive-pip {{#if box.filled}}pip-on{{/if}}"
+          <span class="pip drive-pip {{#if box.isTick}}pip-tick{{/if}} {{#if box.isCross}}pip-cross{{/if}}"
                 data-index="{{box.index}}"
-                data-action="pipClick"
-                data-field="system.drive_track.value"
-                data-max="9"></span>
+                data-action="driveBoxClick"></span>
           {{/each}}
         </div>
       </div>
@@ -249,6 +250,11 @@
           {{/each}}
           {{/each}}
         </div>
+        {{#if editable}}
+        <button type="button" class="xp-spend-btn" data-action="spendXP">
+          <i class="fas fa-arrow-up-right-dots"></i> {{localize 'NCO.XP.SpendBtn'}}
+        </button>
+        {{/if}}
       </div>
 
     </div>

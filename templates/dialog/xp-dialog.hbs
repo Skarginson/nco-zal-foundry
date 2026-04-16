@@ -1,0 +1,62 @@
+<form class="xp-dialog-form flexcol" autocomplete="off">
+
+  <div class="xp-dialog-body flexcol">
+    <p class="xp-dialog-hint">{{localize 'NCO.XP.SpendHint'}}</p>
+
+    {{!-- Nouveau trademark --}}
+    <label class="xp-option {{#unless canTm}}xp-option-disabled{{/unless}}">
+      <input type="radio" name="advancement" value="trademark"
+             {{#unless canTm}}disabled{{/unless}}
+             {{#if (eq firstChecked 'trademark')}}checked{{/if}}/>
+      <span class="xp-option-label">{{localize 'NCO.XP.NewTrademark'}}</span>
+      <span class="xp-limit">({{tmCount}}/5)</span>
+    </label>
+
+    {{!-- Nouvel edge --}}
+    <label class="xp-option {{#unless canEdge}}xp-option-disabled{{/unless}}">
+      <input type="radio" name="advancement" value="edge"
+             {{#unless canEdge}}disabled{{/unless}}
+             {{#if (eq firstChecked 'edge')}}checked{{/if}}/>
+      <span class="xp-option-label">{{localize 'NCO.XP.NewEdge'}}</span>
+    </label>
+    {{#if canEdge}}
+    <div class="xp-tm-select-wrap">
+      <select name="trademark_id" class="xp-tm-select">
+        {{#each eligibleTm as |tm|}}
+        <option value="{{tm.id}}">{{tm.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    {{/if}}
+
+    {{!-- +1 hit max --}}
+    <label class="xp-option {{#unless canHits}}xp-option-disabled{{/unless}}">
+      <input type="radio" name="advancement" value="hits"
+             {{#unless canHits}}disabled{{/unless}}
+             {{#if (eq firstChecked 'hits')}}checked{{/if}}/>
+      <span class="xp-option-label">{{localize 'NCO.XP.IncreaseHits'}}</span>
+      <span class="xp-limit">({{hitsMax}}/4)</span>
+    </label>
+
+    {{!-- +1 stunt max --}}
+    <label class="xp-option {{#unless canStunt}}xp-option-disabled{{/unless}}">
+      <input type="radio" name="advancement" value="stunt"
+             {{#unless canStunt}}disabled{{/unless}}
+             {{#if (eq firstChecked 'stunt')}}checked{{/if}}/>
+      <span class="xp-option-label">{{localize 'NCO.XP.IncreaseStunt'}}</span>
+      <span class="xp-limit">({{stuntMax}}/5)</span>
+    </label>
+
+  </div>
+
+  {{!-- Boutons --}}
+  <div class="xp-dialog-footer flexrow">
+    <button type="button" class="btn-cancel" data-action="cancel">
+      <i class="fas fa-times"></i> {{localize 'NCO.Roll.Cancel'}}
+    </button>
+    <button type="button" class="btn-confirm" data-action="confirm">
+      <i class="fas fa-check"></i> {{localize 'NCO.XP.Confirm'}}
+    </button>
+  </div>
+
+</form>

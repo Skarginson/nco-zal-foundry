@@ -16,7 +16,21 @@
       "Flaws": "Défauts",
       "StuntPoints": "Points de Stunt",
       "Stash": "Stash",
-      "XP": "Points d'Expérience"
+        "XP": "Points d'Expérience"
+    },
+    "XP": {
+      "SpendTitle":        "Avancement — Dépenser 5 XP",
+      "SpendHint":         "Effacez 5 points d'expérience pour choisir une avancée.",
+      "SpendBtn":          "Avancement (5 XP)",
+      "Confirm":           "Confirmer",
+      "NotEnough":         "Il vous faut au moins 5 XP pour progresser.",
+      "NothingAvailable":  "Toutes les avancées sont déjà au maximum.",
+      "NewTrademark":      "Nouveau trademark",
+      "NewTrademarkName":  "Nouveau trademark",
+      "NewEdge":           "Nouvel edge pour…",
+      "NewEdgeName":       "Nouvel edge",
+      "IncreaseHits":      "+1 maximum de Blessures",
+      "IncreaseStunt":     "+1 maximum de Points de Stunt"
     },
     "Condition": {
       "Angry":      "Angry",

@@ -57,7 +57,8 @@
    ============================================ */
 
 .nco.sheet,
-.nco.roll-dialog {
+.nco.roll-dialog,
+.nco.xp-dialog {
   background: var(--nco-bg);
   color: var(--nco-text);
   font-family: var(--nco-font-body);
@@ -66,7 +67,8 @@
 }
 
 .nco.sheet .window-content,
-.nco.roll-dialog .window-content {
+.nco.roll-dialog .window-content,
+.nco.xp-dialog .window-content {
   background: var(--nco-bg);
   padding: 0;
   overflow: hidden;
@@ -82,7 +84,8 @@
 }
 
 .nco.sheet .window-title,
-.nco.roll-dialog .window-title {
+.nco.roll-dialog .window-title,
+.nco.xp-dialog .window-title {
   font-family: var(--nco-font-body);
   font-size: 0.95em;
   font-weight: 600;
@@ -818,6 +821,101 @@
 }
 
 /* ============================================
+   Dialog Avancement XP
+   ============================================ */
+
+.nco.xp-dialog .window-content { padding: 0; }
+
+.xp-dialog-form { gap: 0; }
+
+.xp-dialog-body {
+  padding: 16px;
+  gap: 4px;
+}
+
+.xp-dialog-hint {
+  font-size: 0.84em;
+  color: var(--nco-text-muted);
+  margin: 0 0 10px;
+  font-style: italic;
+}
+
+.xp-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.xp-option:not(.xp-option-disabled):hover {
+  background: var(--nco-surface);
+  border-color: var(--nco-border-dim);
+}
+
+.xp-option input[type="radio"] {
+  flex-shrink: 0;
+  accent-color: var(--nco-primary);
+  width: 14px;
+  height: 14px;
+}
+
+.xp-option-label {
+  flex: 1;
+  font-size: 0.9em;
+}
+
+.xp-option-disabled {
+  opacity: 0.38;
+  cursor: default;
+  pointer-events: none;
+}
+
+.xp-tm-select-wrap {
+  padding: 4px 8px 6px 30px;
+}
+
+.xp-tm-select {
+  width: 100%;
+  font-size: 0.85em;
+  padding: 3px 6px;
+  border: 1px solid var(--nco-border);
+  border-radius: 3px;
+  color: var(--nco-text);
+  background: var(--nco-surface-low);
+  font-family: var(--nco-font-body);
+}
+
+.xp-dialog-footer {
+  border-top: 1px solid var(--nco-border-dim);
+  padding: 10px 16px;
+  gap: 8px;
+  justify-content: flex-end;
+  background: var(--nco-surface-low);
+}
+
+.xp-dialog-footer button {
+  padding: 7px 18px;
+  font-family: var(--nco-font-body);
+  font-size: 0.88em;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-confirm {
+  background: var(--nco-primary);
+  border: 1px solid var(--nco-primary-dark);
+  color: #fff;
+}
+
+.btn-confirm:hover { background: var(--nco-primary-dark); }
+
+/* ============================================
    Chat — Résultat de jet
    ============================================ */
 
@@ -1288,8 +1386,11 @@
 
 .hit-pip.pip-on   { background: var(--nco-error);   border-color: var(--nco-error-dark); }
 .stash-pip.pip-on { background: var(--nco-primary);  border-color: var(--nco-primary-dark); }
-.drive-pip.pip-on { background: var(--nco-text-muted); border-color: var(--nco-text); }
 .xp-pip.pip-on    { background: var(--nco-success);  border-color: var(--nco-success-dark); }
+
+/* Drive track : tick (/) et croix (×) */
+.drive-pip.pip-tick  { background: var(--nco-partial);   border-color: var(--nco-partial-dark); }
+.drive-pip.pip-cross { background: var(--nco-text-muted); border-color: var(--nco-text); }
 
 /* CONDITIONS */
 .conditions-grid {
@@ -1476,4 +1577,39 @@
   font-size: 0.85em;
   color: var(--nco-text-dim);
   padding: 0 2px;
+}
+
+/* Bouton Avancement XP */
+.xp-spend-btn {
+  width: 100%;
+  margin-top: 7px;
+  padding: 5px 10px;
+  background: var(--nco-primary);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.82em;
+  font-family: var(--nco-font-body);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.15s;
+}
+
+.xp-spend-btn:hover { background: var(--nco-primary-dark); }
+
+/* Compteur de trademarks */
+.tm-count {
+  font-size: 0.75em;
+  color: var(--nco-text-muted);
+  margin-left: auto;
+  align-self: center;
+}
+
+.tm-count.tm-max { color: var(--nco-error); font-weight: 700; }
+
+.xp-limit {
+  font-size: 0.8em;
+  color: var(--nco-text-muted);
+  margin-left: 3px;
 }

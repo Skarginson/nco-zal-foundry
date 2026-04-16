@@ -11,6 +11,7 @@ import { NCO } from './helpers/config.mjs';
 import { registerSettings } from './helpers/settings.mjs';
 // Applications
 import { NCORollDialog } from './apps/roll-dialog.mjs';
+import { NCOXPDialog }   from './apps/xp-dialog.mjs';
 
 /* -------------------------------------------- */
 /*  Hook Init                                   */
@@ -22,6 +23,7 @@ Hooks.once('init', function () {
     NCOActor,
     NCOItem,
     NCORollDialog,
+    NCOXPDialog,
   };
 
   // Constantes de configuration

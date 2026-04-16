@@ -18,6 +18,20 @@
       "Stash": "Stash",
       "XP": "Experience Points"
     },
+    "XP": {
+      "SpendTitle":        "Advancement — Spend 5 XP",
+      "SpendHint":         "Clear 5 experience points to choose one advancement.",
+      "SpendBtn":          "Advancement (5 XP)",
+      "Confirm":           "Confirm",
+      "NotEnough":         "You need at least 5 XP to advance.",
+      "NothingAvailable":  "All advancements are already at maximum.",
+      "NewTrademark":      "Write a new trademark",
+      "NewTrademarkName":  "New Trademark",
+      "NewEdge":           "Write a new edge for…",
+      "NewEdgeName":       "New Edge",
+      "IncreaseHits":      "+1 hit value maximum",
+      "IncreaseStunt":     "+1 stunt point maximum"
+    },
     "Condition": {
       "Angry":      "Angry",
       "Dazed":      "Dazed",
