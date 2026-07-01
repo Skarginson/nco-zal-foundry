@@ -16,6 +16,8 @@
       "Flaws": "Flaws",
       "StuntPoints": "Stunt Points",
       "Stash": "Stash",
+      "Description": "Description",
+      "DescriptionPlaceholder": "Describe your character...",
       "XP": "Experience Points"
     },
     "XP": {
@@ -65,11 +67,8 @@
       "BonusGear": "Equipment bonus",
       "TotalDA": "Total AD",
       "TotalDD": "Total DD",
-      "DesperateWarning": "Desperate! No AD available — rolling 2 DD, keeping the lowest.",
       "Cancel": "Cancel",
       "Roll": "Roll",
-      "Kept": "Kept",
-      "Desperate": "Desperate situation",
       "Boons": "Boons",
       "PoolHint": "Always start with 1 action die, then adjust for the situation."
     },
@@ -83,6 +82,7 @@
       "Trademarks": "Trademarks",
       "Etat": "State",
       "Equipement": "Gear & XP",
+      "Description": "Description",
       "Stats": "Stats",
       "Notes": "Notes",
       "Effets": "Effects"

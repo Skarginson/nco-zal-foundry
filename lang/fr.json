@@ -16,6 +16,8 @@
       "Flaws": "Défauts",
       "StuntPoints": "Points de Stunt",
       "Stash": "Stash",
+      "Description": "Description",
+      "DescriptionPlaceholder": "Décrivez votre personnage...",
         "XP": "Points d'Expérience"
     },
     "XP": {
@@ -65,11 +67,8 @@
       "BonusGear": "Bonus équipement",
       "TotalDA": "Total DA",
       "TotalDD": "Total DD",
-      "DesperateWarning": "Désespéré ! Aucun DA disponible — 2 DD lancés, on garde le plus bas.",
       "Cancel": "Annuler",
       "Roll": "Lancer",
-      "Kept": "Gardé",
-      "Desperate": "Situation désespérée",
       "Boons": "Boons",
       "PoolHint": "Commencez toujours avec 1 dé d'action, puis ajustez selon la situation."
     },
@@ -83,6 +82,7 @@
       "Trademarks": "Trademarks",
       "Etat": "État",
       "Equipement": "Équipement & XP",
+      "Description": "Description",
       "Stats": "Stats",
       "Notes": "Notes",
       "Effets": "Effets"

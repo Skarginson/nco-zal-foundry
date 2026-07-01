@@ -11,20 +11,7 @@
 
   <div class="chat-roll-separator"></div>
 
-  {{#if desperate}}
-  {{!-- Situation désespérée : 2 DD, on garde le plus bas --}}
-  <div class="chat-dice-section">
-    <span class="dice-pool-label desperate-label">{{localize 'NCO.Roll.Desperate'}}</span>
-    <div class="dice-results flexrow">
-      {{#each ddResults as |val|}}
-      <span class="die-face danger-die {{#if (eq val @root.desperateBest)}}die-best-desperate{{/if}}">{{val}}</span>
-      {{/each}}
-    </div>
-    <span class="best-die-label">→ {{localize 'NCO.Roll.Kept'}} : <strong>{{desperateBest}}</strong></span>
-  </div>
-
-  {{else}}
-  {{!-- Pools normaux --}}
+  {{!-- Pools de dés --}}
   <div class="chat-dice-pools flexrow">
 
     {{!-- Dés d'Action : triés, les annulés sont barrés --}}
@@ -61,8 +48,6 @@
     <span class="boons-label">{{localize 'NCO.Roll.Boons'}}</span>
     <span class="boons-count">×{{boons}}</span>
   </div>
-  {{/if}}
-
   {{/if}}
 
   <div class="chat-roll-separator"></div>

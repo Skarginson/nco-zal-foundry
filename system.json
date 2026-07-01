@@ -29,5 +29,8 @@
       "gear":      {},
       "trademark": {}
     }
-  }
+  },
+  "manifest": "https://github.com/Skarginson/nco-foundryVTT/releases/download/v0.1.0-beta/system.json",
+  "download": "https://github.com/Skarginson/nco-foundryVTT/releases/download/v0.1.0-beta/system.zip"
+ 
 }

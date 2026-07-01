@@ -19,6 +19,7 @@
     <a class="item" data-tab="trademarks" data-action="changeTab">{{localize 'NCO.Tab.Trademarks'}}</a>
     <a class="item" data-tab="etat"       data-action="changeTab">{{localize 'NCO.Tab.Etat'}}</a>
     <a class="item" data-tab="equipement" data-action="changeTab">{{localize 'NCO.Tab.Equipement'}}</a>
+    <a class="item" data-tab="description" data-action="changeTab">{{localize 'NCO.Tab.Description'}}</a>
   </nav>
 
   <section class="sheet-body">
@@ -257,6 +258,15 @@
         {{/if}}
       </div>
 
+    </div>
+
+    {{!-- ===== Tab Description ===== --}}
+    <div class="tab description flexcol" data-group="primary" data-tab="description">
+      <div class="char-block flexcol">
+        <h4 class="block-title">{{localize 'NCO.Actor.Description'}}</h4>
+        <textarea name="system.description" class="description-input"
+                  placeholder="{{localize 'NCO.Actor.DescriptionPlaceholder'}}">{{system.description}}</textarea>
+      </div>
     </div>
 
   </section>

@@ -69,12 +69,11 @@ export class NCORollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   _updateTotals() {
     const bonusDA    = parseInt(this.element.querySelector('[name="bonus-da"]')?.value)    || 0;
     const dangerDice = parseInt(this.element.querySelector('[name="danger-dice"]')?.value) || 0;
-    const totalDA    = Math.max(0, 1 + bonusDA);
+    const totalDA    = Math.max(1, 1 + bonusDA);
     const totalDD    = Math.max(0, this.traumaDD + dangerDice);
 
     this.element.querySelector('.total-da').textContent = totalDA;
     this.element.querySelector('.total-dd').textContent = totalDD;
-    this.element.querySelector('.desperate-warning')?.classList.toggle('hidden', totalDA > 0);
   }
 
   /* -------------------------------------------- */
@@ -88,7 +87,7 @@ export class NCORollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   static async _onRoll(event, target) {
     const bonusDA    = parseInt(this.element.querySelector('[name="bonus-da"]')?.value)    || 0;
     const dangerDice = parseInt(this.element.querySelector('[name="danger-dice"]')?.value) || 0;
-    const totalDA    = Math.max(0, 1 + bonusDA);
+    const totalDA    = Math.max(1, 1 + bonusDA);
     const totalDD    = Math.max(0, this.traumaDD + dangerDice);
 
     await rollPool(this.actor, this.actor.name, totalDA, totalDD);

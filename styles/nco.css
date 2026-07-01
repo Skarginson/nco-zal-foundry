@@ -768,19 +768,6 @@
   margin-top: 14px;
 }
 
-.desperate-warning {
-  background: var(--nco-error-light);
-  border: 1px solid var(--nco-error);
-  border-radius: 3px;
-  color: var(--nco-error-dark);
-  font-size: 0.8em;
-  font-weight: 600;
-  padding: 7px 10px;
-  text-align: center;
-}
-
-.desperate-warning.hidden { display: none; }
-
 .roll-dialog-footer {
   border-top: 1px solid var(--nco-border-dim);
   padding: 10px 16px;
@@ -996,7 +983,6 @@
 
 .action-label   { color: var(--nco-primary); }
 .danger-label   { color: var(--nco-error); }
-.desperate-label { color: var(--nco-botch); }
 
 .dice-results {
   flex-wrap: wrap;
@@ -1040,20 +1026,6 @@
   border-color: var(--nco-error);
   color: var(--nco-error-dark);
 }
-
-.die-best-desperate {
-  background: var(--nco-botch-light);
-  border-color: var(--nco-botch);
-  color: var(--nco-botch-dark);
-}
-
-.best-die-label {
-  font-size: 0.72em;
-  font-weight: 600;
-  color: var(--nco-text-muted);
-}
-
-.best-die-label strong { color: var(--nco-text); }
 
 .no-dice {
   font-size: 0.85em;
@@ -1564,6 +1536,35 @@
 .drive-input:focus {
   outline: none;
   border-bottom-color: var(--nco-primary);
+}
+
+/* Description */
+.tab.description {
+  flex: 1;
+}
+
+.tab.description .char-block {
+  flex: 1;
+}
+
+.description-input {
+  width: 100%;
+  min-height: 320px;
+  flex: 1;
+  resize: vertical;
+  background: transparent;
+  border: 1px solid var(--nco-border-dim);
+  border-radius: 4px;
+  font-family: var(--nco-font-body);
+  font-size: 0.88em;
+  line-height: 1.4;
+  color: var(--nco-text);
+  padding: 6px 8px;
+}
+
+.description-input:focus {
+  outline: none;
+  border-color: var(--nco-primary);
 }
 
 /* XP */
